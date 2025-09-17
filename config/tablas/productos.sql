@@ -1,3 +1,4 @@
+-- Tabla de Productos
 CREATE TABLE productos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -11,3 +12,6 @@ CREATE TABLE productos (
     fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     usuario_modificacion VARCHAR(255)
 );
+
+
+

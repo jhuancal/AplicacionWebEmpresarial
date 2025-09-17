@@ -1,1 +1,0 @@
--- Eliminar cuando se inicie el desarrollo de Config

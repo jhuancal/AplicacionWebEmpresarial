@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="paginas/seguros/styles-seguros.css">
+
+<style>
+  .seguros-banner {
+    background: linear-gradient(to right, #f5f5f5, #d0eaff);
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .seguros-banner h2 {
+    color: #0077cc;
+    font-size: 2rem;
+  }
+
+  .seguros-info {
+    font-family: Arial, sans-serif;
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+  }
+
+  .seguros-info p {
+    font-size: 1.1rem;
+    color: #333;
+  }
+
+</style>
+
+<section class="seguros">
+    <div class="seguros-banner">
+        <h2>Protege a tu mascota con nuestros seguros</h2>
+    </div>
+
+    <div class="seguros-info">
+        <p>Ofrecemos planes de salud, accidentes y emergencias para que tu mascota esté siempre protegida.</p>
+        <button id="btn-info">Ver beneficios</button>
+        <div id="beneficios" style="display:none; margin-top:1rem;">
+        <ul>
+            <li style="color: green;">✔️ Cobertura veterinaria completa</li>
+            <li>✔️ Atención 24/7</li>
+            <li>✔️ Descuentos en productos</li>
+        </ul>
+        </div>
+    </div>
+</section>
+
+<script src="paginas/seguros/scripts-seguros.js"></script>
+
+<script>
+  document.getElementById('btn-info').addEventListener('click', () => {
+    const beneficios = document.getElementById('beneficios');
+    beneficios.style.display = beneficios.style.display === 'none' ? 'block' : 'none';
+  });
+</script>

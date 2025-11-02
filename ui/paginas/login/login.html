@@ -42,6 +42,26 @@
                 <a href="register.html" target="_self"><button class="btn register-btn">REGISTRARSE</button></a>
              </div>
         </div>    
-    </div>          
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('.form-box.login form');
+            const usuarioInput = form.querySelector('input[type="text"]');
+            const passwordInput = form.querySelector('input[type="password"]');
+
+            form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const usuario = usuarioInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (usuario === 'admin' && password === 'admin') {
+                window.location.href = 'http://127.0.0.1:5500/config/productos.html';
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,98 @@
+<!-- Modern normalize -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize/modern-normalize.css">
+<!-- styles.css -->
+<link rel="stylesheet" href="paginas/ui/styles-ui.css">
+<!-- Favicon -->
+<link rel="icon" href="./paginas/ui/images/favicon.ico" type="favicon/ico"> <!-- Indica al navegador -->
+<!-- Material icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div>
+  <div class="carrusel">
+    <div class="carrusel__contenedor" id="slides">
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/imperdible-alimento-desktop.png" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/imperdible-antipulgas-desktop.png" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/imperdible-arenas-desktop.png" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/imperdible-camas-desktop.jpg" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/imperdible-leeby-desktop.png" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/imperdible-nath-desktop.png" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/imperdible-royal-desktop.png" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/yowup-desktop.jpg" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/zoetis-desktop.png" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="">
+          <img src="./paginas/ui/images/zoovet-desktop.png" alt="">
+        </a>
+      </div>
+    </div>
+    <button class="btn btn--next" id="next" aria-label="Slide siguiente">›</button>
+    <button class="btn btn--prev" id="prev" aria-label="Slide anterior">‹</button>
+  </div>
+  
+  <div class="swiper-pagination">
+    <span class="dot active" aria-label="Ir al slide 1"></span>
+    <span class="dot" aria-label="Ir al slide 2"></span>
+    <span class="dot" aria-label="Ir al slide 3"></span>
+    <span class="dot" aria-label="Ir al slide 4"></span>
+    <span class="dot" aria-label="Ir al slide 5"></span>
+    <span class="dot" aria-label="Ir al slide 6"></span>
+    <span class="dot" aria-label="Ir al slide 7"></span>
+    <span class="dot" aria-label="Ir al slide 8"></span>
+    <span class="dot" aria-label="Ir al slide 9"></span>
+    <span class="dot" aria-label="Ir al slide 10"></span>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const slides = document.getElementById('slides');
+    const total = slides.children.length;
+    let index = 0;
+
+    function mostrarSlide(i) {
+      index = (i + total) % total;
+      slides.style.transform = `translateX(${-index * 100}%)`;
+    }
+
+    document.getElementById('next').addEventListener('click', () => mostrarSlide(index + 1));
+    document.getElementById('prev').addEventListener('click', () => mostrarSlide(index - 1));
+
+    setInterval(() => mostrarSlide(index + 1), 4000);
+  })();
+</script>

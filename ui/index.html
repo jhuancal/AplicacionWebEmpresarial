@@ -3,54 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <title>SuperPet | Tienda para Mascotas Online</title>
-  <link rel="stylesheet" href="style.css" />
+  <!-- <link rel="stylesheet" href="style.css"/> -->
+   <style>
+    body{
+      background-color: #191919;
+      color: #fff;
+      margin: 0;
+    }
+   </style>
+  <script type="module" src="./main.js"></script>
 </head>
 <body>
-  <header class="navbar">
-    <div class="navbar__bar">
-      <div class="navbar__brand">
-        <a href="#" onclick="loadPage('ui')" title="SuperPet">
-          <img src="./images/logo_superpet.svg" alt="SuperPet Tienda de mascotas online"">
-        </a>
-      </div>
-      <div class="navbar__search">
-        <form class="search" action="/buscar" method="GET" role="search" aria-label="Buscar en el sitio">
-          <label for="q" class="visually-hidden">Buscar</label>
-          <input id="q" name="q" type="search" placeholder="Busca tus marcas y productos favoritos" aria-label="Buscar" autocomplete="off">
-          <button type="submit" class="search-btn" aria-label="Enviar búsqueda">
-            <span class="material-icons" aria-hidden="true">search</span>
-          </button>
-        </form>
-      </div>
-      <nav class="navbar__actions">
-        <div class="minicart">
-          <a href="#" aria-label="Carrito">
-            <img class="images" src="./images/minicart.png" alt="Carrito de compras">
-          </a>
-        </div>
-        <div class="store">
-          <a href="#" aria-label="Tiendas">
-            <img class="images" src="./images/store.png" alt="Tienda">
-          </a>
-        </div>
-        <div class="account">
-          <a href="./paginas/login/login.html" aria-label="Cuenta">
-            <img class="images" src="./images/user.png" alt="Usuario">
-          </a>
-        </div>
-      </nav>
-    </div>
-    <nav class="navbar__nav">
-      <ul class="navbar__menu">
-        <li><a href="#perro" class="navbar__link">Perro</a></li>
-        <li><a href="#gato" class="navbar__link">Gato</a></li>
-        <li><a href="#otras-mascotas" class="navbar__link">Otras mascotas</a></li>
-        <li><a href="#marcas" class="navbar__link">Marcas</a></li>
-        <li><a href="#" onclick="loadPage('peluqueria')" class="navbar__link">Peluquería canina</a></li>
-        <li><a href="#seguros" onclick="loadPage('seguros')" class="navbar__link">Seguros</a></li>
-      </ul>
-    </nav>
-  </header>
+  <header-component nombre="SuperPet" descripcion="Tienda de mascotas online" place_holder="Busca tus marcas y productos favoritos"></header-component>
 
   <main id="content"></main>
 
@@ -96,7 +60,5 @@
     </div>
 
   </footer>
-
-  <script src="layout.js"></script>
 </body>
 </html>

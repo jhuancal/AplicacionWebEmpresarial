@@ -19,9 +19,7 @@ class ProductCard extends HTMLElement{
     <div class="card">
       <div class="media">
         <a href="#">
-          <div class="main">
-            <img src="${img}" width="200" height="200" alt="">
-          </div>
+          <img src="${img}" width="200" height="200" alt="">
         </a>
         <div class="tags">
           <span>-${descuento}%</span>

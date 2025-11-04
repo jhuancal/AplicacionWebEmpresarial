@@ -6,18 +6,25 @@
   <title>SuperPet | Tienda para Mascotas Online</title>
   <!-- <link rel="stylesheet" href="style.css"/> -->
    <style>
+    *{
+      margin: 0;
+      box-sizing: border-box;
+    }
     body{
       background-color: #191919;
       color: #fff;
-      margin: 0;
     }
    </style>
   <script type="module" src="./main.js"></script>
 </head>
 <body>
-  <header-component nombre="SuperPet" descripcion="Tienda de mascotas online" place_holder="Busca tus marcas y productos favoritos"></header-component>
-
-  <main id="content"></main>
+  <header>
+    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online" place_holder="Busca tus marcas y productos favoritos"></header-component>
+  </header>
+  <main>
+    <products-component>
+    </products-component>
+  </main>
 
   <footer>
     <div class="container">

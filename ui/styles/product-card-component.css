@@ -30,15 +30,20 @@
   padding: 12px;
   border: 1px solid #34383a;
   border-radius: 4px;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   .media{
     position: relative;
     margin-bottom: 12px;
-    img{
-      max-width: 100%;
+    a{
+      width: 100%;
       height: auto;
-
+      img{
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
+  
+      }
     }
     .tags{
       span{

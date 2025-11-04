@@ -51,8 +51,8 @@ class HeaderComponent extends HTMLElement{
 
     <nav class="nav">
       <ul>
-        <li><a href="#perro">Perro</a></li>
-        <li><a href="#gato">Gato</a></li>
+        <li><a href="#perro">Perros</a></li>
+        <li><a href="#gato">Gatos</a></li>
         <li><a href="#otras-mascotas">Otras mascotas</a></li>
         <li><a href="#marcas">Marcas</a></li>
         <li><a href="#">Peluquería canina</a></li>

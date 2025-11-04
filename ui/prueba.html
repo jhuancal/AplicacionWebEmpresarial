@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{margin: 0;box-sizing: border-box;}
+    body{
+      background-color: #191919;
+      color: #fff
+    }
+    :root{
+      --rojo-principal: #b40500;
+      --rojo-secundario: #9e1e1e;
+      --oferta-text:#dd4e4e;
+      --delivery-text: #3dd5ff;
+      --negro-principal: #191919;
+      --font-principal: "Poppins", sans-serif;
+      background-color: #191919;
+      color: #fff;
+      font-family: var(--font-principal);
+    }
+    .card{
+      border: 1px solid color-mix(in srgb, #fff 15%, transparent);
+      border-radius: 12px;
+      h3{
+        font-size: 15px;
+        padding: 20px 30px;
+        border-bottom: 1px solid color-mix(in srgb, #fff 15%, transparent);
+      }
+      .toolbar{
+        display: flex;
+        flex-direction: column;
+        font-size: 15px;
+        padding: 20px 30px;
+        border-bottom: 1px solid color-mix(in srgb, #fff 15%, transparent);
+        span{
+          margin-bottom: 10px;
+        }
+        .option{
+          font-size: 14px;
+          border: 1px solid color-mix(in srgb, var(--rojo-principal) 40%, transparent);
+          margin-bottom: 10px;
+          padding: 10px;
+          background-color: color-mix(in srgb, var(--rojo-principal) 20%, transparent);
+          border-radius: 5px;
+          text-align: center;
+          transition: background-color .1s, border 3s;
+          &:hover{
+            background-color: color-mix(in srgb, var(--rojo-principal) 70%, transparent);
+          }
+        }
+      }
+      form{
+        .filter{
+          padding: 20px 30px;
+          ul{
+            padding: 10px 0;
+            list-style: none;
+            li{
+              display: flex;
+              align-items: center;
+            input[type="checkbox"] {
+              appearance: none;
+              width: 20px;
+              height: 20px;
+              border: 1px solid color-mix(in srgb, #fff 15%, transparent);
+              background-color: transparent;
+              position: relative;
+
+              &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-color: var(--rojo-principal);
+                opacity: 0;
+              }
+
+              &::after {
+                content: "✔";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -60%) scale(0);
+                color: white;
+                font-size: 14px;
+              }
+
+              &:checked {
+                &::before {
+                  opacity: 1;
+                }
+                &::after {
+                  transform: translate(-50%, -60%) scale(1);
+                }
+              }
+            }
+
+            }
+
+          }
+
+        }
+
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h3>Filtros</h3>
+    <div class="toolbar">
+      <span>Ordenamiento</span>
+      <div class="options">
+        <div class="option">Más vendidos</div>
+        <div class="option">Precio, menor a mayor</div>
+        <div class="option">Precio, mayor a menor</div>
+      </div>
+    </div>
+    <form action="">
+      <div class="filter">
+        <span>Uso</span>
+        <ul>
+          <li>
+            <div>
+              <input type="checkbox">
+            </div>
+            <span>Exterior</span>
+          </li>
+        </ul>
+      </div>
+      <div class="filter">
+        <span>Tipo de producto</span>
+        <ul>
+          <li>
+            <div>
+              <input type="checkbox">
+            </div>
+            <span>Individual</span>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+  
+</body>
+</html>

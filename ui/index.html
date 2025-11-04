@@ -14,59 +14,22 @@
       background-color: #191919;
       color: #fff;
     }
+    footer{
+      padding-top: 2rem;
+    }
    </style>
   <script type="module" src="./main.js"></script>
 </head>
 <body>
   <header>
-    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online" place_holder="Busca tus marcas y productos favoritos"></header-component>
+    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online" place_holder="Busca tus marcas y productos favoritos" pag_principal="./index.html"></header-component>
   </header>
   <main>
     <products-component>
     </products-component>
   </main>
-
   <footer>
-    <div class="container">
-      <div class="footer__container"></div>
-      <hr class="hidden-md-down">
-      <div class="footer__bottom">
-        <div class="footer__logo">
-          <img src="./images/logo_superpet_red.svg" alt="">
-        </div>
-        <div class="footer__social-links">
-          <ul>
-            <li>
-              <a class="favicon__instagram" href="https://www.instagram.com/superpet_pe" target="_blank">
-                <img src="" alt="">
-              </a>
-            </li>
-            <li>
-              <a class="favicon__facebook" href="https://www.facebook.com/superpet.pe" target="_blank">
-                <img src="" alt="">
-              </a>
-            </li>
-            <li>
-              <a class="favicon__youtube" href="https://www.youtube.com/channel/UCMcd3FCBavw7fVgQR0Fi-2w" target="_blank">
-                <img src="" alt="">
-              </a>
-            </li>
-            <li>
-              <a class="favicon__linkedin" href="https://pe.linkedin.com/company/mascotaslatinas" target="_blank">
-                <img src="" alt="">
-              </a>
-            </li>
-            <li>
-              <a class="favicon__tiktok" href="https://www.tiktok.com/@superzoo.cl" target="_blank">
-                <img src="" alt="">
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="copyright">© SuperPet - Todos los derechos reservados</div>
-      </div>
-    </div>
-
+    <footer-component></footer-component>
   </footer>
 </body>
 </html>

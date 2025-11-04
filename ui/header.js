@@ -7,6 +7,7 @@ class HeaderComponent extends HTMLElement{
     const nombre=this.getAttribute("nombre")
     const descripcion=this.getAttribute("descripcion")
     const placeHolder=this.getAttribute("place_holder")
+    const pagPrincipal=this.getAttribute("pag_principal")
 
     this.shadowRoot.innerHTML=`
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +17,7 @@ class HeaderComponent extends HTMLElement{
     <header>
     <div class="bar">
       
-      <a href="#./index.html" title="${nombre}">
+      <a href="${pagPrincipal}" title="${nombre}">
         <img src="./images/logo_${nombre.toLowerCase()}.svg" alt="${nombre} ${descripcion}">
       </a>
 
@@ -51,7 +52,7 @@ class HeaderComponent extends HTMLElement{
 
     <nav class="nav">
       <ul>
-        <li><a href="#perro">Perros</a></li>
+        <li><a href="./collections.html">Perros</a></li>
         <li><a href="#gato">Gatos</a></li>
         <li><a href="#otras-mascotas">Otras mascotas</a></li>
         <li><a href="#marcas">Marcas</a></li>

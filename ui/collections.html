@@ -13,22 +13,45 @@
       background-color: #191919;
       color: #fff;
     }
-    div{
+    main{
+      .container{
+        display: flex;
+        justify-content: center;
+        .card{
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+  
+          .minicard{
+            display: flex;
+          }
+        }
+      }
+    }
+    footer{
+      padding-top: 2rem;
     }
    </style>
    <script type="module" src="./main.js"></script>
 </head>
 <body>
   <header>
-    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online" place_holder="Busca tus marcas y productos favoritos"></header-component>
+    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online" place_holder="Busca tus marcas y productos favoritos" pag_principal="./index.html"></header-component>
   </header>
   <main>
-    <div>
-      <breadcrumb-component padre="Inicio" hijo="Accesorio para perros">
-      </breadcrumb>
-
+    <div class="container">
+      <div class="card">
+        <breadcrumb-component padre="Inicio" hijo="Accesorio para perros" padreHref="./index.html"></breadcrumb-component>
+        <div class="minicard">
+          <filter-component></filter-component>
+          <products-component></products-component>
+        </div>
+      </div>
     </div>
   </main>
+  <footer>
+    <footer-component></footer-component>
+  </footer>
   
 </body>
 </html>

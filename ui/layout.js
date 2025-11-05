@@ -31,5 +31,4 @@ function loadPage(pageName) {
         });
 }
 
-
 window.onload = () => loadPage('ui');

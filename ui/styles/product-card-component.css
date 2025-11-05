@@ -19,10 +19,8 @@
   --oferta-text:#dd4e4e;
   --delivery-text: #3dd5ff;
   --negro-principal: #191919;
-  --font-principal: "Poppins", sans-serif;
   background-color: #191919;
   color: #fff;
-  font-family: var(--font-principal);
   
 }
 

@@ -6,9 +6,6 @@ class FooterComponent extends HTMLElement{
   render(){
 
     this.shadowRoot.innerHTML=`
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/footer-component.css">
     <div class="footer">
       <div class="container">

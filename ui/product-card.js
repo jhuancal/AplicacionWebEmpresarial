@@ -12,9 +12,6 @@ class ProductCard extends HTMLElement{
     const img=this.getAttribute("img")
 
     this.shadowRoot.innerHTML=`
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/product-card-component.css">
     <div class="card">
       <div class="media">

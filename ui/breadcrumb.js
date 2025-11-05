@@ -9,8 +9,6 @@ class BreadCrumb extends HTMLElement{
     const padreHref=this.getAttribute("padreHref")
 
     this.shadowRoot.innerHTML=`
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
       *{margin: 0; box-sizing: border-box;}
       :host{
@@ -19,10 +17,8 @@ class BreadCrumb extends HTMLElement{
         --oferta-text:#dd4e4e;
         --delivery-text: #3dd5ff;
         --negro-principal: #191919;
-        --font-principal: "Poppins", sans-serif;
         background-color: #191919;
         color: #fff;
-        font-family: var(--font-principal);
       }
       .card{
         display: flex;

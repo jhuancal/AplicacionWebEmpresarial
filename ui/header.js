@@ -10,9 +10,6 @@ class HeaderComponent extends HTMLElement{
     const pagPrincipal=this.getAttribute("pag_principal")
 
     this.shadowRoot.innerHTML=`
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/header-component.css">
     <header>
     <div class="bar">
@@ -42,9 +39,11 @@ class HeaderComponent extends HTMLElement{
           </a>
         </div>
         <div class="account">
-          <a href="./paginas/login/login.html" aria-label="Cuenta">
-            <img class="images" src="./images/user.png" alt="Usuario">
-          </a>
+          <img class="images" src="./images/user.png" alt="Usuario">
+          <div>
+            <a href="./login.html"><strong>Inicia sesión</strong></a>
+            <a href="./register.html">Regístrate</a>
+          </div>
         </div>
       </nav>
 

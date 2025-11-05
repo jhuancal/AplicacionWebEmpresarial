@@ -5,8 +5,6 @@ class FilterPanel extends HTMLElement{
   }
   render(){
     this.shadowRoot.innerHTML=`
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="./styles/filter-panel-component.css">
     <div class="card">
       <h3>Filtros</h3>

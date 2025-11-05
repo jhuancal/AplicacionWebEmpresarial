@@ -25,7 +25,7 @@ Objetivos:
 ## Colaboradores
 
 ```markdown
-- [Nombre] — ui/
+- Luis Alberto García Daza — ui/
 - [Nombre] — logic/
 - Jhoans Anthony Huanca Lupaca — config/
 

@@ -1,0 +1,106 @@
+*{margin: 0;box-sizing: border-box;}
+:host{
+  --rojo-principal: #b40500;
+  --rojo-secundario: #9e1e1e;
+  --oferta-text:#dd4e4e;
+  --delivery-text: #3dd5ff;
+  --negro-principal: #191919;
+  background-color: #191919;
+  color: #fff;
+}
+.card{
+  border: 1px solid color-mix(in srgb, #fff 15%, transparent);
+  border-radius: 12px;
+  max-width: 298px;
+  h3{
+    font-weight: normal;
+    font-size: 15px;
+    padding: 20px 30px;
+    border-bottom: 1px solid color-mix(in srgb, #fff 15%, transparent);
+  }
+  .toolbar{
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    padding: 20px 30px;
+    border-bottom: 1px solid color-mix(in srgb, #fff 15%, transparent);
+    span{
+      margin-bottom: 10px;
+    }
+    .option{
+      font-size: 14px;
+      border: 1px solid color-mix(in srgb, var(--rojo-principal) 40%, transparent);
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: color-mix(in srgb, var(--rojo-principal) 20%, transparent);
+      border-radius: 5px;
+      text-align: center;
+      transition: background-color .1s, border 3s;
+      &:hover{
+        background-color: color-mix(in srgb, var(--rojo-principal) 70%, transparent);
+      }
+    }
+  }
+  form{
+    .filter{
+      padding: 20px 30px;
+      border-bottom: 1px solid color-mix(in srgb, #fff 15%, transparent);
+      &:last-child{
+        border: none;
+      }
+
+      ul{
+        padding: 10px 0;
+        list-style: none;
+        li{
+          display: flex;
+          align-items: center;
+          span{
+            font-size: 14px;
+          }
+          div{
+            display: flex;
+            /**/
+            input[type="checkbox"] {
+              appearance: none;
+              width: 20px;
+              height: 20px;
+              border: 1px solid color-mix(in srgb, #fff 15%, transparent);
+              background-color: transparent;
+              position: relative;
+              margin-right: 9px;
+
+              &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-color: var(--rojo-principal);
+                opacity: 0;
+              }
+
+              &::after {
+                content: "✔";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -60%) scale(0);
+                color: white;
+                font-size: 14px;
+              }
+
+              &:checked {
+                &::before {
+                  opacity: 1;
+                }
+                &::after {
+                  transform: translate(-50%, -60%) scale(1);
+                }
+              }
+            }
+            /**/
+          }
+        }
+      }
+    }
+  }
+}

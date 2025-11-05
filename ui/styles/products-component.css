@@ -1,0 +1,15 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+}
+.productos{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px,1fr));
+  justify-items: center;
+  gap: 40px 0;
+  product-card{
+    padding: 0 15px;
+    width: 100%;
+  }
+
+}

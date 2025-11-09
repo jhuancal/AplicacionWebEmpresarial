@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrusel Vanilla JS</title>
+    <link rel="stylesheet" href="../static/css/carrusel-component.css">
+    <script type="module">
+        class Carousel {
+            constructor(container) {
+                this.wrapper = container.querySelector('#carouselWrapper');
+                this.slides = container.querySelectorAll('.carousel-slide');
+                this.prevBtn = container.querySelector('#prevBtn');
+                this.nextBtn = container.querySelector('#nextBtn');
+                this.dotsContainer = container.querySelector('#carouselDots');
+                
+                this.currentIndex = 0;
+                this.slideWidth = 100;
+                this.autoplayInterval = null;
+                this.autoplayDelay = 5000;
+                
+                this.init();
+            }
+
+            init() {
+                this.createDots();
+                this.attachEvents();
+                this.updateCarousel();
+                this.startAutoplay();
+            }
+
+            createDots() {
+                this.slides.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot');
+                    if (index === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => this.goToSlide(index));
+                    this.dotsContainer.appendChild(dot);
+                });
+                this.dots = this.dotsContainer.querySelectorAll('.dot');
+            }
+
+            attachEvents() {
+                this.prevBtn.addEventListener('click', () => this.prev());
+                this.nextBtn.addEventListener('click', () => this.next());
+                
+                // Pausar autoplay al hacer hover
+                this.wrapper.parentElement.addEventListener('mouseenter', () => this.stopAutoplay());
+                this.wrapper.parentElement.addEventListener('mouseleave', () => this.startAutoplay());
+
+                // Touch events para móviles
+                let startX = 0;
+                let isDragging = false;
+
+                this.wrapper.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                    this.stopAutoplay();
+                });
+
+                this.wrapper.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                });
+
+                this.wrapper.addEventListener('touchend', (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = startX - endX;
+
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) {
+                            this.next();
+                        } else {
+                            this.prev();
+                        }
+                    }
+                    
+                    this.startAutoplay();
+                });
+            }
+
+            updateCarousel() {
+                const offset = -this.currentIndex * this.slideWidth;
+                this.wrapper.style.transform = `translateX(${offset}%)`;
+                
+                // Actualizar dots
+                this.dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === this.currentIndex);
+                });
+            }
+
+            next() {
+                this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+                this.updateCarousel();
+            }
+
+            prev() {
+                this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+                this.updateCarousel();
+            }
+
+            goToSlide(index) {
+                this.currentIndex = index;
+                this.updateCarousel();
+                this.resetAutoplay();
+            }
+
+            startAutoplay() {
+                this.stopAutoplay();
+                this.autoplayInterval = setInterval(() => this.next(), this.autoplayDelay);
+            }
+
+            stopAutoplay() {
+                if (this.autoplayInterval) {
+                    clearInterval(this.autoplayInterval);
+                    this.autoplayInterval = null;
+                }
+            }
+
+            resetAutoplay() {
+                this.stopAutoplay();
+                this.startAutoplay();
+            }
+        }
+
+        // Inicializar carrusel
+        document.addEventListener('DOMContentLoaded', () => {
+            const carouselContainer = document.querySelector('.carousel-container');
+            new Carousel(carouselContainer);
+        });
+    </script>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel-wrapper" id="carouselWrapper">
+            <!-- Slide 1 -->
+            <div class="carousel-slide">
+                <img src="//quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=3840" alt="slider image slider_item_LciEwf" srcset="//quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=300 300w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=400 400w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=500 500w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=600 600w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=700 700w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=800 800w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=900 900w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=3200 3200w" width="2000" height="695" loading="lazy" fetchpriority="low" sizes="100vw">
+                <div class="carousel-content">
+                    <h2>Productos para Perros</h2>
+                    <p>Encuentra todo lo que tu mascota necesita</p>
+                    <button class="carousel-btn">Ver Colección</button>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-slide">
+                <img src="//quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=3840" alt="slider image slider_item_7NJU63" srcset="//quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=300 300w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=400 400w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=500 500w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=600 600w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=700 700w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=800 800w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=900 900w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=3200 3200w" width="1920" height="600" loading="eager" fetchpriority="high" sizes="100vw">
+                <div class="carousel-content">
+                    <h2>Pago Seguro</h2>
+                    <p>Múltiples métodos de pago disponibles</p>
+                    <button class="carousel-btn">Comprar Ahora</button>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-slide">
+                <img src="//quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=3840" alt="slider image slider_item_fcKXmE" srcset="//quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=300 300w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=400 400w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=500 500w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=600 600w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=700 700w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=800 800w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=900 900w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=3200 3200w" width="2000" height="695" loading="lazy" fetchpriority="low" sizes="100vw">
+                <div class="carousel-content">
+                    <h2>Transportadores</h2>
+                    <p>Viaja seguro con tu mascota</p>
+                    <button class="carousel-btn">Ver Más</button>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="carousel-slide">
+                <img src="//quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=3840" alt="slider image 1621243260e1af0c20-0" srcset="//quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=300 300w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=400 400w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=500 500w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=600 600w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=700 700w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=800 800w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=900 900w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=3200 3200w" width="2000" height="695" loading="lazy" fetchpriority="low" sizes="100vw">
+                <div class="carousel-content">
+                    <h2>Ofertas Especiales</h2>
+                    <p>Descuentos en productos seleccionados</p>
+                    <button class="carousel-btn">Explorar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de navegación -->
+        <button class="carousel-nav prev" id="prevBtn">‹</button>
+        <button class="carousel-nav next" id="nextBtn">›</button>
+
+        <!-- Indicadores (dots) -->
+        <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+
+</body>
+</html>

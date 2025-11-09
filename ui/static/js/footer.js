@@ -6,7 +6,7 @@ class FooterComponent extends HTMLElement{
   render(){
 
     this.shadowRoot.innerHTML=`
-    <link rel="stylesheet" href="./styles/footer-component.css">
+    <link rel="stylesheet" href="../static/css/footer-component.css">
     <div class="footer">
       <div class="container">
         <div class="container-rows">

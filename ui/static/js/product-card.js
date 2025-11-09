@@ -12,7 +12,7 @@ class ProductCard extends HTMLElement{
     const img=this.getAttribute("img")
 
     this.shadowRoot.innerHTML=`
-    <link rel="stylesheet" href="./styles/product-card-component.css">
+    <link rel="stylesheet" href="../static/css/product-card-component.css">
     <div class="card">
       <div class="media">
         <a href="#">

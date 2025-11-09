@@ -10,12 +10,12 @@ class HeaderComponent extends HTMLElement{
     const pagPrincipal=this.getAttribute("pag_principal")
 
     this.shadowRoot.innerHTML=`
-    <link rel="stylesheet" href="./styles/header-component.css">
+    <link rel="stylesheet" href="../static/css/header-component.css">
     <header>
     <div class="bar">
       
       <a href="${pagPrincipal}" title="${nombre}">
-        <img src="./images/logo_${nombre.toLowerCase()}.svg" alt="${nombre} ${descripcion}">
+        <img src="../static/img/logo_${nombre.toLowerCase()}.svg" alt="${nombre} ${descripcion}">
       </a>
 
       <form role="search" aria-label="Buscar en el sitio">
@@ -30,16 +30,16 @@ class HeaderComponent extends HTMLElement{
       <nav>
         <div class="minicart">
           <a href="#" aria-label="Carrito">
-            <img class="images" src="./images/minicart.png" alt="Carrito de compras">
+            <img class="images" src="../static/img/minicart.png" alt="Carrito de compras">
           </a>
         </div>
         <div class="store">
           <a href="#" aria-label="Tiendas">
-            <img class="images" src="./images/store.png" alt="Tienda">
+            <img class="images" src="../static/img/store.png" alt="Tienda">
           </a>
         </div>
         <div class="account">
-          <img class="images" src="./images/user.png" alt="Usuario">
+          <img class="images" src="../static/img/user.png" alt="Usuario">
           <div>
             <a href="./login.html"><strong>Inicia sesión</strong></a>
             <a href="./register.html">Regístrate</a>
@@ -55,8 +55,8 @@ class HeaderComponent extends HTMLElement{
         <li><a href="#gato">Gatos</a></li>
         <li><a href="#otras-mascotas">Otras mascotas</a></li>
         <li><a href="#marcas">Marcas</a></li>
-        <li><a href="#">Peluquería canina</a></li>
-        <li><a href="#seguros">Seguros</a></li>
+        <li><a href="#" onclick="loadPage('peluqueria')" class="navbar__link">Peluquería canina</a></li>
+        <li><a href="#" onclick="loadPage('seguros')" class="navbar__link">Seguros</a></li>
       </ul>
     </nav>
   </header>`

@@ -5,7 +5,7 @@ class FilterPanel extends HTMLElement{
   }
   render(){
     this.shadowRoot.innerHTML=`
-    <link rel="stylesheet" href="./styles/filter-panel-component.css">
+    <link rel="stylesheet" href="../static/css/filter-panel-component.css">
     <div class="card">
       <h3>Filtros</h3>
       <div class="toolbar">

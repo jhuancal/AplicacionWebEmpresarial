@@ -1,0 +1,186 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Contenedor del producto */
+.contenedor-producto {
+    display: flex;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Sección de imágenes */
+.seccion-imagenes {
+    flex: 1;
+    padding: 20px;
+}
+
+.contenedor-slider {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.miniaturas {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 15px;
+}
+
+.miniatura {
+    width: 100%;
+    height: 80px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 4px;
+}
+
+.activa {
+    border-color: #ff6b00;
+}
+
+.imagen-principal {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-grande {
+    max-width: 100%;
+    max-height: 400px;
+}
+
+/* Botón de detalles */
+.boton-detalles {
+    width: 100%;
+    padding: 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.detalles-producto {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.mostrar {
+    display: block;
+}
+
+/* Sección de descripción */
+.seccion-descripcion {
+    flex: 1;
+    padding: 20px;
+    border-left: 1px solid #eee;
+}
+
+/* Precios */
+.contenedor-precios {
+    margin-bottom: 15px;
+}
+
+.precio-actual {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff6b00;
+}
+
+.precio-anterior {
+    font-size: 18px;
+    color: #999;
+    text-decoration: line-through;
+    margin-left: 10px;
+}
+
+.etiqueta-oferta {
+    background-color: #ff6b00;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.texto-ahorro {
+    color: #ff6b00;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Título y descripción */
+.titulo-producto {
+    font-size: 22px;
+    margin: 15px 0;
+}
+
+.estado-stock {
+    color: #28a745;
+    margin: 10px 0px;
+    font-weight: bold;
+}
+
+/* Información de envío */
+.info-envio {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #e8f5e9;
+    border-radius: 8px;
+}
+
+/* Selector de cantidad */
+.selector-cantidad {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    .boton-cantidad {
+        width: 40px;
+        height: 40px;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    .input-cantidad {
+        width: 60px;
+        height: 40px;
+        text-align: center;
+        border: 1px solid #ddd;
+        margin: 0 5px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: white;
+    }
+}
+
+/* Botón de carrito */
+.boton-carrito {
+    width: 100%;
+    padding: 15px;
+    background-color: #ff6b00;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
+}

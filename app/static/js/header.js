@@ -55,6 +55,7 @@ class HeaderComponent extends HTMLElement{
         <li><a href="#gato">Gatos</a></li>
         <li><a href="#otras-mascotas">Otras mascotas</a></li>
         <li><a href="#marcas">Marcas</a></li>
+        <li><a href="./eventos.html">Eventos</a></li>
         <li><a href="#" onclick="loadPage('peluqueria')" class="navbar__link">Peluquería canina</a></li>
         <li><a href="#" onclick="loadPage('seguros')" class="navbar__link">Seguros</a></li>
       </ul>

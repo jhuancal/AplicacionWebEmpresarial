@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos IRL - PetSocial</title>
+    <link rel="stylesheet" href="../static/css/events.css">
+</head>
+<body class="scroll-hidden">
+    <nav class="navbar">
+        <h1>PetSocial</h1>
+        <ul>
+        <li>Inicio</li>
+        <li>Productos</li>
+        <li class="active">Eventos</li>
+        <li>Adopciones</li>
+        </ul>
+    </nav>
+
+    <section class="event-section">
+        <div class="event-card school">
+        <h2>Evento en Colegio</h2>
+        <p>Compartimos alegría y productos con los más pequeños.</p>
+        <img src="school-event.jpg" alt="Evento en colegio">
+        </div>
+
+        <div class="ferret-tube"></div>
+
+        <div class="event-card park">
+        <h2>Evento en Parque</h2>
+        <p>Una tarde de juegos, regalos y conexión entre mascotas.</p>
+        <img src="park-event.jpg" alt="Evento en parque">
+        </div>
+
+        <div class="ferret-climber">
+        <div class="ferret"></div>
+        </div>
+    </section>
+</body>
+</html>
+<script>
+    document.addEventListener('mousemove', function(e) {
+    const threshold = window.innerWidth - 50;
+    if (e.clientX > threshold) {
+        document.body.classList.add('scroll-visible');
+    } else {
+        document.body.classList.remove('scroll-visible');
+    }
+    });
+        
+</script>

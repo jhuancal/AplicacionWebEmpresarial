@@ -1,21 +1,43 @@
-class ProductsComponent extends HTMLElement{
-  constructor(){
+class ProductsComponent extends HTMLElement {
+  constructor() {
     super()
-    this.attachShadow({mode: "open"})
+    this.attachShadow({ mode: "open" })
   }
-  render(){
-    this.shadowRoot.innerHTML=`
+
+  async fetchProducts() {
+    try {
+      const response = await fetch('/api/products');
+      const products = await response.json();
+      return products;
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      return [];
+    }
+  }
+
+  async render() {
+    const products = await this.fetchProducts();
+
+    const productsHtml = products.map(product => `
+      <product-card 
+        id="${product.id}"
+        descuento="${product.discount}" 
+        dia-llegada="${product.arrival_day}" 
+        producto="${product.name}" 
+        precio-regular="${product.price_regular}" 
+        precio-venta="${product.price_sale}" 
+        img="${product.image_url}">
+      </product-card>
+    `).join('');
+
+    this.shadowRoot.innerHTML = `
     <link rel="stylesheet" href="../static/css/products-component.css">
     <div class="productos">
-      <product-card descuento="80" dia-llegada="Martes" producto="Silla" precio-regular="389" precio-venta="439" img="https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100"></product-card>
-      <product-card descuento="80" dia-llegada="Martes" producto="Silla" precio-regular="389" precio-venta="439" img="https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100"></product-card>
-      <product-card descuento="80" dia-llegada="Martes" producto="Silla" precio-regular="389" precio-venta="439" img="https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100"></product-card>
-      <product-card descuento="80" dia-llegada="Martes" producto="Silla" precio-regular="389" precio-venta="439" img="https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100"></product-card>
-      <product-card descuento="80" dia-llegada="Martes" producto="Silla" precio-regular="389" precio-venta="439" img="https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100"></product-card>
-      <product-card descuento="80" dia-llegada="Martes" producto="Silla" precio-regular="389" precio-venta="439" img="https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100"></product-card>
+      ${productsHtml}
     </div>`
   }
-  connectedCallback(){
+
+  connectedCallback() {
     this.render()
   }
 }

@@ -1,18 +1,36 @@
-class ProductCard extends HTMLElement{
-  constructor(){
+class ProductCard extends HTMLElement {
+  constructor() {
     super()
-    this.attachShadow({mode: "open"})
+    this.attachShadow({ mode: "open" })
   }
-  render(){
-    const descuento=this.getAttribute("descuento")
-    const diaLlegada=this.getAttribute("dia-llegada")
-    const producto=this.getAttribute("producto")
-    const precioRegular=parseInt(this.getAttribute("precio-regular")).toFixed(2)
-    const precioVenta=parseInt(this.getAttribute("precio-venta")).toFixed(2)
-    const img=this.getAttribute("img")
+  render() {
+    const id = this.getAttribute("id")
+    const descuento = this.getAttribute("descuento")
+    const diaLlegada = this.getAttribute("dia-llegada")
+    const producto = this.getAttribute("producto")
+    const precioRegular = parseInt(this.getAttribute("precio-regular")).toFixed(2)
+    const precioVenta = parseInt(this.getAttribute("precio-venta")).toFixed(2)
+    const img = this.getAttribute("img")
 
-    this.shadowRoot.innerHTML=`
+    this.shadowRoot.innerHTML = `
     <link rel="stylesheet" href="../static/css/product-card-component.css">
+    <style>
+      .edit-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background-color: #333;
+        color: #fff;
+        padding: 5px;
+        margin-top: 10px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      .edit-btn:hover {
+        background-color: #555;
+      }
+    </style>
     <div class="card">
       <div class="media">
         <a href="#">
@@ -26,7 +44,7 @@ class ProductCard extends HTMLElement{
       <div class="content">
         <div class="tags">
           <p>Oferta</p>
-          <span>Recibelo ${diaLlegada.toLowerCase()}</span>
+          <span>Recibelo ${diaLlegada ? diaLlegada.toLowerCase() : ''}</span>
         </div>
         <div class="info">
           <h3>
@@ -42,12 +60,13 @@ class ProductCard extends HTMLElement{
               <span>S/ ${precioVenta}</span>
             </div>
           </div>
+          <a href="/edit_product/${id}" class="edit-btn">Editar</a>
         </div>
       </div>
-    </div>` 
+    </div>`
   }
-  connectedCallback(){
+  connectedCallback() {
     this.render()
   }
 }
-customElements.define("product-card",ProductCard)
+customElements.define("product-card", ProductCard)

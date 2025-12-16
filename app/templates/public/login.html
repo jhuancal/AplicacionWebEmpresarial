@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SuperPet | Tienda para Mascotas Online</title>
-   <style>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-    *{
+
+    * {
       margin: 0;
       box-sizing: border-box;
       font-family: "Poppins", sans-serif;
     }
-    body{
+
+    body {
       background-color: #191919;
       color: #fff;
     }
-    footer{
+
+    footer {
       padding-top: 2rem;
     }
-   </style>
-   <script src="../static/js/layout.js"></script>
+  </style>
+  <script src="../static/js/layout.js"></script>
   <script type="module" src="../static/js/main.js"></script>
   <link rel="stylesheet" href="../static/css/login-register.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
+
 <body>
   <header>
-    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online" place_holder="Busca tus marcas y productos favoritos" pag_principal="./index.html"></header-component>
+    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online"
+      place_holder="Busca tus marcas y productos favoritos" pag_principal="./index.html"></header-component>
   </header>
   <main>
     <div class="card">
@@ -55,40 +61,56 @@
             </div>
           </form>
         </div>
-  
-        <div class="toggle-box">
-            <!-- Izquierda -->
-              <div class="toggle-panel toggle-left">
-                <h1>Bienvenido de nuevo</h1>
-                <p>¿No tienes cuenta?</p>
-                <a href="./register.html" target="_self"><button class="btn register-btn">REGISTRARSE</button></a>
-              </div>
-        </div>    
-    </div>
-  </div>
-  <script>
-      document.addEventListener('DOMContentLoaded', () => {
-          const form = document.querySelector('.form-box.login form');
-          const usuarioInput = form.querySelector('input[type="text"]');
-          const passwordInput = form.querySelector('input[type="password"]');
 
-          form.addEventListener('submit', function (e) {
+        <div class="toggle-box">
+          <!-- Izquierda -->
+          <div class="toggle-panel toggle-left">
+            <h1>Bienvenido de nuevo</h1>
+            <p>¿No tienes cuenta?</p>
+            <a href="./register.html" target="_self"><button class="btn register-btn">REGISTRARSE</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('.form-box.login form');
+        const usuarioInput = form.querySelector('input[type="text"]');
+        const passwordInput = form.querySelector('input[type="password"]');
+
+        form.addEventListener('submit', async function (e) {
           e.preventDefault();
 
           const usuario = usuarioInput.value.trim();
           const password = passwordInput.value.trim();
 
-          if (usuario === 'admin' && password === 'admin') {
-              window.location.href = 'http://127.0.0.1:5500/config/productos.html';
-          } else {
-              alert('Usuario o contraseña incorrectos');
+          try {
+            const response = await fetch('/api/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ username: usuario, password: password })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              window.location.href = '/admin/dashboard';
+            } else {
+              alert(data.message);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Ocurrió un error al intentar iniciar sesión');
           }
-          });
+        });
       });
-  </script>
+    </script>
   </main>
   <footer>
     <footer-component></footer-component>
   </footer>
 </body>
+
 </html>

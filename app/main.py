@@ -11,15 +11,6 @@ MOCK_USERS = {
     'user': '1234'
 }
 
-def get_db_connection():
-    connection = mysql.connector.connect(
-        host='db',
-        user='user',
-        password='userpass',
-        database='tienda'
-    )
-    return connection
-
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -61,30 +52,33 @@ def logout():
 def dashboard():
     return render_template("admin/dashboard.html", user=session['user'])
 
+from db import get_db_connection
+from repositories.producto import ProductoRepository
+from repositories.usuario import UsuarioRepository
+from entities.usuario import Usuario
+from entities.producto import Producto
+
 @app.route("/api/products")
 def get_products():
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM products')
-    products = cursor.fetchall()
-    cursor.close()
+    repo = ProductoRepository(conn)
+    products = repo.get_all()
     conn.close()
-    return jsonify(products)
+    # Helper to convert Entity objects to dicts for JSON
+    return jsonify([p.to_dict() for p in products])
 
-@app.route("/edit_product/<int:id>")
+@app.route("/edit_product/<string:id>")
 @login_required
 def edit_product(id):
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM products WHERE id = %s', (id,))
-    product = cursor.fetchone()
-    cursor.close()
+    repo = ProductoRepository(conn)
+    product = repo.get_by_id(id)
     conn.close()
     if product:
         return render_template("admin/edit_product.html", product=product)
     return "Product not found", 404
 
-@app.route("/update_product/<int:id>", methods=['POST'])
+@app.route("/update_product/<string:id>", methods=['POST'])
 @login_required
 def update_product(id):
     name = request.form['name']
@@ -96,16 +90,177 @@ def update_product(id):
     image_url = request.form['image_url']
 
     conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('''
-        UPDATE products
-        SET name = %s, description = %s, price_regular = %s, price_sale = %s, discount = %s, arrival_day = %s, image_url = %s
-        WHERE id = %s
-    ''', (name, description, price_regular, price_sale, discount, arrival_day, image_url, id))
-    conn.commit()
-    cursor.close()
+    repo = ProductoRepository(conn)
+    repo.update(id, 
+                Nombre=name, 
+                Descripcion=description, 
+                PrecioRegular=price_regular, 
+                PrecioVenta=price_sale, 
+                Descuento=discount, 
+                DiaLlegada=arrival_day, 
+                UrlImagen=image_url)
     conn.close()
-    return redirect(url_for('home'))
+    return redirect(url_for('dashboard'))
+
+from repositories.usuario import UsuarioRepository
+import uuid
+import time
+from entities.usuario import Usuario
+from entities.producto import Producto
+
+# Entity-Repository Mapping
+def get_repo_and_entity(entity_name, conn):
+    if entity_name == 'adm_administracion_producto':
+        return ProductoRepository(conn), Producto
+    elif entity_name == 'seg_seguridad_usuario':
+        return UsuarioRepository(conn), Usuario
+    return None, None
+
+@app.route("/api/<entity_name>/GetAll", methods=['POST'])
+def api_get_all(entity_name):
+    conn = get_db_connection()
+    repo, _ = get_repo_and_entity(entity_name, conn)
+    if not repo:
+        conn.close()
+        return jsonify({"error": "Entity not found"}), 404
+    data = repo.get_all()
+    conn.close()
+    return jsonify([d.to_dict() for d in data])
+
+@app.route("/api/<entity_name>/CountAll", methods=['POST'])
+def api_count_all(entity_name):
+    data = request.get_json()
+    filters = data if isinstance(data, list) else None # Filters passed directly as list
+    
+    conn = get_db_connection()
+    repo, _ = get_repo_and_entity(entity_name, conn)
+    if not repo:
+        conn.close()
+        return jsonify({"error": "Entity not found"}), 404
+    count = repo.count_all(filters)
+    conn.close()
+    return jsonify([count]) # Helper expects array
+
+@app.route("/api/<entity_name>/GetPaged", methods=['POST'])
+def api_get_paged(entity_name):
+    data = request.get_json()
+    start_index = data.get('startIndex', 0)
+    length = data.get('length', 10)
+    filters = data.get('filtros')
+    order = data.get('orden')
+
+    conn = get_db_connection()
+    repo, _ = get_repo_and_entity(entity_name, conn)
+    if not repo:
+        conn.close()
+        return jsonify({"error": "Entity not found"}), 404
+    
+    # Ensure correct types
+    try:
+        start_index = int(start_index)
+        length = int(length)
+    except:
+        start_index = 0
+        length = 10
+
+    data = repo.get_paged(start_index, length, filters, order)
+    conn.close()
+    return jsonify(data)
+
+@app.route("/api/<entity_name>/Insert", methods=['POST'])
+def api_insert(entity_name):
+    data = request.get_json()
+    conn = get_db_connection()
+    repo, entity_class = get_repo_and_entity(entity_name, conn)
+    if not repo:
+        conn.close()
+        return jsonify({"error": "Entity not found"}), 404
+    
+    # Add System Fields
+    data['Id'] = str(uuid.uuid4())
+    data['ESTADO'] = 1
+    data['DISPONIBILIDAD'] = 1
+    data['FECHA_CREACION'] = int(time.time() * 1000)
+    data['FECHA_MODIFICACION'] = int(time.time() * 1000)
+    data['USER_CREACION'] = session.get('user', 'SYS')
+    data['USER_MODIFICACION'] = session.get('user', 'SYS')
+    
+    # Filter kwargs to match Entity constructor
+    # Simple approach: pass data, Entity ignores extra if safe, or we filter explicitly
+    # But Repository.add uses keys to build SQL, so we MUST filter to valid columns
+    # For now, relying on frontend sending correct fields matching DB columns
+    
+    try:
+        repo.add(**data)
+        conn.close()
+        return jsonify({"id": data['Id']})
+    except Exception as e:
+        conn.close()
+        print(e)
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/<entity_name>/Update", methods=['PUT'])
+def api_update(entity_name):
+    data = request.get_json()
+    id = data.get('Id')
+    if not id:
+        return jsonify({"error": "Id required"}), 400
+        
+    conn = get_db_connection()
+    repo, _ = get_repo_and_entity(entity_name, conn)
+    if not repo:
+        conn.close()
+        return jsonify({"error": "Entity not found"}), 404
+    
+    data['FECHA_MODIFICACION'] = int(time.time() * 1000)
+    data['USER_MODIFICACION'] = session.get('user', 'SYS')
+
+    # Remove Id from data so we don't try to update it in SET clause (update method handles it)
+    data_to_update = {k: v for k, v in data.items() if k != 'Id'}
+
+    try:
+        repo.update(id, **data_to_update)
+        conn.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        conn.close()
+        print(e)
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/<entity_name>/Delete", methods=['DELETE'])
+def api_delete(entity_name):
+    data = request.get_json()
+    id = data.get('Id')
+    if not id:
+        return jsonify({"error": "Id required"}), 400
+    
+    conn = get_db_connection()
+    repo, _ = get_repo_and_entity(entity_name, conn)
+    if not repo:
+        conn.close()
+        return jsonify({"error": "Entity not found"}), 404
+
+    try:
+        repo.delete(id)
+        conn.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        conn.close()
+        print(e)
+        return jsonify({"error": str(e)}), 500
+
+
+# Admin Pages Routes
+@app.route("/admin/administracion/producto")
+@login_required
+def admin_producto():
+    return render_template("admin/Administracion/producto.html", user=session['user'])
+
+@app.route("/admin/seguridad/usuario")
+@login_required
+def admin_usuario():
+    return render_template("admin/Seguridad/usuario.html", user=session['user'])
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+

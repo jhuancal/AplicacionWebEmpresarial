@@ -20,13 +20,13 @@ class ProductsComponent extends HTMLElement {
 
     const productsHtml = products.map(product => `
       <product-card 
-        id="${product.id}"
-        descuento="${product.discount}" 
-        dia-llegada="${product.arrival_day}" 
-        producto="${product.name}" 
-        precio-regular="${product.price_regular}" 
-        precio-venta="${product.price_sale}" 
-        img="${product.image_url}">
+        id="${product.Id}"
+        descuento="${product.Descuento}" 
+        dia-llegada="${product.DiaLlegada}" 
+        producto="${product.Nombre}" 
+        precio-regular="${product.PrecioRegular}" 
+        precio-venta="${product.PrecioVenta}" 
+        img="${product.UrlImagen}">
       </product-card>
     `).join('');
 

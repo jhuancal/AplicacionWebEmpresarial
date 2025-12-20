@@ -57,30 +57,30 @@
 </head>
 
 <body>
-    <form action="/update_product/{{ product.id }}" method="POST">
+    <form action="/update_product/{{ product.Id }}" method="POST">
         <h2>Editar Producto</h2>
 
         <label for="name">Nombre</label>
-        <input type="text" id="name" name="name" value="{{ product.name }}" required>
+        <input type="text" id="name" name="name" value="{{ product.Nombre }}" required>
 
         <label for="description">Descripción</label>
-        <input type="text" id="description" name="description" value="{{ product.description }}">
+        <input type="text" id="description" name="description" value="{{ product.Descripcion }}">
 
         <label for="price_regular">Precio Regular</label>
-        <input type="number" step="0.01" id="price_regular" name="price_regular" value="{{ product.price_regular }}"
+        <input type="number" step="0.01" id="price_regular" name="price_regular" value="{{ product.PrecioRegular }}"
             required>
 
         <label for="price_sale">Precio Venta</label>
-        <input type="number" step="0.01" id="price_sale" name="price_sale" value="{{ product.price_sale }}" required>
+        <input type="number" step="0.01" id="price_sale" name="price_sale" value="{{ product.PrecioVenta }}" required>
 
         <label for="discount">Descuento (%)</label>
-        <input type="number" id="discount" name="discount" value="{{ product.discount }}">
+        <input type="number" id="discount" name="discount" value="{{ product.Descuento }}">
 
         <label for="arrival_day">Día de Llegada</label>
-        <input type="text" id="arrival_day" name="arrival_day" value="{{ product.arrival_day }}">
+        <input type="text" id="arrival_day" name="arrival_day" value="{{ product.DiaLlegada }}">
 
         <label for="image_url">URL Imagen</label>
-        <input type="text" id="image_url" name="image_url" value="{{ product.image_url }}">
+        <input type="text" id="image_url" name="image_url" value="{{ product.UrlImagen }}">
 
         <button type="submit">Guardar Cambios</button>
     </form>

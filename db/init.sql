@@ -1,15 +1,146 @@
-CREATE TABLE IF NOT EXISTS products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    price_regular DECIMAL(10, 2),
-    price_sale DECIMAL(10, 2),
-    discount INT,
-    arrival_day VARCHAR(50),
-    image_url VARCHAR(255)
+-- Security Tables
+
+CREATE TABLE IF NOT EXISTS Seg_Rol (
+    Id CHAR(36) NOT NULL PRIMARY KEY,
+    Nombre TEXT,
+    Descripcion TEXT,
+    RowVersion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ESTADO BIT NOT NULL,
+    DISPONIBILIDAD BIT NOT NULL,
+    FECHA_CREACION BIGINT NOT NULL,
+    FECHA_MODIFICACION BIGINT NOT NULL,
+    USER_CREACION TEXT,
+    USER_MODIFICACION TEXT
 );
 
-INSERT INTO products (name, description, price_regular, price_sale, discount, arrival_day, image_url) VALUES
-('Silla', 'Silla cómoda', 389.00, 439.00, 80, 'Martes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100'),
-('Mesa', 'Mesa de madera', 150.00, 120.00, 20, 'Lunes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100'),
-('Sofá', 'Sofá de cuero', 500.00, 450.00, 10, 'Viernes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100');
+CREATE TABLE IF NOT EXISTS Seg_Acceso (
+    Id CHAR(36) NOT NULL PRIMARY KEY,
+    Orden INT,
+    Codigo VARCHAR(4),
+    Nombre VARCHAR(100),
+    Descripcion TEXT,
+    Tipo VARCHAR(100),
+    Nivel INT,
+    Padre VARCHAR(4),
+    RowVersion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ESTADO BIT NOT NULL,
+    DISPONIBILIDAD BIT NOT NULL,
+    FECHA_CREACION BIGINT NOT NULL,
+    FECHA_MODIFICACION BIGINT NOT NULL,
+    USER_CREACION TEXT,
+    USER_MODIFICACION TEXT,
+    UrlAcceso TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Seg_Rol_Acceso (
+    Id CHAR(36) NOT NULL PRIMARY KEY,
+    IdRol CHAR(36) NOT NULL,
+    Codigo TEXT,
+    Valor TEXT,
+    Tipo TEXT,
+    IdAccesoUno CHAR(36) NOT NULL,
+    IdAccesoDos CHAR(36) NOT NULL,
+    RowVersion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ESTADO BIT NOT NULL,
+    DISPONIBILIDAD BIT NOT NULL,
+    FECHA_CREACION BIGINT NOT NULL,
+    FECHA_MODIFICACION BIGINT NOT NULL,
+    USER_CREACION TEXT,
+    USER_MODIFICACION TEXT,
+    FOREIGN KEY (IdRol) REFERENCES Seg_Rol(Id),
+    FOREIGN KEY (IdAccesoUno) REFERENCES Seg_Acceso(Id),
+    FOREIGN KEY (IdAccesoDos) REFERENCES Seg_Acceso(Id)
+);
+
+CREATE TABLE IF NOT EXISTS Seg_Usuario (
+    Id CHAR(36) NOT NULL PRIMARY KEY,
+    NombreUsuario VARCHAR(255) NOT NULL,
+    Contrasena VARCHAR(255) NOT NULL,
+    IdPersona CHAR(36) NULL,
+    RowVersion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ESTADO BIT NOT NULL,
+    DISPONIBILIDAD BIT NOT NULL,
+    FECHA_CREACION BIGINT NOT NULL,
+    FECHA_MODIFICACION BIGINT NOT NULL,
+    USER_CREACION TEXT,
+    USER_MODIFICACION TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Seg_Usuario_Rol (
+    Id CHAR(36) NOT NULL PRIMARY KEY,
+    IdUsuario CHAR(36) NOT NULL,
+    IdRol CHAR(36) NOT NULL,
+    RowVersion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ESTADO BIT NOT NULL,
+    DISPONIBILIDAD BIT NOT NULL,
+    FECHA_CREACION BIGINT NOT NULL,
+    FECHA_MODIFICACION BIGINT NOT NULL,
+    USER_CREACION TEXT,
+    USER_MODIFICACION TEXT,
+    FOREIGN KEY (IdUsuario) REFERENCES Seg_Usuario(Id),
+    FOREIGN KEY (IdRol) REFERENCES Seg_Rol(Id)
+);
+
+-- Admin Tables
+CREATE TABLE IF NOT EXISTS Adm_Producto (
+    Id CHAR(36) NOT NULL PRIMARY KEY,
+    Nombre VARCHAR(255) NOT NULL,
+    Descripcion TEXT,
+    PrecioRegular DECIMAL(10, 2),
+    PrecioVenta DECIMAL(10, 2),
+    Descuento INT,
+    DiaLlegada VARCHAR(50),
+    UrlImagen VARCHAR(255),
+    RowVersion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ESTADO BIT NOT NULL,
+    DISPONIBILIDAD BIT NOT NULL,
+    FECHA_CREACION BIGINT NOT NULL,
+    FECHA_MODIFICACION BIGINT NOT NULL,
+    USER_CREACION TEXT,
+    USER_MODIFICACION TEXT
+);
+
+
+-- Init Data
+
+-- Roles
+INSERT INTO Seg_Rol (Id, Nombre, Descripcion, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
+('11111111-1111-1111-1111-111111111111', 'Administrador', 'Administrador del sistema', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
+('22222222-2222-2222-2222-222222222222', 'Empleado', 'Empleado de ventas', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin');
+
+-- Access
+-- Dummy Access for "0000..." placeholder in FKs
+INSERT INTO Seg_Acceso (Id, Orden, Codigo, Nombre, Descripcion, Tipo, Nivel, Padre, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION, UrlAcceso) VALUES
+('00000000-0000-0000-0000-000000000000', 0, 'NULL', 'NULL', 'NULL', 'NULL', 0, 'NULL', 0, 0, 0, 0, 'SYS', 'SYS', ''),
+('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 1, 'ADMI', 'Administracion', 'Modulo de Administracion', 'ADMIN', 1, 'TODO', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin', ''),
+('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 2, 'DASH', 'Dashboard', 'Dashboard Administrativo', 'ADMIN', 2, 'ADMI', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin', '/admin/dashboard'),
+('cccccccc-cccc-cccc-cccc-cccccccccccc', 3, 'PROD', 'Productos', 'Gestion de Productos', 'ADMIN', 2, 'ADMI', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin', '/edit_product/1');
+
+-- Permissions (Rol_Acceso)
+INSERT INTO Seg_Rol_Acceso (Id, IdRol, Codigo, Valor, Tipo, IdAccesoUno, IdAccesoDos, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
+(UUID(), '11111111-1111-1111-1111-111111111111', 'ADMITODO', 'S', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '00000000-0000-0000-0000-000000000000', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
+(UUID(), '11111111-1111-1111-1111-111111111111', 'ADMIDASH', 'S', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
+(UUID(), '11111111-1111-1111-1111-111111111111', 'ADMIPROD', 'S', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'cccccccc-cccc-cccc-cccc-cccccccccccc', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
+(UUID(), '22222222-2222-2222-2222-222222222222', 'ADMITODO', 'S', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '00000000-0000-0000-0000-000000000000', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
+(UUID(), '22222222-2222-2222-2222-222222222222', 'ADMIDASH', 'S', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
+(UUID(), '22222222-2222-2222-2222-222222222222', 'ADMIPROD', 'N', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'cccccccc-cccc-cccc-cccc-cccccccccccc', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin');
+
+-- Users
+-- 333... = admin
+-- 444... = user
+INSERT INTO Seg_Usuario (Id, NombreUsuario, Contrasena, IdPersona, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
+('33333333-3333-3333-3333-333333333333', 'admin', 'admin', NULL, 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),
+('44444444-4444-4444-4444-444444444444', 'user', '1234', NULL, 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS');
+
+-- User Roles
+-- Link 333... (admin) to 111... (Administrador)
+-- Link 444... (user) to 222... (Empleado)
+INSERT INTO Seg_Usuario_Rol (Id, IdUsuario, IdRol, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
+(UUID(), '33333333-3333-3333-3333-333333333333', '11111111-1111-1111-1111-111111111111', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),
+(UUID(), '44444444-4444-4444-4444-444444444444', '22222222-2222-2222-2222-222222222222', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS');
+
+-- Adm_Producto Data
+INSERT INTO Adm_Producto (Id, Nombre, Descripcion, PrecioRegular, PrecioVenta, Descuento, DiaLlegada, UrlImagen, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
+(UUID(), 'Silla', 'Silla cómoda', 389.00, 439.00, 80, 'Martes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),
+(UUID(), 'Mesa', 'Mesa de madera', 150.00, 120.00, 20, 'Lunes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),
+(UUID(), 'Sofá', 'Sofá de cuero', 500.00, 450.00, 10, 'Viernes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS');

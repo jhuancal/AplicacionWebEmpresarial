@@ -1,70 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SuperPet | Tienda para Mascotas Online</title>
   <!-- <link rel="stylesheet" href="style.css"/> -->
-   <style>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-    *{
+
+    * {
       margin: 0;
       box-sizing: border-box;
       font-family: "Poppins", sans-serif;
     }
-    body{
+
+    body {
       background-color: #191919;
       color: #fff;
     }
-    .slider{
+
+    .slider {
       padding: 2rem 0;
       overflow: hidden;
-      .slider-inner{
+
+      .slider-inner {
         display: flex;
         transition: all .3s ease-in;
-        img{
+
+        img {
           width: 100%;
         }
       }
     }
-    .productos{
+
+    .productos {
       max-width: 1400px;
       margin: 0 auto;
     }
-    footer{
+
+    footer {
       padding-top: 2rem;
     }
-   </style>
-  <script src="../static/js/layout.js"></script>
-  <script type="module" src="../static/js/main.js"></script>
-    <script type="module">
-    let sliderInner=document.querySelector(".slider-inner")
-    let index=0
-    let images=sliderInner.querySelectorAll("img")
-    setInterval(()=>{
-      let porcentaje=index*-100
-      sliderInner.style.transform=`translateX(${porcentaje}%)`
+  </style>
+  <script src="../static/js/public/layout.js"></script>
+  <script type="module" src="../static/js/public/main.js"></script>
+  <script type="module">
+    let sliderInner = document.querySelector(".slider-inner")
+    let index = 0
+    let images = sliderInner.querySelectorAll("img")
+    setInterval(() => {
+      let porcentaje = index * -100
+      sliderInner.style.transform = `translateX(${porcentaje}%)`
       index++
-      if(index>images.length-1){
-        index=0
+      if (index > images.length - 1) {
+        index = 0
       }
-    },3000)
+    }, 3000)
   </script>
 </head>
+
 <body>
   <header>
-    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online" place_holder="Busca tus marcas y productos favoritos" pag_principal="./index.html"></header-component>
+    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online"
+      place_holder="Busca tus marcas y productos favoritos" pag_principal="./index.html"></header-component>
   </header>
   <main>
     <div class="slider">
       <div class="slider-inner">
-        <img src="//quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=3840" alt="slider image slider_item_LciEwf" srcset="//quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=300 300w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=400 400w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=500 500w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=600 600w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=700 700w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=800 800w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=900 900w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=3200 3200w" width="2000" height="695" loading="lazy" fetchpriority="low" sizes="100vw">
+        <img src="//quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=3840"
+          alt="slider image slider_item_LciEwf"
+          srcset="//quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=300 300w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=400 400w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=500 500w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=600 600w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=700 700w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=800 800w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=900 900w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Banner-Mayo2_1.png?v=1751996667&amp;width=3200 3200w"
+          width="2000" height="695" loading="lazy" fetchpriority="low" sizes="100vw">
 
-        <img src="//quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=3840" alt="slider image slider_item_7NJU63" srcset="//quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=300 300w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=400 400w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=500 500w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=600 600w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=700 700w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=800 800w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=900 900w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=3200 3200w" width="1920" height="600" loading="eager" fetchpriority="high" sizes="100vw">
+        <img src="//quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=3840"
+          alt="slider image slider_item_7NJU63"
+          srcset="//quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=300 300w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=400 400w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=500 500w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=600 600w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=700 700w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=800 800w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=900 900w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Noviembre.png?v=1761943932&amp;width=3200 3200w"
+          width="1920" height="600" loading="eager" fetchpriority="high" sizes="100vw">
 
-        <img src="//quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=3840" alt="slider image slider_item_fcKXmE" srcset="//quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=300 300w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=400 400w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=500 500w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=600 600w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=700 700w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=800 800w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=900 900w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=3200 3200w" width="2000" height="695" loading="lazy" fetchpriority="low" sizes="100vw">
+        <img src="//quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=3840"
+          alt="slider image slider_item_fcKXmE"
+          srcset="//quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=300 300w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=400 400w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=500 500w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=600 600w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=700 700w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=800 800w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=900 900w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Banner-Mercado-pago.png?v=1748378651&amp;width=3200 3200w"
+          width="2000" height="695" loading="lazy" fetchpriority="low" sizes="100vw">
 
-        <img src="//quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=3840" alt="slider image 1621243260e1af0c20-0" srcset="//quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=300 300w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=400 400w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=500 500w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=600 600w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=700 700w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=800 800w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=900 900w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=3200 3200w" width="2000" height="695" loading="lazy" fetchpriority="low" sizes="100vw">
+        <img src="//quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=3840"
+          alt="slider image 1621243260e1af0c20-0"
+          srcset="//quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=300 300w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=400 400w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=500 500w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=600 600w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=700 700w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=800 800w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=900 900w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1000 1000w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1200 1200w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1400 1400w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1600 1600w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=1800 1800w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2000 2000w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2200 2200w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2400 2400w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2600 2600w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=2800 2800w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=3000 3000w, //quepatas.com/cdn/shop/files/Banner_1_1.jpg?v=1745433209&amp;width=3200 3200w"
+          width="2000" height="695" loading="lazy" fetchpriority="low" sizes="100vw">
       </div>
     </div>
     <div class="productos">
@@ -76,4 +98,5 @@
     <footer-component></footer-component>
   </footer>
 </body>
+
 </html>

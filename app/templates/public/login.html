@@ -96,7 +96,11 @@
             const data = await response.json();
 
             if (data.success) {
-              window.location.href = '/admin/dashboard';
+              if (data.user && data.user.Tipo === 'Colaborador') {
+                window.location.href = '/admin/dashboard';
+              } else {
+                window.location.href = '/';
+              }
             } else {
               alert(data.message);
             }

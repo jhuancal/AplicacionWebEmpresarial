@@ -45,6 +45,9 @@
   </style>
   <script src="../static/js/public/layout.js"></script>
   <script type="module" src="../static/js/public/main.js"></script>
+  <script>
+    window.USER_SESSION = {{ user | tojson | safe if user else 'null' }};
+  </script>
   <script type="module">
     let sliderInner = document.querySelector(".slider-inner")
     let index = 0

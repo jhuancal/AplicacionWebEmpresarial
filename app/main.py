@@ -1,35 +1,40 @@
+from auth.auth_service import AuthService
+from auth.serializers import serialize_user
+import json
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import mysql.connector
 import os
+import time
 from functools import wraps
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key' # Change this in production
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True) # Ensure dir exists
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True) 
 
-MOCK_USERS = {
-    'admin': 'admin',
-    'user': '1234'
-}
-
+# Wrapper for Auth
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user' not in session:
+        user = session.get('user_data')
+        if not user:
+            # If not logged in, redirect to login page (public)
             return redirect(url_for('render_page', page_name='login'))
         return f(*args, **kwargs)
     return decorated_function
 
 @app.route("/")
 def home():
-    return render_template("public/index.html")
+    user = session.get('user_data')
+    return render_template("public/index.html", user=user)
 
 @app.route("/<page_name>.html")
 def render_page(page_name):
+    # Public pages are accessible without login
     try:
-        return render_template(f"public/{page_name}.html")
+        user = session.get('user_data')
+        return render_template(f"public/{page_name}.html", user=user)
     except:
         return "Page not found", 404
 
@@ -39,21 +44,37 @@ def login():
     username = data.get('username')
     password = data.get('password')
 
-    if username in MOCK_USERS and MOCK_USERS[username] == password:
-        session['user'] = username
-        return jsonify({"success": True, "message": "Login successful"})
-    
+    if AuthService.validate_user(username, password):
+        user_details = AuthService.get_user_details(username)
+        if user_details:
+            user_model = serialize_user(user_details)
+            session['user_data'] = user_model
+            
+            # Allow redirect to dashboard if admin/collab, or home if client
+            # For now, just return success and frontend handles redirect
+            return jsonify({"success": True, "message": "Login successful", "user": user_model})
+
     return jsonify({"success": False, "message": "Invalid credentials"}), 401
+
+@app.route("/api/register", methods=['POST'])
+def register():
+    data = request.get_json()
+    result = AuthService.register_client(data)
+    if result.get('success'):
+         return jsonify(result)
+    return jsonify(result), 400
+
 
 @app.route("/logout")
 def logout():
-    session.pop('user', None)
+    session.pop('user_data', None)
     return redirect(url_for('home'))
 
 @app.route("/admin/dashboard")
 @login_required
 def dashboard():
-    return render_template("admin/dashboard.html", user=session['user'])
+    user = session.get('user_data')
+    return render_template("admin/dashboard.html", user=user)
 
 from db import get_db_connection
 from repositories.producto import ProductoRepository
@@ -189,8 +210,8 @@ def api_insert(entity_name):
     data['DISPONIBILIDAD'] = 1
     data['FECHA_CREACION'] = int(time.time() * 1000)
     data['FECHA_MODIFICACION'] = int(time.time() * 1000)
-    data['USER_CREACION'] = session.get('user', 'SYS')
-    data['USER_MODIFICACION'] = session.get('user', 'SYS')
+    data['USER_CREACION'] = session.get('user_data', {}).get('Username', 'SYS')
+    data['USER_MODIFICACION'] = session.get('user_data', {}).get('Username', 'SYS')
     
     # Filter kwargs to match Entity constructor
     # Simple approach: pass data, Entity ignores extra if safe, or we filter explicitly
@@ -233,7 +254,7 @@ def api_update(entity_name):
         return jsonify({"error": "Entity not found"}), 404
     
     data['FECHA_MODIFICACION'] = int(time.time() * 1000)
-    data['USER_MODIFICACION'] = session.get('user', 'SYS')
+    data['USER_MODIFICACION'] = session.get('user_data', {}).get('Username', 'SYS')
 
     # Handle File Upload for Update
     if request.files:
@@ -282,12 +303,14 @@ def api_delete(entity_name):
 @app.route("/admin/administracion/producto")
 @login_required
 def admin_producto():
-    return render_template("admin/Administracion/producto.html", user=session['user'])
+    user = session.get('user_data')
+    return render_template("admin/Administracion/producto.html", user=user)
 
 @app.route("/admin/seguridad/usuario")
 @login_required
 def admin_usuario():
-    return render_template("admin/Seguridad/usuario.html", user=session['user'])
+    user = session.get('user_data')
+    return render_template("admin/Seguridad/usuario.html", user=user)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

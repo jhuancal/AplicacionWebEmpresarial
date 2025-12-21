@@ -1,15 +1,15 @@
-class HeaderComponent extends HTMLElement{
-  constructor(){
+class HeaderComponent extends HTMLElement {
+  constructor() {
     super()
-    this.attachShadow({mode: "open"})
+    this.attachShadow({ mode: "open" })
   }
-  render(){
-    const nombre=this.getAttribute("nombre")
-    const descripcion=this.getAttribute("descripcion")
-    const placeHolder=this.getAttribute("place_holder")
-    const pagPrincipal=this.getAttribute("pag_principal")
+  render() {
+    const nombre = this.getAttribute("nombre")
+    const descripcion = this.getAttribute("descripcion")
+    const placeHolder = this.getAttribute("place_holder")
+    const pagPrincipal = this.getAttribute("pag_principal")
 
-    this.shadowRoot.innerHTML=`
+    this.shadowRoot.innerHTML = `
     <link rel="stylesheet" href="../static/css/header-component.css">
     <header>
     <div class="bar">
@@ -41,8 +41,13 @@ class HeaderComponent extends HTMLElement{
         <div class="account">
           <img class="images" src="../static/img/user.png" alt="Usuario">
           <div>
-            <a href="./login.html"><strong>Inicia sesión</strong></a>
-            <a href="./register.html">Regístrate</a>
+            ${window.USER_SESSION ? `
+              <span style="display:block; font-weight:bold; font-size: 0.9em;">Hola, ${window.USER_SESSION.Nombres}</span>
+              <a href="/logout" style="font-size: 0.8em; color: #ff6b6b;">Cerrar sesión</a>
+            ` : `
+              <a href="./login.html"><strong>Inicia sesión</strong></a>
+              <a href="./register.html">Regístrate</a>
+            `}
           </div>
         </div>
       </nav>
@@ -62,8 +67,8 @@ class HeaderComponent extends HTMLElement{
     </nav>
   </header>`
   }
-  connectedCallback(){
+  connectedCallback() {
     this.render()
   }
 }
-customElements.define("header-component",HeaderComponent)
+customElements.define("header-component", HeaderComponent)

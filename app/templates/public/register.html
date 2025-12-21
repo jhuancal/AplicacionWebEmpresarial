@@ -42,17 +42,29 @@
         <div class="form-box register">
           <form action="#">
             <h1>Registrarse</h1>
-            <div class="input-box">
-              <input type="text" placeholder="Usuario" required>
-              <i class="fa-solid fa-user"></i>
+            <div class="card-item w-100 mb-3">
+              <label>Nombres</label>
+              <input type="text" id="txtNombres" class="form-control" placeholder="Ingrese Nombres">
             </div>
-            <div class="input-box">
-              <input type="email" placeholder="Correo Electronico" required>
-              <i class="fa-solid fa-envelope"></i>
+            <div class="card-item w-100 mb-3">
+              <label>Apellidos</label>
+              <input type="text" id="txtApellidos" class="form-control" placeholder="Ingrese Apellidos">
             </div>
-            <div class="input-box">
-              <input type="password" placeholder="Contraseña" required>
-              <i class="fa-solid fa-lock"></i>
+            <div class="card-item w-100 mb-3">
+              <label>DNI</label>
+              <input type="text" id="txtDNI" class="form-control" placeholder="Ingrese DNI" maxlength="20">
+            </div>
+            <div class="card-item w-100 mb-3">
+              <label>Correo</label>
+              <input type="email" id="txtCorreo" class="form-control" placeholder="Ingrese Correo">
+            </div>
+            <div class="card-item w-100 mb-3">
+              <label>Usuario</label>
+              <input type="text" id="txtUser" class="form-control" placeholder="Ingrese Usuario">
+            </div>
+            <div class="card-item w-100 mb-3">
+              <label>Contraseña</label>
+              <input type="password" id="txtPassword" class="form-control" placeholder="Ingrese Contraseña">
             </div>
             <button type="submit" class="btn">Registrar</button>
             <p>O regístrese con:</p>
@@ -77,6 +89,46 @@
   <footer>
     <footer-component></footer-component>
   </footer>
+  <script>
+    document.querySelector('.form-box.register form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nombres = document.getElementById('txtNombres').value;
+      const apellidos = document.getElementById('txtApellidos').value;
+      const dni = document.getElementById('txtDNI').value;
+      const email = document.getElementById('txtCorreo').value;
+      const username = document.getElementById('txtUser').value;
+      const password = document.getElementById('txtPassword').value;
+
+      fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nombres: nombres,
+          apellidos: apellidos,
+          dni: dni,
+          email: email,
+          username: username,
+          password: password
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Registro exitoso. Por favor inicie sesión.');
+            window.location.href = 'login.html';
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Ocurrió un error al registrarse.');
+        });
+    });
+  </script>
 </body>
 
 </html>

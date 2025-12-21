@@ -2,9 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, s
 import mysql.connector
 import os
 from functools import wraps
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key' # Change this in production
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True) # Ensure dir exists
 
 MOCK_USERS = {
     'admin': 'admin',
@@ -169,7 +172,11 @@ def api_get_paged(entity_name):
 
 @app.route("/api/<entity_name>/Insert", methods=['POST'])
 def api_insert(entity_name):
-    data = request.get_json()
+    if request.is_json:
+        data = request.get_json()
+    else:
+        data = request.form.to_dict()
+        
     conn = get_db_connection()
     repo, entity_class = get_repo_and_entity(entity_name, conn)
     if not repo:
@@ -188,7 +195,16 @@ def api_insert(entity_name):
     # Filter kwargs to match Entity constructor
     # Simple approach: pass data, Entity ignores extra if safe, or we filter explicitly
     # But Repository.add uses keys to build SQL, so we MUST filter to valid columns
-    # For now, relying on frontend sending correct fields matching DB columns
+    
+    # Handle File Upload
+    if request.files:
+        # data is already populated from request.form above if not json
+        
+        file = request.files.get('Imagen') # Key from FormData
+        if file and file.filename != '':
+            filename = secure_filename(f"{data['Id']}_{file.filename}")
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            data['UrlImagen'] = f"/static/uploads/{filename}"
     
     try:
         repo.add(**data)
@@ -201,7 +217,11 @@ def api_insert(entity_name):
 
 @app.route("/api/<entity_name>/Update", methods=['PUT'])
 def api_update(entity_name):
-    data = request.get_json()
+    if request.is_json:
+        data = request.get_json()
+    else:
+        data = request.form.to_dict()
+        
     id = data.get('Id')
     if not id:
         return jsonify({"error": "Id required"}), 400
@@ -214,6 +234,14 @@ def api_update(entity_name):
     
     data['FECHA_MODIFICACION'] = int(time.time() * 1000)
     data['USER_MODIFICACION'] = session.get('user', 'SYS')
+
+    # Handle File Upload for Update
+    if request.files:
+         file = request.files.get('Imagen')
+         if file and file.filename != '':
+            filename = secure_filename(f"{id}_{file.filename}")
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            data['UrlImagen'] = f"/static/uploads/{filename}"
 
     # Remove Id from data so we don't try to update it in SET clause (update method handles it)
     data_to_update = {k: v for k, v in data.items() if k != 'Id'}

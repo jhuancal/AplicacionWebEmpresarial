@@ -144,8 +144,10 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label class="control-label">URL Imagen</label>
-                                    <input type="text" id="txtUrlImagen" class="form-control" placeholder="https://...">
+                                    <label class="control-label">Imagen</label>
+                                    <input type="file" id="txtImagen" class="form-control" accept="image/*">
+                                    <input type="hidden" id="txtUrlImagen"> <!-- To store existing URL -->
+                                    <img id="imgPreview" src="" style="max-width: 100%; margin-top: 10px; display: none;">
                                 </div>
                             </div>
                         </div>

@@ -68,6 +68,14 @@ var setFormValuesEdit = function () {
     $('#txtDescuento').val(e.Descuento);
     $('#txtDiaLlegada').val(e.DiaLlegada);
     $('#txtUrlImagen').val(e.UrlImagen);
+
+    // Preview existing image
+    if (e.UrlImagen) {
+        $('#imgPreview').attr('src', e.UrlImagen).show();
+    } else {
+        $('#imgPreview').hide();
+    }
+    $('#txtImagen').val(''); // Clear file input
 }
 
 var clearForm = function () {
@@ -78,6 +86,8 @@ var clearForm = function () {
     $('#txtDescuento').val("");
     $('#txtDiaLlegada').val("");
     $('#txtUrlImagen').val("");
+    $('#txtImagen').val("");
+    $('#imgPreview').hide().attr('src', '');
 }
 
 $(function () {
@@ -143,34 +153,72 @@ var eventClickEditar = function (data) {
     $("#modalRegistro").modal("show");
 };
 
+// Custom Ajax for FormData
+function callAjaxFormData(formData, url, method) {
+    return $.ajax({
+        url: url,
+        type: method,
+        data: formData,
+        processData: false,
+        contentType: false
+    });
+}
+
 var eventClickSaveRegistro = function () {
-    var data = getFormValues();
+    var data = getFormValues(); // Basic values
+    var formData = new FormData();
+
+    // Append fields
+    formData.append("Nombre", data.Nombre);
+    formData.append("Descripcion", data.Descripcion);
+    formData.append("PrecioRegular", data.PrecioRegular);
+    formData.append("PrecioVenta", data.PrecioVenta);
+    formData.append("Descuento", data.Descuento);
+    formData.append("DiaLlegada", data.DiaLlegada);
+
+    var fileInput = $('#txtImagen')[0];
+    if (fileInput.files.length > 0) {
+        formData.append("Imagen", fileInput.files[0]);
+    } else {
+        // If editing and no new file, backend needs to know to keep old one OR we send old URL
+        // Our backend logic updates UrlImagen only if file is present.
+        // But for Insert, we might want a default?
+        // For Update, we send Id.
+        formData.append("UrlImagen", $('#txtUrlImagen').val());
+    }
+
     if (ClaseRegistro.getOperacion()) {
-        ClaseRegistro.setNewEntity(data);
-        callAjax(ClaseRegistro.getEntity(), urlInsert, "POST").done(function () {
+        // Insert
+        // Backend handles ID generation
+        callAjaxFormData(formData, urlInsert, "POST").done(function () {
             initDataTable();
             $("#modalRegistro").modal("hide");
             Noty("success", "Éxito", "Guardado correctamente");
         });
     } else {
-        // Edit logic
+        // Update
         var entity = ClaseRegistro.getEntity();
-        // Update fields
-        entity.Nombre = data.Nombre;
-        entity.Descripcion = data.Descripcion;
-        entity.PrecioRegular = data.PrecioRegular;
-        entity.PrecioVenta = data.PrecioVenta;
-        entity.Descuento = data.Descuento;
-        entity.DiaLlegada = data.DiaLlegada;
-        entity.UrlImagen = data.UrlImagen;
+        formData.append("Id", entity.Id);
 
-        callAjax(entity, urlUpdate, "PUT").done(function () {
+        callAjaxFormData(formData, urlUpdate, "PUT").done(function () {
             initDataTable();
             $("#modalRegistro").modal("hide");
             Noty("success", "Éxito", "Actualizado correctamente");
         });
     }
 };
+
+// Preview Image Logic
+$('#txtImagen').change(function () {
+    var file = this.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#imgPreview').attr('src', e.target.result).show();
+        }
+        reader.readAsDataURL(file);
+    }
+});
 
 var eventClickEliminar = function (data) {
     bootbox.confirm("¿Está seguro de eliminar el registro?", function (result) {

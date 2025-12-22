@@ -26,6 +26,6 @@ Objetivos:
 
 ```markdown
 - Luis Alberto García Daza — ui/
-- [Nombre] — logic/
+- Mmamani Gutierrez Jonahtan Joaquin — logic/
 - Jhoans Anthony Huanca Lupaca — config/
 

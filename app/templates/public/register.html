@@ -4,93 +4,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SuperPet | Tienda para Mascotas Online</title>
-  <!-- <link rel="stylesheet" href="style.css"/> -->
+  <title>SuperPet | Registrarse</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../static/css/login-register.css">
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-    * {
-      margin: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-    }
-
     body {
       background-color: #191919;
       color: #fff;
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    footer {
-      padding-top: 2rem;
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: #fff;
+      /* Temporarily white for contrast against dark body if css matches else override */
     }
   </style>
-  <link rel="stylesheet" href="../static/css/login-register.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-  <script src="../static/js/public/layout.js"></script>
-  <script type="module" src="../static/js/public/main.js"></script>
+
+  <!-- Inject User Session -->
+  <script>
+    window.USER_SESSION = {{ user | tojson | safe if user else 'null' }};
+  </script>
+
+  <!-- Components -->
+  <script type="module" src="/static/js/public/main.js"></script>
 </head>
 
 <body>
   <header>
-    <header-component nombre="SuperPet" descripcion="Tienda de mascotas online"
-      place_holder="Busca tus marcas y productos favoritos" pag_principal="./index.html"></header-component>
+    <header-component></header-component>
   </header>
+
   <main>
-    <div class="card">
-      <div class="container">
-        <!-- Register -->
-        <div class="form-box register">
-          <form action="#">
-            <h1>Registrarse</h1>
-            <div class="card-item w-100 mb-3">
-              <label>Nombres</label>
-              <input type="text" id="txtNombres" class="form-control" placeholder="Ingrese Nombres">
-            </div>
-            <div class="card-item w-100 mb-3">
-              <label>Apellidos</label>
-              <input type="text" id="txtApellidos" class="form-control" placeholder="Ingrese Apellidos">
-            </div>
-            <div class="card-item w-100 mb-3">
-              <label>DNI</label>
-              <input type="text" id="txtDNI" class="form-control" placeholder="Ingrese DNI" maxlength="20">
-            </div>
-            <div class="card-item w-100 mb-3">
-              <label>Correo</label>
-              <input type="email" id="txtCorreo" class="form-control" placeholder="Ingrese Correo">
-            </div>
-            <div class="card-item w-100 mb-3">
-              <label>Usuario</label>
-              <input type="text" id="txtUser" class="form-control" placeholder="Ingrese Usuario">
-            </div>
-            <div class="card-item w-100 mb-3">
-              <label>Contraseña</label>
-              <input type="password" id="txtPassword" class="form-control" placeholder="Ingrese Contraseña">
-            </div>
-            <button type="submit" class="btn">Registrar</button>
-            <p>O regístrese con:</p>
-            <div class="social-icons">
-              <a href="#"><i class="fa-brands fa-google"></i></a>
-              <a href="#"><i class="fa-brands fa-facebook"></i></a>
-              <a href="#"><i class="fa-brands fa-instagram"></i></a>
+    <div class="card"
+      style="max-width: 900px; width: 100%; display: flex; box-shadow: 0 15px 25px rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; background: #fff; color: #333;">
+      <div class="container" style="display: flex; width: 100%;">
+        <!-- Register Form -->
+        <div class="form-box register" style="width: 50%; padding: 40px; background: #fff;">
+          <form id="registerForm" style="display: flex; flex-direction: column; gap: 15px;">
+            <h1 style="text-align: center; color: #b40500;">Registrarse</h1>
+
+            <input type="text" id="txtNombres" class="form-control" placeholder="Nombres" required
+              style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <input type="text" id="txtApellidos" class="form-control" placeholder="Apellidos" required
+              style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <input type="text" id="txtDNI" class="form-control" placeholder="DNI" maxlength="20" required
+              style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <input type="email" id="txtCorreo" class="form-control" placeholder="Correo" required
+              style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <input type="text" id="txtUser" class="form-control" placeholder="Usuario" required
+              style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <input type="password" id="txtPassword" class="form-control" placeholder="Contraseña" required
+              style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <button type="submit" class="btn"
+              style="padding: 10px; background: #b40500; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">REGISTRAR</button>
+
+            <p style="text-align: center; margin-top: 10px;">O regístrese con:</p>
+            <div class="social-icons" style="display: flex; justify-content: center; gap: 15px;">
+              <a href="#" style="color: #333; font-size: 1.5rem;"><i class="fa-brands fa-google"></i></a>
+              <a href="#" style="color: #333; font-size: 1.5rem;"><i class="fa-brands fa-facebook"></i></a>
             </div>
           </form>
         </div>
-        <div class="toggle-box">
-          <!-- Derecha -->
+
+        <div class="toggle-box"
+          style="width: 50%; background: #b40500; display: flex; align-items: center; justify-content: center; color: white; text-align: center; flex-direction: column; padding: 20px;">
           <div class="toggle-panel toggle-right">
             <h1>Bienvenido</h1>
-            <p>¿Tienes una cuenta?</p>
-            <a href="./login.html"><button class="btn login-btn">INICIAR SESIÓN</button></a>
+            <p>¿Ya tienes una cuenta?</p>
+            <button class="btn login-btn" onclick="openLoginFromRegister()"
+              style="padding: 10px 20px; background: transparent; border: 2px solid white; color: white; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px;">INICIAR
+              SESIÓN</button>
           </div>
         </div>
       </div>
     </div>
   </main>
+
   <footer>
     <footer-component></footer-component>
   </footer>
+
+  <!-- Login Modal (Hidden initially) -->
+  <login-component></login-component>
+
   <script>
-    document.querySelector('.form-box.register form').addEventListener('submit', function (e) {
+    // Handle opening login modal
+    function openLoginFromRegister() {
+      const loginComponent = document.querySelector('login-component');
+      if (loginComponent) {
+        loginComponent.open();
+      } else {
+        // If component not ready (unlikely), default to home
+        window.location.href = '/';
+      }
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
       const nombres = document.getElementById('txtNombres').value;
@@ -102,9 +132,7 @@
 
       fetch('/api/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           nombres: nombres,
           apellidos: apellidos,
@@ -117,8 +145,9 @@
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            alert('Registro exitoso. Por favor inicie sesión.');
-            window.location.href = 'login.html';
+            alert('Registro exitoso. Inicie sesión.');
+            // Open Login Modal
+            openLoginFromRegister();
           } else {
             alert('Error: ' + data.message);
           }

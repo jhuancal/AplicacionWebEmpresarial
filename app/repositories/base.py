@@ -21,7 +21,6 @@ class Repository:
     def add(self, **kwargs):
         cursor = self.conn.cursor()
         cols = ", ".join(kwargs.keys())
-        # MySQL/Python connector specific placeholder %s
         vals = ", ".join(["%s"] * len(kwargs))
         sql = f"INSERT INTO {self.table_name} ({cols}) VALUES ({vals})"
         cursor.execute(sql, tuple(kwargs.values()))
@@ -48,7 +47,6 @@ class Repository:
                     if op == 'Contains':
                         conditions.append(f"{prop} LIKE %s")
                         params.append(f"%{val}%")
-                    # Add other operators as needed
             if conditions:
                 where_clause = "WHERE " + " AND ".join(conditions)
         
@@ -81,7 +79,7 @@ class Repository:
             o_list = []
             for o in order:
                 prop = o.get('Property')
-                direction = o.get('OrderType') # ASC or DESC
+                direction = o.get('OrderType')
                 if prop:
                     o_list.append(f"{prop} {direction}")
             if o_list:

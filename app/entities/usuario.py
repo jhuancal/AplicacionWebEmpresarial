@@ -11,7 +11,6 @@ class Usuario(Entidad):
         return {
             'Id': self.Id,
             'NombreUsuario': self.NombreUsuario,
-            # 'Contrasena': self.Contrasena, # Security: Don't sending password
             'IdPersona': self.IdPersona,
             'ESTADO': self.ESTADO,
             'RowVersion': self.RowVersion

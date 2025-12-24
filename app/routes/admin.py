@@ -7,15 +7,11 @@ from werkzeug.utils import secure_filename
 
 from db import get_db_connection
 from auth.decorators import login_required
-
-# Repositories
 from repositories.producto import ProductoRepository
 from repositories.usuario import UsuarioRepository
 from repositories.persona import PersonaRepository
 from repositories.cliente import ClienteRepository
 from repositories.colaborador import ColaboradorRepository
-
-# Entities
 from entities.usuario import Usuario
 from entities.producto import Producto
 from entities.persona import Persona
@@ -29,8 +25,6 @@ admin_bp = Blueprint('admin', __name__)
 def dashboard():
     user = session.get('user_data')
     return render_template("admin/dashboard.html", user=user)
-
-# Admin Pages Routes
 @admin_bp.route("/admin/administracion/producto")
 @login_required
 def admin_producto():
@@ -95,9 +89,7 @@ def update_product(id):
                 DiaLlegada=arrival_day, 
                 UrlImagen=image_url)
     conn.close()
-    return redirect(url_for('admin.dashboard')) # Updated url_for
-
-# Entity-Repository Mapping
+    return redirect(url_for('admin.dashboard'))
 def get_repo_and_entity(entity_name, conn):
     if entity_name == 'adm_administracion_producto':
         return ProductoRepository(conn), Producto
@@ -110,8 +102,6 @@ def get_repo_and_entity(entity_name, conn):
     elif entity_name == 'seg_seguridad_colaborador':
         return ColaboradorRepository(conn), Colaborador
     return None, None
-
-# Generic CRUD APIs
 @admin_bp.route("/api/<entity_name>/GetAll", methods=['POST'])
 def api_get_all(entity_name):
     conn = get_db_connection()
@@ -174,8 +164,6 @@ def api_insert(entity_name):
     if not repo:
         conn.close()
         return jsonify({"error": "Entity not found"}), 404
-    
-    # Add System Fields
     data['Id'] = str(uuid.uuid4())
     data['ESTADO'] = 1
     data['DISPONIBILIDAD'] = 1
@@ -183,13 +171,10 @@ def api_insert(entity_name):
     data['FECHA_MODIFICACION'] = int(time.time() * 1000)
     data['USER_CREACION'] = session.get('user_data', {}).get('Username', 'SYS')
     data['USER_MODIFICACION'] = session.get('user_data', {}).get('Username', 'SYS')
-    
-    # Handle File Upload
     if request.files:
         file = request.files.get('Imagen')
         if file and file.filename != '':
             filename = secure_filename(f"{data['Id']}_{file.filename}")
-            # Use current_app.config
             file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
             data['UrlImagen'] = f"/static/uploads/{filename}"
     

@@ -1,4 +1,4 @@
-// Colaborador JS Logic
+
 
 var ClaseGlobalVar = {};
 (function () {
@@ -167,8 +167,6 @@ var eventClickEliminar = function (data) {
         }
     });
 };
-
-// Reuse Paginator Logic 
 var getPaginator = function (count, currentPage) {
     var numRows = $('#numRows').val();
     var numPages = count >= parseInt(numRows) ? Math.ceil(count / parseInt(numRows)) : 1;

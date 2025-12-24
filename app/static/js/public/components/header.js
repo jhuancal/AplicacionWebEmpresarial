@@ -9,8 +9,6 @@ class HeaderComponent extends HTMLElement {
   }
 
   render() {
-    // We will access functionality from main.js if needed, or check session from a global
-    // The user's example uses window.USER_SESSION
     const loggedIn = window.USER_SESSION || null;
 
     this.shadowRoot.innerHTML = `
@@ -81,16 +79,12 @@ class HeaderComponent extends HTMLElement {
         </div>
       </nav>
     `;
-
-    // Event Listeners
-    // Handle Navigation Links for SPA
     this.shadowRoot.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", e => {
         const href = link.getAttribute("href");
 
         if (href === '#' && link.id === 'login-btn') {
           e.preventDefault();
-          // Open Login Modal
           document.dispatchEvent(new CustomEvent('open-login'));
           return;
         }
@@ -98,7 +92,6 @@ class HeaderComponent extends HTMLElement {
         if (href.startsWith("/")) {
           e.preventDefault();
           window.history.pushState({}, "", href);
-          // We need to notify router to render
           window.dispatchEvent(new Event('popstate'));
         }
       });
@@ -106,12 +99,10 @@ class HeaderComponent extends HTMLElement {
 
     if (loggedIn) {
       this.shadowRoot.querySelector("#logout").addEventListener("click", () => {
-        // Logout logic
         fetch('/logout').then(() => {
           window.USER_SESSION = null;
           window.history.pushState({}, "", "/");
           window.dispatchEvent(new Event('popstate'));
-          // Re-render header
           this.render();
         });
       });

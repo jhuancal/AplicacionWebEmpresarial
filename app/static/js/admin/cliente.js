@@ -1,4 +1,4 @@
-// Cliente JS Logic
+
 
 var ClaseGlobalVar = {};
 (function () {
@@ -26,7 +26,7 @@ var ClaseRegistro = {};
     this.setEntity = function (objeto) {
         entity.Id = objeto.Id;
         entity.NombreUsuario = objeto.NombreUsuario;
-        entity.Contrasena = "******"; // Placeholder
+        entity.Contrasena = "******";
         entity.IdPersona = objeto.IdPersona;
         entity.NumeroCuenta = objeto.NumeroCuenta;
         entity.RowVersion = objeto.RowVersion;
@@ -35,7 +35,7 @@ var ClaseRegistro = {};
     this.setNewEntity = function (objeto) {
         this.setEntity(objeto);
         entity.Id = ClaseGlobalVar.getIdEmpty();
-        entity.Contrasena = "123456"; // Default
+        entity.Contrasena = "123456";
     };
 
     this.getEntity = function () { return entity; };
@@ -98,7 +98,7 @@ var initDataTable = function () {
                     $("<td>", { class: "text-center" }).text(item.NombreCompleto || "N/A"),
                     $("<td>", { class: "text-center" }).text(item.NombreUsuario),
                     $("<td>", { class: "text-center" }).text(item.NumeroCuenta),
-                    $("<td>", { class: "text-center" }).text(item.Contrasena), // Temporary for testing
+                    $("<td>", { class: "text-center" }).text(item.Contrasena),
                     $("<td>", { class: "text-center" }).text(item.ESTADO == 1 ? "Activo" : "Inactivo"),
                     $("<td>", { class: "text-center" }).append([btnEdit, " ", btnDelete])
                 );
@@ -160,8 +160,6 @@ var eventClickEliminar = function (data) {
         }
     });
 };
-
-// Reuse Paginator Logic 
 var getPaginator = function (count, currentPage) {
     var numRows = $('#numRows').val();
     var numPages = count >= parseInt(numRows) ? Math.ceil(count / parseInt(numRows)) : 1;

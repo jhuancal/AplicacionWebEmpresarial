@@ -25,8 +25,6 @@ def wait_for_db():
 
 def init_db():
     print("Starting Database Verification and Initialization...")
-    
-    # Only run initialization if we can connect to the server
     conn = wait_for_db()
     if not conn:
         print("Could not connect to database for initialization.")
@@ -34,8 +32,6 @@ def init_db():
 
     db_name = os.getenv('MYSQL_DATABASE', os.getenv('MYSQLDATABASE', 'tienda'))
     cursor = conn.cursor()
-    
-    # Create DB if not exists
     try:
         cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_name}")
         print(f"Database schema '{db_name}' verified.")
@@ -43,14 +39,11 @@ def init_db():
         print(f"Info: Checked database existence ({e})")
 
     conn.database = db_name
-    
-    # helper to run script
     def run_script(filename):
         print(f"Executing schema script: {filename}")
         try:
             with open(filename, 'r', encoding='utf-8') as f:
                 content = f.read()
-                # Split by semicolon to run statements
                 statements = content.split(';')
                 for statement in statements:
                     stmt = statement.strip()
@@ -58,14 +51,11 @@ def init_db():
                         try:
                             cursor.execute(stmt)
                         except mysql.connector.Error as err:
-                            # Ignore specific errors like "Duplicate entry" or "Table exists" if we want to be soft
                             print(f"[Schema Update] {err}")
             conn.commit()
             print(f"Schema script {filename} executed successfully.")
         except FileNotFoundError:
             print(f"File {filename} not found.")
-
-    # Check if tables exist to determine if fresh init is needed
     try:
         cursor.execute("SHOW TABLES LIKE 'Seg_Usuario'")
         result = cursor.fetchone()

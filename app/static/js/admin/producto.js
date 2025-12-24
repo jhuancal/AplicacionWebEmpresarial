@@ -1,4 +1,4 @@
-// Product JS Logic based on TipoDocumento.js
+
 
 var ClaseGlobalVar = {};
 (function () {
@@ -68,14 +68,12 @@ var setFormValuesEdit = function () {
     $('#txtDescuento').val(e.Descuento);
     $('#txtDiaLlegada').val(e.DiaLlegada);
     $('#txtUrlImagen').val(e.UrlImagen);
-
-    // Preview existing image
     if (e.UrlImagen) {
         $('#imgPreview').attr('src', e.UrlImagen).show();
     } else {
         $('#imgPreview').hide();
     }
-    $('#txtImagen').val(''); // Clear file input
+    $('#txtImagen').val('');
 }
 
 var clearForm = function () {
@@ -97,13 +95,8 @@ $(function () {
 
 var initDataTable = function () {
     fload("show");
-
-    // Using generic callAjax defined in base.html
-    // Count
     callAjax(ClaseRegistro.pagedItem.filtros, urlCountAll, "POST").done(function (r1) {
         var total = r1[0];
-
-        // Paged
         callAjax(ClaseRegistro.pagedItem, urlGetPaged, "POST").done(function (data) {
             $("#tableRegistros tbody").empty();
 
@@ -152,8 +145,6 @@ var eventClickEditar = function (data) {
     $(".label-title").text("EDITAR").removeClass("new").addClass("edit");
     $("#modalRegistro").modal("show");
 };
-
-// Custom Ajax for FormData
 function callAjaxFormData(formData, url, method) {
     return $.ajax({
         url: url,
@@ -165,10 +156,8 @@ function callAjaxFormData(formData, url, method) {
 }
 
 var eventClickSaveRegistro = function () {
-    var data = getFormValues(); // Basic values
+    var data = getFormValues();
     var formData = new FormData();
-
-    // Append fields
     formData.append("Nombre", data.Nombre);
     formData.append("Descripcion", data.Descripcion);
     formData.append("PrecioRegular", data.PrecioRegular);
@@ -180,23 +169,16 @@ var eventClickSaveRegistro = function () {
     if (fileInput.files.length > 0) {
         formData.append("Imagen", fileInput.files[0]);
     } else {
-        // If editing and no new file, backend needs to know to keep old one OR we send old URL
-        // Our backend logic updates UrlImagen only if file is present.
-        // But for Insert, we might want a default?
-        // For Update, we send Id.
         formData.append("UrlImagen", $('#txtUrlImagen').val());
     }
 
     if (ClaseRegistro.getOperacion()) {
-        // Insert
-        // Backend handles ID generation
         callAjaxFormData(formData, urlInsert, "POST").done(function () {
             initDataTable();
             $("#modalRegistro").modal("hide");
             Noty("success", "Éxito", "Guardado correctamente");
         });
     } else {
-        // Update
         var entity = ClaseRegistro.getEntity();
         formData.append("Id", entity.Id);
 
@@ -207,8 +189,6 @@ var eventClickSaveRegistro = function () {
         });
     }
 };
-
-// Preview Image Logic
 $('#txtImagen').change(function () {
     var file = this.files[0];
     if (file) {
@@ -237,11 +217,8 @@ var getPaginator = function (count, currentPage) {
     var htmlPag = "";
 
     $('.pagination').empty();
-
-    // Logic simplified for prev/next
     for (var i = 1; i <= numPages; i++) {
         var active = i === currentPage ? 'active' : '';
-        // Using closure to capture 'i'
         (function (page) {
             var li = $('<li>', { class: 'paginate_button ' + active });
             var a = $('<a>', { text: page, href: '#' }).click(function (e) { e.preventDefault(); getPage(page, count); });

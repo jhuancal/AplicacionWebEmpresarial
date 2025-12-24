@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Bootstrap CSS (Needed for Modal/Table in User's template) -->
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
         /* Base Styles from Dashboard */
@@ -189,7 +189,7 @@
 
 <body>
 
-    <!-- Sidebar -->
+    
     <aside class="sidebar">
         <div class="logo">SuperPet Admin</div>
         <nav>
@@ -200,7 +200,7 @@
                     </a>
                 </li>
 
-                <!-- Administracion -->
+                
                 <li>
                     <a href="#submenu-administracion" data-toggle="collapse"
                         aria-expanded="{{ 'true' if 'administracion' in request.path else 'false' }}"
@@ -219,7 +219,7 @@
                     </ul>
                 </li>
 
-                <!-- Seguridad -->
+                
                 <li>
                     <a href="#submenu-seguridad" data-toggle="collapse"
                         aria-expanded="{{ 'true' if 'seguridad' in request.path else 'false' }}"
@@ -243,7 +243,7 @@
                     </ul>
                 </li>
 
-                <!-- Reportes -->
+                
                 <li>
                     <a href="#submenu-reportes" data-toggle="collapse" aria-expanded="false"
                         class="menu-toggle collapsed">
@@ -257,7 +257,7 @@
         </nav>
     </aside>
 
-    <!-- Main Content -->
+    
     <div class="wrapper">
         <header>
             <div class="user-info">Bienvenido, {{ session['user'] if session.get('user') else 'Admin' }}</div>
@@ -270,11 +270,11 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
-    <!-- Noty or similar notification library if needed, mimicking standard alerts for now if library missing -->
+    
     <script>
         function Noty(type, title, message) {
             alert(title + ": " + message);

@@ -1,4 +1,4 @@
-// User JS Logic
+
 
 var ClaseGlobalVar = {};
 (function () {
@@ -28,13 +28,12 @@ var ClaseRegistro = {};
         entity.NombreUsuario = objeto.NombreUsuario;
         entity.IdPersona = objeto.IdPersona;
         entity.RowVersion = objeto.RowVersion;
-        // Password is not fetched back usually for security, only set on new
     };
 
     this.setNewEntity = function (objeto) {
         this.setEntity(objeto);
         entity.Id = ClaseGlobalVar.getIdEmpty();
-        entity.Contrasena = "123456"; // Default password for new users for now
+        entity.Contrasena = "123456";
     };
 
     this.getEntity = function () { return entity; };
@@ -153,8 +152,6 @@ var eventClickEliminar = function (data) {
         }
     });
 };
-
-// Reuse Paginator Logic (Could be extracted to shared JS)
 var getPaginator = function (count, currentPage) {
     var numRows = $('#numRows').val();
     var numPages = count >= parseInt(numRows) ? Math.ceil(count / parseInt(numRows)) : 1;

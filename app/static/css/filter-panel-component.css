@@ -60,7 +60,7 @@
           }
           div{
             display: flex;
-            /**/
+            
             input[type="checkbox"] {
               appearance: none;
               width: 20px;
@@ -97,7 +97,7 @@
                 }
               }
             }
-            /**/
+            
           }
         }
       }

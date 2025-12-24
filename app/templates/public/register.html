@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SuperPet | Registrarse</title>
 
-  <!-- Fonts -->
+  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome -->
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-  <!-- Styles -->
+  
   <link rel="stylesheet" href="../static/css/login-register.css">
 
   <style>
@@ -40,12 +40,12 @@
     }
   </style>
 
-  <!-- Inject User Session -->
+  
   <script>
     window.USER_SESSION = {{ user | tojson | safe if user else 'null' }};
   </script>
 
-  <!-- Components -->
+  
   <script type="module" src="/static/js/public/main.js"></script>
 </head>
 
@@ -58,7 +58,7 @@
     <div class="card"
       style="max-width: 900px; width: 100%; display: flex; box-shadow: 0 15px 25px rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; background: #fff; color: #333;">
       <div class="container" style="display: flex; width: 100%;">
-        <!-- Register Form -->
+        
         <div class="form-box register" style="width: 50%; padding: 40px; background: #fff;">
           <form id="registerForm" style="display: flex; flex-direction: column; gap: 15px;">
             <h1 style="text-align: center; color: #b40500;">Registrarse</h1>
@@ -105,7 +105,7 @@
     <footer-component></footer-component>
   </footer>
 
-  <!-- Login Modal (Hidden initially) -->
+  
   <login-component></login-component>
 
   <script>

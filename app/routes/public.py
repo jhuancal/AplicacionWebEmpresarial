@@ -19,7 +19,7 @@ def register_page():
     user = session.get('user_data')
     return render_template("public/register.html", user=user)
 
-@public_bp.route("/login") # Legacy redirect
+@public_bp.route("/login")
 def login_redirect():
     return redirect("/")
 
@@ -55,10 +55,6 @@ def logout():
 def get_products():
     conn = get_db_connection()
     repo = ProductoRepository(conn)
-    # Filter products? The user said public page products don't load.
-    # Adm_Producto often implies all products.
-    # If the user wants to filter by availability, we might need a custom query or filter.
-    # For now, fetching all.
     products = repo.get_all()
     conn.close()
     return jsonify([p.to_dict() for p in products])

@@ -1,4 +1,4 @@
--- Admin Tables (Definitions moved up for FK dependencies)
+
 CREATE TABLE IF NOT EXISTS Adm_Persona (
     Id CHAR(36) NOT NULL PRIMARY KEY,
     Nombres VARCHAR(100),
@@ -13,8 +13,6 @@ CREATE TABLE IF NOT EXISTS Adm_Persona (
     USER_CREACION TEXT,
     USER_MODIFICACION TEXT
 );
-
--- Security Tables
 CREATE TABLE IF NOT EXISTS Seg_Rol (
     Id CHAR(36) NOT NULL PRIMARY KEY,
     Nombre TEXT,
@@ -125,8 +123,6 @@ CREATE TABLE IF NOT EXISTS Seg_Colaborador (
     FOREIGN KEY (Id) REFERENCES Seg_Usuario(Id),
     FOREIGN KEY (IdRol) REFERENCES Seg_Rol(Id)
 );
-
--- Admin Tables
 CREATE TABLE IF NOT EXISTS Adm_Producto (
     Id CHAR(36) NOT NULL PRIMARY KEY,
     Nombre VARCHAR(255) NOT NULL,
@@ -144,24 +140,14 @@ CREATE TABLE IF NOT EXISTS Adm_Producto (
     USER_CREACION TEXT,
     USER_MODIFICACION TEXT
 );
-
-
--- Init Data
-
--- Roles
 INSERT INTO Seg_Rol (Id, Nombre, Descripcion, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
 ('11111111-1111-1111-1111-111111111111', 'Administrador', 'Administrador del sistema', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
 ('22222222-2222-2222-2222-222222222222', 'Empleado', 'Empleado de ventas', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin');
-
--- Access
--- Dummy Access for "0000..." placeholder in FKs
 INSERT INTO Seg_Acceso (Id, Orden, Codigo, Nombre, Descripcion, Tipo, Nivel, Padre, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION, UrlAcceso) VALUES
 ('00000000-0000-0000-0000-000000000000', 0, 'NULL', 'NULL', 'NULL', 'NULL', 0, 'NULL', 0, 0, 0, 0, 'SYS', 'SYS', ''),
 ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 1, 'ADMI', 'Administracion', 'Modulo de Administracion', 'ADMIN', 1, 'TODO', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin', ''),
 ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 2, 'DASH', 'Dashboard', 'Dashboard Administrativo', 'ADMIN', 2, 'ADMI', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin', '/admin/dashboard'),
 ('cccccccc-cccc-cccc-cccc-cccccccccccc', 3, 'PROD', 'Productos', 'Gestion de Productos', 'ADMIN', 2, 'ADMI', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin', '/edit_product/1');
-
--- Permissions (Rol_Acceso)
 INSERT INTO Seg_Rol_Acceso (Id, IdRol, Codigo, Valor, Tipo, IdAccesoUno, IdAccesoDos, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
 (UUID(), '11111111-1111-1111-1111-111111111111', 'ADMITODO', 'S', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '00000000-0000-0000-0000-000000000000', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
 (UUID(), '11111111-1111-1111-1111-111111111111', 'ADMIDASH', 'S', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
@@ -169,46 +155,27 @@ INSERT INTO Seg_Rol_Acceso (Id, IdRol, Codigo, Valor, Tipo, IdAccesoUno, IdAcces
 (UUID(), '22222222-2222-2222-2222-222222222222', 'ADMITODO', 'S', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '00000000-0000-0000-0000-000000000000', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
 (UUID(), '22222222-2222-2222-2222-222222222222', 'ADMIDASH', 'S', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
 (UUID(), '22222222-2222-2222-2222-222222222222', 'ADMIPROD', 'N', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'cccccccc-cccc-cccc-cccc-cccccccccccc', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin');
-
--- Users
--- 333... = admin
--- 444... = user
 INSERT INTO Seg_Usuario (Id, NombreUsuario, Contrasena, IdPersona, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
 ('33333333-3333-3333-3333-333333333333', 'admin', 'admin', NULL, 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),
 ('44444444-4444-4444-4444-444444444444', 'user', '1234', NULL, 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS');
-
--- User Roles
--- Link 333... (admin) to 111... (Administrador)
--- Link 444... (user) to 222... (Empleado)
 INSERT INTO Seg_Usuario_Rol (Id, IdUsuario, IdRol, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
 (UUID(), '33333333-3333-3333-3333-333333333333', '11111111-1111-1111-1111-111111111111', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),
 (UUID(), '44444444-4444-4444-4444-444444444444', '22222222-2222-2222-2222-222222222222', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS');
-
--- SEED DATA FOR DEMO
--- 1. Personas
 INSERT INTO Adm_Persona (Id, Nombres, Apellidos, DNI, Correo, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
-('P1111111-1111-1111-1111-111111111111', 'Abel', 'D', '77777777', 'abel@mail.com', 1, 1, 0, 0, 'SYS', 'SYS'), -- Dual
-('P2222222-2222-2222-2222-222222222222', 'Bruno', 'C', '88888888', 'bruno@mail.com', 1, 1, 0, 0, 'SYS', 'SYS'), -- Client Only
-('P3333333-3333-3333-3333-333333333333', 'Carlos', 'E', '99999999', 'carlos@mail.com', 1, 1, 0, 0, 'SYS', 'SYS'); -- Collab Only
-
--- 2. Users (Abel Client, Abel Collab, Bruno Client, Carlos Collab)
+('P1111111-1111-1111-1111-111111111111', 'Abel', 'D', '77777777', 'abel@mail.com', 1, 1, 0, 0, 'SYS', 'SYS'),
+('P2222222-2222-2222-2222-222222222222', 'Bruno', 'C', '88888888', 'bruno@mail.com', 1, 1, 0, 0, 'SYS', 'SYS'),
+('P3333333-3333-3333-3333-333333333333', 'Carlos', 'E', '99999999', 'carlos@mail.com', 1, 1, 0, 0, 'SYS', 'SYS');
 INSERT INTO Seg_Usuario (Id, NombreUsuario, Contrasena, IdPersona, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
-('U1111111-1111-1111-1111-111111111111', 'abelcliente', '1234', 'P1111111-1111-1111-1111-111111111111', 1, 1, 0, 0, 'SYS', 'SYS'), -- Abel (Client)
-('U1111111-C111-1111-1111-111111111111', 'ws_abelAdmin', '1234', 'P1111111-1111-1111-1111-111111111111', 1, 1, 0, 0, 'SYS', 'SYS'), -- Abel (Collab)
-('U2222222-2222-2222-2222-222222222222', 'bruno', '1234', 'P2222222-2222-2222-2222-222222222222', 1, 1, 0, 0, 'SYS', 'SYS'), -- Bruno (Client)
-('U3333333-C333-3333-3333-333333333333', 'ws_carlos', '1234', 'P3333333-3333-3333-3333-333333333333', 1, 1, 0, 0, 'SYS', 'SYS'); -- Carlos (Collab)
-
--- 3. Clients
+('U1111111-1111-1111-1111-111111111111', 'abelcliente', '1234', 'P1111111-1111-1111-1111-111111111111', 1, 1, 0, 0, 'SYS', 'SYS'),
+('U1111111-C111-1111-1111-111111111111', 'ws_abelAdmin', '1234', 'P1111111-1111-1111-1111-111111111111', 1, 1, 0, 0, 'SYS', 'SYS'),
+('U2222222-2222-2222-2222-222222222222', 'bruno', '1234', 'P2222222-2222-2222-2222-222222222222', 1, 1, 0, 0, 'SYS', 'SYS'),
+('U3333333-C333-3333-3333-333333333333', 'ws_carlos', '1234', 'P3333333-3333-3333-3333-333333333333', 1, 1, 0, 0, 'SYS', 'SYS');
 INSERT INTO Seg_Cliente (Id, NumeroCuenta, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
 ('U1111111-1111-1111-1111-111111111111', 'ACC-ABEL-001', 1, 1, 0, 0, 'SYS', 'SYS'),
 ('U2222222-2222-2222-2222-222222222222', 'ACC-BRUNO-001', 1, 1, 0, 0, 'SYS', 'SYS');
-
--- 4. Collaborators
 INSERT INTO Seg_Colaborador (Id, IdRol, EsActivo, FechaContratacion, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
 ('U1111111-C111-1111-1111-111111111111', '22222222-2222-2222-2222-222222222222', 1, 0, 1, 1, 0, 0, 'SYS', 'SYS'),
 ('U3333333-C333-3333-3333-333333333333', '22222222-2222-2222-2222-222222222222', 1, 0, 1, 1, 0, 0, 'SYS', 'SYS');
-
--- Adm_Producto Data
 INSERT INTO Adm_Producto (Id, Nombre, Descripcion, PrecioRegular, PrecioVenta, Descuento, DiaLlegada, UrlImagen, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
 (UUID(), 'Silla', 'Silla cómoda', 389.00, 439.00, 80, 'Martes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),
 (UUID(), 'Mesa', 'Mesa de madera', 150.00, 120.00, 20, 'Lunes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),

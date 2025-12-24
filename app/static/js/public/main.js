@@ -2,8 +2,6 @@ import "./components/header.js";
 import "./components/footer.js";
 import "./components/login.js";
 import { productsView, initProducts } from "./views/products.js";
-
-// Routes definition
 const routes = {
     "/": `
     <div class="hero" style="text-align: center; padding: 4rem 1rem; background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%); border-radius: 8px; color: #333; margin-bottom: 2rem;">
@@ -20,44 +18,22 @@ const routes = {
     "/servicios": "<h1>Servicios</h1><p>Próximamente: Baño, Peluquería y Veterinaria.</p>",
     "/publicaciones": "<h1>Publicaciones</h1><p>Blog y Novedades.</p>"
 };
-
-// Navigate function
 function navigate(path) {
     const content = document.getElementById("content");
-
-    // Simple router match
-    // For production, regex matching might be needed for params
-    const view = routes[path] || routes["/"]; // Default to home if not found, or 404
+    const view = routes[path] || routes["/"];
 
     content.innerHTML = view;
-
-    // View specific initialization
     if (path === '/productos') {
         initProducts();
     }
-
-    // Scroll to top
     window.scrollTo(0, 0);
 }
-
-// Router initialization
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Check initial user session (injected by backend or stored in localstorage? 
-    // Backend injects into template usually, but here we are SPA.
-    // We can fetch session status on load.
-
-    // For now, assume window.USER_SESSION is set by index.html script tag if backend passed it
-    // Or we fetch it.
-
     navigate(window.location.pathname);
-
-    // Handle Browser History (Back/Forward)
     window.addEventListener("popstate", () => {
         navigate(window.location.pathname);
     });
-
-    // Listen for custom Login Open event
     document.addEventListener('open-login', () => {
         const loginComponent = document.querySelector('login-component');
         if (loginComponent) loginComponent.open();

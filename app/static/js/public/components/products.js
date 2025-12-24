@@ -19,7 +19,6 @@ class ProductsComponent extends HTMLElement {
   }
 
   applyFilters() {
-    // Get sorting value
     const sortSelect = this.shadowRoot.querySelector('#sort-select');
     const sortValue = sortSelect ? sortSelect.value : '';
 
@@ -149,8 +148,6 @@ class ProductsComponent extends HTMLElement {
     </div>`
 
     this.renderProducts();
-
-    // Listeners
     this.shadowRoot.querySelector('#sort-select').addEventListener('change', () => this.applyFilters());
   }
 

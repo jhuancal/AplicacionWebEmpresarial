@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SuperPet | Tienda de Animales</title>
 
-  <!-- Font Awesome -->
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-  <!-- Fonts -->
+  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -32,29 +32,29 @@
     }
   </style>
 
-  <!-- Inject User Session from Backend -->
+  
   <script>
     window.USER_SESSION = {{ user | tojson | safe if user else 'null' }};
   </script>
 
-  <!-- Module Entry Point -->
+  
   <script type="module" src="/static/js/public/main.js"></script>
 </head>
 
 <body>
 
-  <!-- Header reutilizable -->
+  
   <header-component></header-component>
 
-  <!-- Contenido dinámico -->
+  
   <main id="content">
-    <!-- Router renders here -->
+    
   </main>
 
-  <!-- Footer reutilizable -->
+  
   <footer-component></footer-component>
 
-  <!-- Login Modal Component outside of flow -->
+  
   <login-component></login-component>
 
 </body>

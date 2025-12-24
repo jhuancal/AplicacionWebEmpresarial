@@ -18,21 +18,15 @@ class ColaboradorRepository(Repository):
         """
         cursor.execute(query)
         rows = cursor.fetchall()
-        # No special handling needed for get_all unless used by UI directly; assuming Grid uses get_paged.
         return [self.entity_class(**row) for row in rows]
 
     def add(self, **kwargs):
         cursor = self.conn.cursor()
-        
-        # Split fields
         usuario_fields = ['Id', 'NombreUsuario', 'Contrasena', 'IdPersona', 'ESTADO', 'DISPONIBILIDAD', 'FECHA_CREACION', 'FECHA_MODIFICACION', 'USER_CREACION', 'USER_MODIFICACION']
         usuario_data = {k: v for k, v in kwargs.items() if k in usuario_fields}
         
         colaborador_fields = ['Id', 'IdRol', 'EsActivo', 'FechaContratacion', 'ESTADO', 'DISPONIBILIDAD', 'FECHA_CREACION', 'FECHA_MODIFICACION', 'USER_CREACION', 'USER_MODIFICACION']
         colaborador_data = {k: v for k, v in kwargs.items() if k in colaborador_fields}
-
-        # Insert Usuario
-        # Enforce "ws_" prefix for Colaborador username
         if 'NombreUsuario' in usuario_data:
             if not usuario_data['NombreUsuario'].startswith('ws_'):
                 usuario_data['NombreUsuario'] = 'ws_' + usuario_data['NombreUsuario']
@@ -41,8 +35,6 @@ class ColaboradorRepository(Repository):
         placeholders_u = ", ".join(["%s"] * len(usuario_data))
         sql_u = f"INSERT INTO {self.base_table} ({columns_u}) VALUES ({placeholders_u})"
         cursor.execute(sql_u, list(usuario_data.values()))
-
-        # Insert Colaborador
         columns_c = ", ".join(colaborador_data.keys())
         placeholders_c = ", ".join(["%s"] * len(colaborador_data))
         sql_c = f"INSERT INTO {self.table_name} ({columns_c}) VALUES ({placeholders_c})"
@@ -52,21 +44,15 @@ class ColaboradorRepository(Repository):
 
     def update(self, id, **kwargs):
         cursor = self.conn.cursor()
-        
-        # Split fields
         usuario_fields = ['NombreUsuario', 'IdPersona', 'ESTADO', 'DISPONIBILIDAD', 'FECHA_CREACION', 'FECHA_MODIFICACION', 'USER_CREACION', 'USER_MODIFICACION']
         usuario_data = {k: v for k, v in kwargs.items() if k in usuario_fields}
         
         colaborador_fields = ['IdRol', 'EsActivo', 'FechaContratacion', 'ESTADO', 'DISPONIBILIDAD', 'FECHA_CREACION', 'FECHA_MODIFICACION', 'USER_CREACION', 'USER_MODIFICACION']
         colaborador_data = {k: v for k, v in kwargs.items() if k in colaborador_fields}
-
-        # Update Usuario
         if usuario_data:
             set_clause_u = ", ".join([f"{k}=%s" for k in usuario_data.keys()])
             sql_u = f"UPDATE {self.base_table} SET {set_clause_u} WHERE Id=%s"
             cursor.execute(sql_u, list(usuario_data.values()) + [id])
-
-        # Update Colaborador
         if colaborador_data:
             set_clause_c = ", ".join([f"{k}=%s" for k in colaborador_data.keys()])
             sql_c = f"UPDATE {self.table_name} SET {set_clause_c} WHERE Id=%s"
@@ -150,16 +136,11 @@ class ColaboradorRepository(Repository):
 
     def add(self, **kwargs):
         cursor = self.conn.cursor()
-        
-        # Split fields
         usuario_fields = ['Id', 'NombreUsuario', 'Contrasena', 'IdPersona', 'ESTADO', 'DISPONIBILIDAD', 'FECHA_CREACION', 'FECHA_MODIFICACION', 'USER_CREACION', 'USER_MODIFICACION']
         usuario_data = {k: v for k, v in kwargs.items() if k in usuario_fields}
         
         colaborador_fields = ['Id', 'IdRol', 'EsActivo', 'FechaContratacion', 'ESTADO', 'DISPONIBILIDAD', 'FECHA_CREACION', 'FECHA_MODIFICACION', 'USER_CREACION', 'USER_MODIFICACION']
         colaborador_data = {k: v for k, v in kwargs.items() if k in colaborador_fields}
-
-        # Insert Usuario
-        # Enforce "ws_" prefix for Colaborador username
         if 'NombreUsuario' in usuario_data:
             if not usuario_data['NombreUsuario'].startswith('ws_'):
                 usuario_data['NombreUsuario'] = 'ws_' + usuario_data['NombreUsuario']
@@ -168,8 +149,6 @@ class ColaboradorRepository(Repository):
         placeholders_u = ", ".join(["%s"] * len(usuario_data))
         sql_u = f"INSERT INTO {self.base_table} ({columns_u}) VALUES ({placeholders_u})"
         cursor.execute(sql_u, list(usuario_data.values()))
-
-        # Insert Colaborador
         columns_c = ", ".join(colaborador_data.keys())
         placeholders_c = ", ".join(["%s"] * len(colaborador_data))
         sql_c = f"INSERT INTO {self.table_name} ({columns_c}) VALUES ({placeholders_c})"
@@ -179,21 +158,15 @@ class ColaboradorRepository(Repository):
 
     def update(self, id, **kwargs):
         cursor = self.conn.cursor()
-        
-        # Split fields
         usuario_fields = ['NombreUsuario', 'IdPersona', 'ESTADO', 'DISPONIBILIDAD', 'FECHA_CREACION', 'FECHA_MODIFICACION', 'USER_CREACION', 'USER_MODIFICACION']
         usuario_data = {k: v for k, v in kwargs.items() if k in usuario_fields}
         
         colaborador_fields = ['IdRol', 'EsActivo', 'FechaContratacion', 'ESTADO', 'DISPONIBILIDAD', 'FECHA_CREACION', 'FECHA_MODIFICACION', 'USER_CREACION', 'USER_MODIFICACION']
         colaborador_data = {k: v for k, v in kwargs.items() if k in colaborador_fields}
-
-        # Update Usuario
         if usuario_data:
             set_clause_u = ", ".join([f"{k}=%s" for k in usuario_data.keys()])
             sql_u = f"UPDATE {self.base_table} SET {set_clause_u} WHERE Id=%s"
             cursor.execute(sql_u, list(usuario_data.values()) + [id])
-
-        # Update Colaborador
         if colaborador_data:
             set_clause_c = ", ".join([f"{k}=%s" for k in colaborador_data.keys()])
             sql_c = f"UPDATE {self.table_name} SET {set_clause_c} WHERE Id=%s"

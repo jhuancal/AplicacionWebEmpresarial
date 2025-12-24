@@ -44,7 +44,7 @@ export const productsView = `
         gap: 20px;
     }
     
-    /* Product Card Styles (moved from component) */
+    
     .product-card {
         border: 1px solid #e0e0e0;
         border-radius: 8px;
@@ -186,12 +186,7 @@ export async function initProducts() {
         grid.innerHTML = '<p>Error al cargar productos.</p>';
         allProducts = [];
     }
-
-    // Setup Listeners
     if (sortSelect) {
-        // Cloning checks to avoid multiple listeners if re-initialized? 
-        // Better: just add new listener, old is gone with innerHTML replacement (if view re-rendered)
-        // Since main.js router replaces innerHTML of #content, we are clean.
         sortSelect.addEventListener('change', () => applyFilters(grid));
     }
 }
@@ -222,7 +217,7 @@ function renderGrid(products, grid) {
             <div class="product-image">
                 ${p.Descuento > 0 ? `<div class="discount-badge">-${p.Descuento}%</div>` : ''}
                 <!-- Fallback to placeholder if img fails -->
-                <img src="${p.UrlImagen}" alt="${p.Nombre}" onerror="this.onerror=null; this.src='https://placehold.co/300x200?text=Sin+Imagen'">
+                <img src="${p.UrlImagen}" alt="${p.Nombre}" onerror="this.onerror=null; this.src='https://placehold.co/400'">
             </div>
             <div class="product-info">
                 ${p.DiaLlegada ? `<div class="product-arrival">${p.DiaLlegada}</div>` : ''}

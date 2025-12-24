@@ -117,18 +117,12 @@ class LoginComponent extends HTMLElement {
         </div>
       </div>
     `;
-
-        // Close logic
         this.shadowRoot.querySelector(".close").addEventListener("click", () => this.close());
-
-        // Outside click close
         this.shadowRoot.querySelector(".modal").addEventListener("click", (e) => {
             if (e.target === this.shadowRoot.querySelector(".modal")) {
                 this.close();
             }
         });
-
-        // Form Submit
         this.shadowRoot.querySelector("#loginForm").addEventListener("submit", e => {
             e.preventDefault();
             const data = Object.fromEntries(new FormData(e.target));
@@ -144,16 +138,10 @@ class LoginComponent extends HTMLElement {
                         window.USER_SESSION = response.user;
                         this.close();
                         alert("Login exitoso");
-
-                        // If admin, redirect
                         if (window.USER_SESSION.Tipo !== 'Cliente') {
                             window.location.href = '/admin/dashboard';
                         } else {
-                            // Refresh UI (Header needs to update)
-                            // Dispatch event or just re-render header if we had access.
-                            // Simpler: reload or custom event
                             document.querySelector('header-component').render();
-                            // Navigate to home
                             window.history.pushState({}, "", "/");
                             window.dispatchEvent(new Event('popstate'));
                         }

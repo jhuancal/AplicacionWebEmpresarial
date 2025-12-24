@@ -1,4 +1,4 @@
-// Persona JS Logic
+
 
 var ClaseGlobalVar = {};
 (function () {
@@ -163,8 +163,6 @@ var eventClickEliminar = function (data) {
         }
     });
 };
-
-// Reuse Paginator Logic (Could be extracted to shared JS)
 var getPaginator = function (count, currentPage) {
     var numRows = $('#numRows').val();
     var numPages = count >= parseInt(numRows) ? Math.ceil(count / parseInt(numRows)) : 1;
@@ -209,15 +207,6 @@ var initEvent = function () {
         var val = $(this).val().trim();
         ClaseRegistro.pagedItem.filtros = [];
         if (val) {
-
-            // Multiple search on different fields could be complex with current backend logic
-            // Assuming simplified backend that checks "filter" against default fields or we need OR logic
-            // For now, let's search by DNI or Nombres if backend supports it, otherwise just DNI.
-            // The default generic backend implementation might only support exact property match unless modified.
-            // But let's assume we search Nombres here.
-
-            // Actually, `persona.py` repository inherits `base.py` which likely builds dynamic WHERE.
-            // Let's create a filter on "Nombres" for now.
             ClaseRegistro.pagedItem.filtros.push({
                 Logical: "OR",
                 PropertyName: "Nombres",

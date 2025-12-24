@@ -10,7 +10,7 @@ class AuthService:
         conn = get_db_connection()
         try:
             repo = UsuarioRepository(conn)
-            user = repo.get_by_username(username) # Returns dict from cursor (fetch_one)
+            user = repo.get_by_username(username)
             if user and user['Contrasena'] == password:
                 return True
             return False
@@ -21,22 +21,16 @@ class AuthService:
     def get_user_details(username):
         conn = get_db_connection()
         try:
-            # 1. Get Base User to get IDs
             user_repo = UsuarioRepository(conn)
             base_user = user_repo.get_by_username(username)
             
             if not base_user:
                 return None
             
-            user_data = base_user # Dict
+            user_data = base_user
             
             is_collaborator = username.startswith('ws_')
-            
-            # 2. Get Extended Data
             if is_collaborator:
-                # Fetch Colaborador Data
-                # Custom query or repo method. 
-                # Doing raw query here to keep Repos simple if they don't have get_by_id_joined
                 cursor = conn.cursor(dictionary=True)
                 query = """
                     SELECT C.IdRol, C.EsActivo, C.FechaContratacion, R.Nombre as RolNombre
@@ -50,7 +44,6 @@ class AuthService:
                     user_data.update(collab_data)
                     user_data['Tipo'] = 'Colaborador'
             else:
-                # Fetch Cliente Data
                 cursor = conn.cursor(dictionary=True)
                 query = "SELECT NumeroCuenta FROM Seg_Cliente WHERE Id = %s"
                 cursor.execute(query, (base_user['Id'],))
@@ -58,8 +51,6 @@ class AuthService:
                 if client_data:
                     user_data.update(client_data)
                     user_data['Tipo'] = 'Cliente'
-            
-            # 3. Get Persona Data
             if base_user.get('IdPersona'):
                 cursor = conn.cursor(dictionary=True)
                 query = "SELECT Nombres, Apellidos, DNI, Correo FROM Adm_Persona WHERE Id = %s"

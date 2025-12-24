@@ -26,5 +26,4 @@ class Producto(Entidad):
             'ESTADO': self.ESTADO,
             'DISPONIBILIDAD': self.DISPONIBILIDAD,
             'USER_CREACION': self.USER_CREACION
-            # Add other fields if needed, primarily for JSON serialization
         }

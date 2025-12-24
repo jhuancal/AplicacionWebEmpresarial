@@ -1,31 +1,50 @@
-# Curso de Introducción al Desarrollo Web — UNSA
+# AplicacionWebEmpresarial: Tienda de Productos para Mascotas
 
-Este repositorio contiene el proyecto colaborativo del curso de **Ingeniería de Sistemas** en la Universidad Nacional de San Agustín.
+Este repositorio contiene el código fuente del Trabajo Final Grupal del curso de Desarrollo Web. El proyecto consiste en una tienda en línea dinámica dedicada a la venta de productos para mascotas.
 
-## Estructura del Proyecto
+## 🔗 URL del Proyecto Desplegado
 
-El proyecto está dividido en tres áreas principales, cada una con su propia carpeta:
+**[https://aplicacionwebempresarial-production.up.railway.app/](https://aplicacionwebempresarial-production.up.railway.app/)**
 
-- `ui/` → Interfaz de usuario y diseño web.
-- `logic/` → Lógica de negocio y procesamiento.
-- `config/` → Conexión con base de datos y servicios.
+## 📝 Descripción
 
-## 🧪 Laboratorio Actual: Laboratorio 1
+La aplicación es una plataforma de comercio electrónico diseñada para facilitar la compra de artículos para mascotas. Permite a los usuarios navegar por un catálogo de productos, ver detalles, y gestiona roles de usuario (administrador y clientes). El sistema cuenta con autenticación segura, manejo de sesiones y persistencia de datos relacional. Se ha priorizado una arquitectura limpia y una interfaz de usuario responsiva y amigable.
 
-**Laboratorio 1: Introducción a Git y GitHub**
+## 🛠 Lenguajes y Tecnologías
 
-Objetivos:
-- Clonar el repositorio.
-- Crear una rama en tu carpeta asignada.
-- Realizar al menos un commit con cambios significativos.
-- Aprender a hacer `fetch`, `merge` y simular un Pull Request.
+El proyecto ha sido desarrollado utilizando las siguientes tecnologías:
 
-*Este laboratorio se enfoca en el uso de Git, no en la funcionalidad del aplicativo.*
+*   **HTML**: Estructura semántica de las páginas.
+*   **CSS**: Estilos personalizados y diseño responsivo.
+*   **JavaScript (JS)**: Interactividad del lado del cliente y consumo de APIs.
+*   **Python (Flask)**: Lógica del backend, manejo de rutas y APIs REST.
+*   **SQL (MySQL)**: Gestión y persistencia de base de datos.
 
-## Colaboradores
+## 👥 Integrantes del Equipo
 
-```markdown
-- Luis Alberto García Daza — ui/
-- Mmamani Gutierrez Jonahtan Joaquin — logic/
-- Jhoans Anthony Huanca Lupaca — config/
+| Role | Integrante | Calificación del Líder |
+| :--- | :--- | :--- |
+| **Líder** | **Jhoans Anthony Huanca Lupaca** | 100% |
+| Colaborador | Luis Alberto García Daza | 100% |
+| Colaborador | Mamani Gutierrez Jonahtan Joaquin | 100% |
 
+*(Calificación basada en el cumplimiento de tareas y participación activa en el desarrollo)*
+
+## 🏗 Arquitectura y Despliegue en Railway
+
+### Evolución de la Arquitectura: De Docker Compose a Servicios Gestionados
+
+Inicialmente, el entorno de desarrollo utilizaba `docker-compose` para orquestar dos contenedores: uno para la aplicación Flask y otro para la base de datos MySQL local.
+
+Para el despliegue en producción utilizando **Railway**, migramos a una arquitectura más robusta y nativa de la nube:
+
+1.  **Backend (App)**: Se configuró un contenedor Docker único para la aplicación Flask. En lugar de depender de `docker-compose` (que une los servicios en una sola máquina virtual), definimos un `Dockerfile` optimizado que instala las dependencias y prepara el entorno.
+2.  **Base de Datos (Managed MySQL)**: En lugar de un contenedor efímero, utilizamos un **Servicio Gestionado de MySQL** provisto por Railway.
+
+**¿Por qué este cambio?**
+*   **Persistencia y Seguridad**: Los servicios gestionados garantizan que los datos no se pierdan si el contenedor de la aplicación se reinicia.
+*   **Escalabilidad**: Permite escalar el backend y la base de datos de forma independiente.
+*   **Configuración**: La aplicación se conecta dinámicamente a la base de datos mediante variables de entorno (`MYSQLHOST`, `MYSQLUSER`, etc.), lo que hace que el sistema sea flexible y seguro, adaptándose automáticamente al entorno de producción sin cambiar el código.
+
+---
+© 2024 Universidad Nacional de San Agustín - Ingeniería de Sistemas

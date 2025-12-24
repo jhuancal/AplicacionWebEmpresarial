@@ -47,4 +47,4 @@ Para el despliegue en producción utilizando **Railway**, migramos a una arquite
 *   **Configuración**: La aplicación se conecta dinámicamente a la base de datos mediante variables de entorno (`MYSQLHOST`, `MYSQLUSER`, etc.), lo que hace que el sistema sea flexible y seguro, adaptándose automáticamente al entorno de producción sin cambiar el código.
 
 ---
-© 2024 Universidad Nacional de San Agustín - Ingeniería de Sistemas
+© 2025 Universidad Nacional de San Agustín - Ingeniería de Sistemas

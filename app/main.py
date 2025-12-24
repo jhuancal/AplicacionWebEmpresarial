@@ -18,5 +18,12 @@ def inject_user():
     return dict(user=session.get('user_data'))
 
 if __name__ == "__main__":
+    # Attempt to initialize DB
+    try:
+        from init_db import init_db
+        init_db()
+    except Exception as e:
+        print(f"DB Init failed: {e}")
+    port = int(os.environ.get("PORT", 5000))
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)

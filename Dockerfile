@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire app directory content into the container's /app directory
 COPY app/ .
+COPY db/ /app/db/
 
 # Ensure the static resources and templates are in the right place relative to main.py
 # Since we copied contents of 'app/' to '/app/', main.py is at /app/main.py

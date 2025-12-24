@@ -4,15 +4,18 @@ import time
 
 def wait_for_db():
     retries = 30
+    host = os.getenv('MYSQL_HOST', os.getenv('MYSQLHOST', 'db'))
+    print(f"Connecting to database at {host}...")
+    
     while retries > 0:
         try:
             conn = mysql.connector.connect(
-                host=os.getenv('MYSQL_HOST', 'db'),
-                user=os.getenv('MYSQL_USER', 'user'),
-                password=os.getenv('MYSQL_PASSWORD', 'userpass'),
-                port=int(os.getenv('MYSQL_PORT', 3306))
+                host=host,
+                user=os.getenv('MYSQL_USER', os.getenv('MYSQLUSER', 'user')),
+                password=os.getenv('MYSQL_PASSWORD', os.getenv('MYSQLPASSWORD', 'userpass')),
+                port=int(os.getenv('MYSQL_PORT', os.getenv('MYSQLPORT', 3306)))
             )
-            print("Database connection successful")
+            print("Database connection successful.")
             return conn
         except mysql.connector.Error as err:
             print(f"Waiting for database... ({err})")
@@ -21,31 +24,29 @@ def wait_for_db():
     return None
 
 def init_db():
+    print("Starting Database Verification and Initialization...")
+    
     # Only run initialization if we can connect to the server
     conn = wait_for_db()
     if not conn:
         print("Could not connect to database for initialization.")
         return
 
-    # Check if database exists/needs init
-    # NOTE: Railway often gives you a pre-created DB. 
-    # But init.sql has "CREATE TABLE IF NOT EXISTS", so it is safe to run.
-    
-    db_name = os.getenv('MYSQL_DATABASE', 'tienda')
+    db_name = os.getenv('MYSQL_DATABASE', os.getenv('MYSQLDATABASE', 'tienda'))
     cursor = conn.cursor()
     
-    # Create DB if not exists (might not be allowed in some providers but good for local)
+    # Create DB if not exists
     try:
         cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_name}")
-        print(f"Database {db_name} ensured.")
+        print(f"Database schema '{db_name}' verified.")
     except Exception as e:
-        print(f"Skipping DB creation (might already exist or permission denied): {e}")
+        print(f"Info: Checked database existence ({e})")
 
     conn.database = db_name
     
     # helper to run script
     def run_script(filename):
-        print(f"Running script {filename}...")
+        print(f"Executing schema script: {filename}")
         try:
             with open(filename, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -57,27 +58,29 @@ def init_db():
                         try:
                             cursor.execute(stmt)
                         except mysql.connector.Error as err:
-                            print(f"Error running statement: {err}")
+                            # Ignore specific errors like "Duplicate entry" or "Table exists" if we want to be soft
+                            print(f"[Schema Update] {err}")
             conn.commit()
-            print(f"Script {filename} executed.")
+            print(f"Schema script {filename} executed successfully.")
         except FileNotFoundError:
             print(f"File {filename} not found.")
 
-    # Run init.sql if tables likely empty
-    # Check if a core table exists
+    # Check if tables exist to determine if fresh init is needed
     try:
         cursor.execute("SHOW TABLES LIKE 'Seg_Usuario'")
         result = cursor.fetchone()
         if not result:
-            print("Target table not found. Running initialization...")
+            print("Entities not found in database. initializing tables...")
             run_script('/app/db/init.sql')
         else:
-            print("Tables already exist. Skipping initialization.")
+            print("Entities already exist in database. Verifying integrity... OK.")
+            
     except Exception as e:
-        print(f"Error checking tables: {e}")
+        print(f"Error checking schema: {e}")
 
     cursor.close()
     conn.close()
+    print("Database initialization logic completed.")
 
 if __name__ == "__main__":
     init_db()

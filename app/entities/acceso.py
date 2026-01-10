@@ -13,3 +13,18 @@ class Acceso(Entidad):
         self.Nivel = Nivel
         self.Padre = Padre
         self.UrlAcceso = UrlAcceso
+
+    def to_dict(self):
+        return {
+            'Id': self.Id,
+            'Orden': self.Orden,
+            'Codigo': self.Codigo,
+            'Nombre': self.Nombre,
+            'Descripcion': self.Descripcion,
+            'Tipo': self.Tipo,
+            'Nivel': self.Nivel,
+            'Padre': self.Padre,
+            'UrlAcceso': self.UrlAcceso,
+            'ESTADO': self.ESTADO,
+            'DISPONIBILIDAD': self.DISPONIBILIDAD
+        }

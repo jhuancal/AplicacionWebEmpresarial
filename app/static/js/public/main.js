@@ -2,6 +2,10 @@ import "./components/header.js";
 import "./components/footer.js";
 import "./components/login.js";
 import { productsView, initProducts } from "./views/products.js";
+import { adoptionView, initAdoption } from "./views/adopcion.js"; // Import new view
+import { servicesView, initServices } from "./views/servicios.js";
+import { publicationsView, initPublications } from "./views/publicaciones.js";
+
 const routes = {
     "/": `
     <div class="hero" style="text-align: center; padding: 4rem 1rem; background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%); border-radius: 8px; color: #333; margin-bottom: 2rem;">
@@ -15,21 +19,44 @@ const routes = {
     </div>
   `,
     "/productos": productsView,
-    "/servicios": "<h1>Servicios</h1><p>Próximamente: Baño, Peluquería y Veterinaria.</p>",
-    "/publicaciones": "<h1>Publicaciones</h1><p>Blog y Novedades.</p>"
+    "/adopcion": adoptionView, // Add route
+    "/servicios": servicesView,
+    "/publicaciones": publicationsView
 };
 function navigate(path) {
+    resetTheme(); // Reset to default theme on navigation
     const content = document.getElementById("content");
-    const view = routes[path] || routes["/"];
+    if (!routes[path]) return; // Use server-rendered content for unknown routes (like /register)
+    const view = routes[path];
 
     content.innerHTML = view;
     if (path === '/productos') {
         initProducts();
     }
+    if (path === '/adopcion') {
+        initAdoption();
+    }
+    if (path === '/servicios') {
+        initServices();
+    }
+    if (path === '/servicios') {
+        // Set Dark Theme for Services Page
+        document.body.style.backgroundColor = "#191919";
+        document.body.style.color = "#fff";
+        initServices();
+    }
+    if (path === '/publicaciones') {
+        initPublications();
+    }
     window.scrollTo(0, 0);
 }
-document.addEventListener("DOMContentLoaded", () => {
 
+function resetTheme() {
+    document.body.style.backgroundColor = "#f4f4f4"; // Default light theme
+    document.body.style.color = ""; // Reset text color
+}
+
+document.addEventListener("DOMContentLoaded", () => {
     navigate(window.location.pathname);
     window.addEventListener("popstate", () => {
         navigate(window.location.pathname);

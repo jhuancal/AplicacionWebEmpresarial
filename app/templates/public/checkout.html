@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperPet | Checkout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .checkout-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .btn-confirm {
+            background: #28a745;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-confirm:hover {
+            background: #218838;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+    <script src="/static/js/public/layout.js"></script>
+    <script type="module" src="/static/js/public/main.js"></script>
+    <script>window.USER_SESSION = {{ user | tojson | safe if user else 'null' }};</script>
+</head>
+
+<body>
+    <header><header-component nombre="SuperPet" place_holder="Buscar..." pag_principal="/"></header-component></header>
+    <main>
+        <div class="checkout-container">
+            <h2>Finalizar Compra</h2>
+            <div id="error-msg" class="error"></div>
+            <form id="checkout-form" onsubmit="processCheckout(event)">
+                <div class="form-group">
+                    <label>Tipo de Entrega</label>
+                    <select id="tipo_entrega" onchange="toggleAddress()">
+                        <option value="Delivery">Delivery</option>
+                        <option value="Recojo">Recojo en Tienda</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="address-group">
+                    <label>Dirección de Entrega</label>
+                    <input type="text" id="direccion" placeholder="Av. Principal 123, Distrito" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Método de Pago</label>
+                    <select id="metodo_pago">
+                        <option value="Tarjeta">Tarjeta de Crédito/Débito</option>
+                        <option value="Yape">Yape / Plin</option>
+                        <option value="Efectivo">Efectivo contraentrega</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-confirm">Confirmar Pedido</button>
+            </form>
+        </div>
+    </main>
+    <footer><footer-component></footer-component></footer>
+    <login-component></login-component>
+    <script>
+        function toggleAddress() {
+            const type = document.getElementById('tipo_entrega').value;
+            const addrGroup = document.getElementById('address-group');
+            const addrInput = document.getElementById('direccion');
+            if (type === 'Recojo') {
+                addrGroup.style.display = 'none';
+                addrInput.removeAttribute('required');
+                addrInput.value = 'Tienda Principal';
+            } else {
+                addrGroup.style.display = 'block';
+                addrInput.setAttribute('required', 'true');
+                addrInput.value = '';
+            }
+        }
+
+        async function processCheckout(e) {
+            e.preventDefault();
+            const btn = document.querySelector('.btn-confirm');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Procesando...';
+
+            const data = {
+                tipo_entrega: document.getElementById('tipo_entrega').value,
+                direccion: document.getElementById('direccion').value,
+                metodo_pago: document.getElementById('metodo_pago').value
+            };
+
+            try {
+                const res = await fetch('/api/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await res.json();
+
+                if (result.success) {
+                    alert('¡Compra realizada con éxito! Boleta: ' + result.boleta);
+                    window.location.href = '/compras'; // Redirect to history
+                } else {
+                    document.getElementById('error-msg').innerText = result.message || 'Error al procesar la compra.';
+                    document.getElementById('error-msg').style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerText = 'Confirmar Pedido';
+                }
+            } catch (err) {
+                console.error(err);
+                document.getElementById('error-msg').innerText = 'Error de conexión.';
+                document.getElementById('error-msg').style.display = 'block';
+                btn.disabled = false;
+                btn.innerText = 'Confirmar Pedido';
+            }
+        }
+    </script>
+</body>
+
+</html>

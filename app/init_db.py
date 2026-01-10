@@ -65,6 +65,14 @@ def init_db():
         else:
             print("Entities already exist in database. Verifying integrity... OK.")
             
+        # Ensure Seg_TokenVerificacion exists (Migration)
+        cursor.execute("SHOW TABLES LIKE 'Seg_TokenVerificacion'")
+        if not cursor.fetchone():
+             print("Creating Seg_TokenVerificacion table...")
+             run_script('/app/db/init.sql') # Re-running init.sql which now has IF NOT EXISTS for everything is safe and easy
+        else:
+            print("Entities already exist in database. Verifying integrity... OK.")
+            
     except Exception as e:
         print(f"Error checking schema: {e}")
 

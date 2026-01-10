@@ -1,0 +1,148 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Reservas - SuperPet{% endblock %}
+
+{% block content %}
+<div id="content-container">
+    <div class="pageheader">
+        <h3><i class="fa fa-calendar-check-o"></i> Reservas </h3>
+        <div class="breadcrumb-wrapper">
+            <span class="label"></span>
+            <ol class="breadcrumb">
+                <li> <a href="#"> Clientes </a> </li>
+                <li class="active"> Reservas </li>
+            </ol>
+        </div>
+    </div>
+    <div id="page-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-body">
+
+                        <div class="data-table">
+
+                            <div class="row panel-search">
+                                <div class="col-sm-6 col-md-9 col-lg-9 table-toolbar-left" style="margin-bottom: 10px;">
+                                    <!-- No add button for now, assuming bookings come from public side or added differently -->
+                                    <!-- But keeping the structure -->
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 table-toolbar-right">
+                                    <div class="form-group w-100 quick-search">
+                                        <input id="txtBuscar" type="text" placeholder="Buscar..."
+                                            class="form-control input-sm w-100" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="panel-table">
+                                <div class="table-responsive">
+                                    <table id="tableRegistros" class="table table-striped table-bordered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Nº</th>
+                                                <th class="sorting text-center">Cliente</th>
+                                                <th class="sorting text-center">Mascota</th>
+                                                <th class="sorting text-center">Servicio</th>
+                                                <th class="sorting text-center">Fecha/Hora</th>
+                                                <th class="text-center">Estado</th>
+                                                <th class="text-center">Opciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div class="panel-pag" style="margin-top: 10px;">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-5 col-lg-5 text-left table-pag-left">
+                                        <span id="labelRegistros"></span>
+                                        <select id="numRows"
+                                            class="form-control drop-filter input-sm d-inline-block ml-3"
+                                            style="width: 70px; display: inline-block;">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 col-md-7 col-lg-7 text-right table-pag-right">
+                                        <div id="paginate">
+                                            <ul class="pagination" style="margin: 0;"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalRegistro" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span class="label-title edit">EDITAR</span> ESTADO RESERVA </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Estado</label>
+                                    <select id="selEstado" class="form-control">
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Confirmado">Confirmado</option>
+                                        <option value="Completado">Completado</option>
+                                        <option value="Cancelado">Cancelado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Observaciones</label>
+                                    <textarea id="txtObservaciones" class="form-control" placeholder="Observaciones"
+                                        disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                        class="fa fa-close mr-1"></i>Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="eventClickSaveRegistro()"><i
+                        class="fa fa-save mr-1"></i>Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    var urlGetAll = '/api/adm_clientes_reserva/GetAll';
+    var urlInsert = '/api/adm_clientes_reserva/Insert';
+    var urlUpdate = '/api/adm_clientes_reserva/Update';
+    var urlDelete = '/api/adm_clientes_reserva/Delete';
+    var urlCountAll = '/api/adm_clientes_reserva/CountAll';
+    var urlGetPaged = '/api/adm_clientes_reserva/GetPaged';
+</script>
+<script src="/static/js/admin/Clientes/reserva.js"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "public/index.html" %}
+
+{% block content %}
+<!-- This template is potentially unused if we use JS rendering, but good to have as fallback if needed or wrapper -->
+<div id="adoption-wrapper"></div>
+<script type="module">
+    import { adoptionView, initAdoption } from "{{ url_for('static', filename='js/public/views/adopcion.js') }}";
+
+    const wrapper = document.getElementById('adoption-wrapper');
+    if (wrapper) {
+        wrapper.innerHTML = adoptionView;
+        console.log("Adoption view injected");
+        initAdoption();
+    } else {
+        console.error("Adoption wrapper not found");
+    }
+</script>
+{% endblock %}

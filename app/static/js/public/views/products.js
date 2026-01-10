@@ -226,10 +226,51 @@ function renderGrid(products, grid) {
                      ${p.Descuento > 0 ? `<span class="price-regular">S/ ${p.PrecioRegular}</span>` : ''}
                     <span class="price-sale">S/ ${p.PrecioVenta}</span>
                 </div>
-                <button class="add-btn">Agregar</button>
+                <button class="add-btn" onclick="addToCart('${p.Id}')">Agregar al Carrito</button>
             </div>
         </div>
     `).join('');
 
     grid.innerHTML = html;
 }
+
+// Global addToCart function
+window.addToCart = async function (id) {
+    if (!window.USER_SESSION) {
+        alert("Por favor, inicia sesión para comprar.");
+        window.dispatchEvent(new CustomEvent('open-login')); // Open login modal if exists
+        return;
+    }
+
+    // Visual feedback
+    const btn = document.querySelector(`button[onclick="addToCart('${id}')"]`);
+    const originalText = btn ? btn.innerText : 'Agregar';
+    if (btn) {
+        btn.disabled = true;
+        btn.innerText = 'Agregando...';
+    }
+
+    try {
+        const res = await fetch('/api/carrito/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id_producto: id, cantidad: 1 })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            // Optional: Update cart counter in header if it exists
+            alert("Producto agregado al carrito.");
+        } else {
+            alert("Error al agregar producto: " + (data.message || 'Error desconocido'));
+        }
+    } catch (e) {
+        console.error(e);
+        alert("Error de conexión al agregar al carrito.");
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerText = originalText;
+        }
+    }
+};

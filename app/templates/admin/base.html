@@ -5,191 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Panel de Administración - SuperPet{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-        /* Base Styles from Dashboard */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            display: flex;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: #191919;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            position: fixed;
-            /* Fix sidebar */
-            height: 100%;
-        }
-
-        .sidebar .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 40px;
-            text-align: center;
-            color: #b40500;
-        }
-
-        .sidebar nav ul {
-            list-style: none;
-            padding-left: 0;
-            /* Reset UL padding */
-        }
-
-        .sidebar nav ul li {
-            margin-bottom: 15px;
-        }
-
-        .sidebar nav ul li a {
-            color: #ccc;
-            text-decoration: none;
-            font-size: 16px;
-            display: block;
-            padding: 10px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .sidebar nav ul li a:hover,
-        .sidebar nav ul li a.active,
-        .sidebar nav ul li a[aria-expanded="true"] {
-            background-color: #333;
-            color: #fff;
-            border-left: 4px solid #b40500;
-        }
-
-        .sidebar nav ul li a.menu-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #aaa;
-            border-left: 4px solid transparent;
-            /* Maintain spacing alignment */
-        }
-
-        /* Arrow rotation */
-        .sidebar .arrow {
-            transition: transform 0.3s;
-            font-size: 10px;
-        }
-
-        .sidebar a[aria-expanded="true"] .arrow {
-            transform: rotate(90deg);
-        }
-
-        /* Submenu Indentation */
-        .sidebar .submenu li a {
-            padding-left: 40px;
-            font-size: 14px;
-            background-color: #111;
-        }
-
-        .sidebar nav ul li a.disabled {
-            color: #444;
-            pointer-events: none;
-        }
-
-        /* Main Content wrapper to offset fixed sidebar */
-        .wrapper {
-            margin-left: 250px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        header {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header .user-info {
-            font-weight: 500;
-        }
-
-        header .logout {
-            color: #b40500;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Dashboard Content */
-        .content {
-            padding: 40px;
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        /* Helper Classes for the Template provided */
-        .text-center {
-            text-align: center;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .text-left {
-            text-align: left;
-        }
-
-        .mr-1 {
-            margin-right: 5px;
-        }
-
-        .ml-3 {
-            margin-left: 15px;
-        }
-
-        .d-inline-block {
-            display: inline-block;
-        }
-
-        .w-100 {
-            width: 100%;
-        }
-
-        .mb-0 {
-            margin-bottom: 0;
-        }
-
-        /* Modal Styles fix for bootstrap 3 compatibility with flex body */
-        .modal {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/base.css') }}">
     {% block styles %}
     {% endblock %}
-
 </head>
 
 <body>
-
-    
     <aside class="sidebar">
         <div class="logo">SuperPet Admin</div>
         <nav>
@@ -199,8 +24,6 @@
                         <i class="fa fa-home"></i> Inicio
                     </a>
                 </li>
-
-                
                 <li>
                     <a href="#submenu-administracion" data-toggle="collapse"
                         aria-expanded="{{ 'true' if 'administracion' in request.path else 'false' }}"
@@ -215,11 +38,17 @@
                         <li><a href="/admin/administracion/producto"
                                 class="{{ 'active' if 'administracion/producto' in request.path else '' }}"><i
                                     class="fa fa-box"></i> Productos</a></li>
-                        <li><a href="#" class="disabled"><i class="fa fa-cogs"></i> Servicios</a></li>
+                        <li><a href="/admin/administracion/mascotas"
+                                class="{{ 'active' if 'administracion/mascotas' in request.path else '' }}"><i
+                                    class="fa fa-paw"></i> Mascotas</a></li>
+                        <li><a href="/admin/administracion/servicios"
+                                class="{{ 'active' if 'administracion/servicios' in request.path else '' }}"><i
+                                    class="fa fa-cogs"></i> Servicios</a></li>
+                        <li><a href="/admin/adopcion/solicitudes"
+                                class="{{ 'active' if 'adopcion/solicitudes' in request.path else '' }}"><i
+                                    class="fa fa-heart"></i> Solicitudes Adopción</a></li>
                     </ul>
                 </li>
-
-                
                 <li>
                     <a href="#submenu-seguridad" data-toggle="collapse"
                         aria-expanded="{{ 'true' if 'seguridad' in request.path else 'false' }}"
@@ -228,12 +57,15 @@
                     </a>
                     <ul id="submenu-seguridad"
                         class="collapse list-unstyled submenu {{ 'in' if 'seguridad' in request.path else '' }}">
-                        <li><a href="#" class="disabled"><i class="fa fa-eye"></i> Vistas</a></li>
-                        <li><a href="#" class="disabled"><i class="fa fa-key"></i> Roles</a></li>
-                        <li><a href="#" class="disabled"><i class="fa fa-lock"></i> Permisos</a></li>
-                        <li><a href="/admin/seguridad/usuario"
-                                class="{{ 'active' if 'seguridad/usuario' in request.path else '' }}"> <i
-                                    class="fa fa-user"></i> Usuarios</a></li>
+                        <li><a href="/admin/seguridad/roles_permisos"
+                                class="{{ 'active' if 'seguridad/roles_permisos' in request.path else '' }}"><i
+                                    class="fa fa-key"></i> Roles y Permisos</a></li>
+                        <li><a href="/admin/seguridad/usuario_rol"
+                                class="{{ 'active' if 'seguridad/usuario_rol' in request.path else '' }}"><i
+                                    class="fa fa-users"></i> Roles Usuario</a></li>
+                        <li><a href="/admin/seguridad/vistas"
+                                class="{{ 'active' if 'seguridad/vistas' in request.path else '' }}"><i
+                                    class="fa fa-eye"></i> Vistas</a></li>
                         <li><a href="/admin/seguridad/cliente"
                                 class="{{ 'active' if 'seguridad/cliente' in request.path else '' }}"><i
                                     class="fa fa-shopping-bag"></i> Clientes</a></li>
@@ -242,8 +74,6 @@
                                     class="fa fa-id-badge"></i> Colaboradores</a></li>
                     </ul>
                 </li>
-
-                
                 <li>
                     <a href="#submenu-reportes" data-toggle="collapse" aria-expanded="false"
                         class="menu-toggle collapsed">
@@ -253,11 +83,31 @@
                         <li><a href="#" class="disabled"><i class="fa fa-chart-bar"></i> Ventas</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#submenu-clientes" data-toggle="collapse"
+                        aria-expanded="{{ 'true' if 'clientes' in request.path else 'false' }}"
+                        class="menu-toggle {{ '' if 'clientes' in request.path else 'collapsed' }}">
+                        <span>CLIENTES</span> <i class="fa fa-chevron-right arrow"></i>
+                    </a>
+                    <ul id="submenu-clientes"
+                        class="collapse list-unstyled submenu {{ 'in' if 'clientes' in request.path else '' }}">
+                        <li><a href="/admin/clientes/reservas"
+                                class="{{ 'active' if 'clientes/reservas' in request.path else '' }}"><i
+                                    class="fa fa-calendar"></i> Reservas</a></li>
+                        <li><a href="/admin/clientes/compras"
+                                class="{{ 'active' if 'clientes/compras' in request.path else '' }}"><i
+                                    class="fa fa-shopping-cart"></i> Compras</a></li>
+                        <li><a href="/admin/clientes/carritos"
+                                class="{{ 'active' if 'clientes/carritos' in request.path else '' }}"><i
+                                    class="fa fa-cart-arrow-down"></i> Carritos</a></li>
+                        <li><a href="/admin/clientes/publicaciones"
+                                class="{{ 'active' if 'clientes/publicaciones' in request.path else '' }}"><i
+                                    class="fa fa-newspaper"></i> Publicaciones</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </aside>
-
-    
     <div class="wrapper">
         <header>
             <div class="user-info">Bienvenido, {{ session['user'] if session.get('user') else 'Admin' }}</div>
@@ -270,31 +120,10 @@
         </div>
     </div>
 
-    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
-    
-    <script>
-        function Noty(type, title, message) {
-            alert(title + ": " + message);
-        }
-        function fload(action) {
-            if (action === 'show') console.log("Loading...");
-            else console.log("Loaded.");
-        }
-        // Generic Ajax helper to match the template's expected signature if possible
-        function callAjax(data, url, method) {
-            return $.ajax({
-                url: url,
-                type: method,
-                contentType: 'application/json',
-                data: JSON.stringify(data)
-            });
-        }
-        // Helper for Nro
-        function getNro(index) { return index + 1; }
-    </script>
+    <script src="{{ url_for('static', filename='js/admin/base.js') }}"></script>
     {% block scripts %}
     {% endblock %}
 </body>

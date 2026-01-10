@@ -11,3 +11,15 @@ class RolAcceso(Entidad):
         self.Tipo = Tipo
         self.IdAccesoUno = IdAccesoUno
         self.IdAccesoDos = IdAccesoDos
+
+    def to_dict(self):
+        return {
+            'Id': self.Id,
+            'IdRol': self.IdRol,
+            'Codigo': self.Codigo,
+            'Valor': self.Valor,
+            'Tipo': self.Tipo,
+            'IdAccesoUno': self.IdAccesoUno,
+            'IdAccesoDos': self.IdAccesoDos,
+            'ESTADO': self.ESTADO
+        }

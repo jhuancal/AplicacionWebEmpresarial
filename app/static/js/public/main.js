@@ -15,21 +15,25 @@ const routes = {
     </div>
     <div class="featured">
         <h2 style="text-align:center; margin-bottom: 2rem;">Nuestros Favoritos</h2>
-        <products-component></products-component>
+        <!-- Reusing products grid logic -->
+        <div id="productos-grid" class="productos-grid">
+            <p style="text-align:center">Cargando destacados...</p>
+        </div>
     </div>
   `,
     "/productos": productsView,
-    "/adopcion": adoptionView, // Add route
+    "/adopcion": adoptionView,
     "/servicios": servicesView,
     "/publicaciones": publicationsView
 };
 function navigate(path) {
-    resetTheme(); // Reset to default theme on navigation
+    resetTheme();
     const content = document.getElementById("content");
-    if (!routes[path]) return; // Use server-rendered content for unknown routes (like /register)
+    if (!routes[path]) return;
     const view = routes[path];
 
     content.innerHTML = view;
+
     if (path === '/productos') {
         initProducts();
     }
@@ -39,12 +43,6 @@ function navigate(path) {
     if (path === '/servicios') {
         initServices();
     }
-    if (path === '/servicios') {
-        // Set Dark Theme for Services Page
-        document.body.style.backgroundColor = "#191919";
-        document.body.style.color = "#fff";
-        initServices();
-    }
     if (path === '/publicaciones') {
         initPublications();
     }
@@ -52,8 +50,8 @@ function navigate(path) {
 }
 
 function resetTheme() {
-    document.body.style.backgroundColor = "#f4f4f4"; // Default light theme
-    document.body.style.color = ""; // Reset text color
+    document.body.style.backgroundColor = "#f4f4f4";
+    document.body.style.color = "";
 }
 
 document.addEventListener("DOMContentLoaded", () => {

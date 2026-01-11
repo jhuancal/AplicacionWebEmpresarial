@@ -1,34 +1,34 @@
 class ServiceCard extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: "open" });
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
+
+  static get observedAttributes() {
+    return ['id', 'nombre', 'costo', 'duracion', 'tipo', 'categoria', 'descripcion', 'img'];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      this.render();
     }
+  }
 
-    static get observedAttributes() {
-        return ['id', 'nombre', 'costo', 'duracion', 'tipo', 'categoria', 'descripcion', 'img'];
-    }
+  connectedCallback() {
+    this.render();
+  }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this.render();
-        }
-    }
+  render() {
+    const id = this.getAttribute("id");
+    const nombre = this.getAttribute("nombre");
+    const costo = this.getAttribute("costo");
+    const duracion = this.getAttribute("duracion");
+    const tipo = this.getAttribute("tipo");
+    // const categoria = this.getAttribute("categoria");
+    const descripcion = this.getAttribute("descripcion") || 'Sin descripción';
+    const img = this.getAttribute("img");
 
-    connectedCallback() {
-        this.render();
-    }
-
-    render() {
-        const id = this.getAttribute("id");
-        const nombre = this.getAttribute("nombre");
-        const costo = this.getAttribute("costo");
-        const duracion = this.getAttribute("duracion");
-        const tipo = this.getAttribute("tipo");
-        // const categoria = this.getAttribute("categoria");
-        const descripcion = this.getAttribute("descripcion") || 'Sin descripción';
-        const img = this.getAttribute("img");
-
-        this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
       :host {
@@ -113,17 +113,17 @@ class ServiceCard extends HTMLElement {
     </div>
     `;
 
-        this.shadowRoot.getElementById('btnBook').addEventListener('click', () => {
-            this.dispatchEvent(new CustomEvent('booking-request', {
-                detail: {
-                    id: id,
-                    nombre: nombre,
-                    costo: costo
-                },
-                bubbles: true,
-                composed: true
-            }));
-        });
-    }
+    this.shadowRoot.getElementById('btnBook').addEventListener('click', () => {
+      this.dispatchEvent(new CustomEvent('booking-request', {
+        detail: {
+          id: id,
+          nombre: nombre,
+          costo: costo
+        },
+        bubbles: true,
+        composed: true
+      }));
+    });
+  }
 }
 customElements.define("service-card", ServiceCard);

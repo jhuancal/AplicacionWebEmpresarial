@@ -23,7 +23,7 @@ def home():
 @public_bp.route("/servicios")
 def servicios_page():
     user = session.get('user_data')
-    return render_template("public/servicios.html", user=user)
+    return render_template("public/index.html", user=user)
 
 @public_bp.route("/register")
 def register_page():

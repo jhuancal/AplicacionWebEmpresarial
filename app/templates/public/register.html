@@ -1,48 +1,6 @@
 {% extends "public/index.html" %}
 
 {% block content %}
-<style>
-    /* Custom styles for transitions */
-    .step-container {
-        position: relative;
-        overflow: hidden;
-        min-height: 400px;
-        /* Adjust based on content */
-    }
-
-    .step-content {
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        transform: translateX(50px);
-        pointer-events: none;
-    }
-
-    .step-content.active {
-        opacity: 1;
-        transform: translateX(0);
-        position: relative;
-        pointer-events: auto;
-    }
-
-    .step-content.prev {
-        transform: translateX(-50px);
-        opacity: 0;
-        position: absolute;
-    }
-
-    /* Input focus ring custom */
-    .input-group input:focus,
-    .input-group select:focus {
-        border-color: #f8b500;
-        box-shadow: 0 0 0 3px rgba(248, 181, 0, 0.2);
-        outline: none;
-    }
-</style>
-
 <div class="container mx-auto mt-10 max-w-3xl">
     <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 relative">
         <!-- Decoration -->
@@ -189,7 +147,7 @@
                         </div>
                     </div>
                     <div class="mt-8 flex justify-between">
-                        <!-- Intentionally hidden Prev button for Step 1 as we don't want them to go back to verification easily or lose data? Actually let's allow content switch back if they really want, but simpler flow forward -->
+                        <!-- Intentionally hidden Prev button for Step 1 -->
                         <button type="button" onclick="prevStep()"
                             class="text-gray-500 hover:text-gray-800 font-medium px-4">Atrás</button>
                         <button type="button" onclick="nextStep()"
@@ -280,5 +238,5 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/public/register.js') }}"></script>
+<script src="/static/js/public/auth.js"></script>
 {% endblock %}

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registro - Almas Salvajes</title>
+    <link rel="stylesheet" href="/static/css/public/bulma.min.css">
+    <link rel="stylesheet" href="/static/css/public/material-design-iconic-font.css">
+    <link rel="stylesheet" href="/static/css/public/style.css">
+    <link rel="stylesheet" href="/static/css/public/views/registro.css">
+    <link rel="stylesheet" href="/static/css/public/payment.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <header class="navbar-header" id="navbar-header">
+            <a href="/" class="brand-link" style="display: flex; align-items: center;">
+                <img src="/static/img/logo-big.png" alt="Almas Salvajes Logo" class="navbar-logo">
+                <span class="brand is-size-3">Almas Salvajes</span>
+            </a>
+            <button class="navbar-menu-mobile open is-size-3 is-hidden-desktop" id="navbar-menu-mobile">
+                <i class="zmdi zmdi-menu"></i>
+            </button>
+        </header>
+
+        <ul class="navbar-container" id="navbar-container">
+            <li class="navbar-item">
+                <a href="/" class="navbar-a">Inicio</a>
+            </li>
+            <li class="navbar-item">
+                <a href="/adopcion" class="navbar-a">Adopción</a>
+            </li>
+            <li class="navbar-item">
+                <a href="/productos" class="navbar-a">Productos</a>
+            </li>
+            <li class="navbar-item">
+                <a href="/servicios" class="navbar-a">Servicios</a>
+            </li>
+            <li class="navbar-item">
+                <a href="/publicaciones" class="navbar-a">Publicaciones</a>
+            </li>
+            {% if user %}
+            <li class="navbar-item">
+                <span class="navbar-a">Hola, {{ user.Nombres }}</span>
+            </li>
+            <li class="navbar-item">
+                <a href="/logout" class="navbar-a">Cerrar Sesión</a>
+            </li>
+            {% else %}
+            <li class="navbar-item">
+                <a href="#" id="login-trigger" class="navbar-a">Iniciar Sesión</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="registration-hero">
+        <div class="registration-hero-content">
+            <h1 class="title has-text-white is-size-1-desktop is-size-3-mobile">Únete a Nosotros</h1>
+            <h3 class="subtitle has-text-white is-size-4-desktop is-size-6-mobile">Forma parte de la comunidad más
+                grande de amantes de los animales</h3>
+        </div>
+    </div>
+
+    <!-- Progress Steps -->
+    <div class="registration-steps">
+        <div class="steps-progress-bar"></div>
+        <div class="steps-progress-fill" style="width: 0%"></div>
+        <div class="steps-container">
+            <div class="step-item active">1</div>
+            <div class="step-item">2</div>
+            <div class="step-item">3</div>
+            <div class="step-item">4</div>
+        </div>
+        <div class="steps-labels columns is-mobile has-text-centered mt-2 is-size-7 has-text-grey">
+            <div class="column">Verificar</div>
+            <div class="column">Datos</div>
+            <div class="column">Pago</div>
+            <div class="column">Mascota</div>
+        </div>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="registration-form-container">
+        <form id="registerForm">
+            <!-- Step 0: Verification -->
+            <div class="step-content active">
+                <div class="box">
+                    <h3 class="title is-4 has-text-centered mb-5">Validar Correo Electrónico</h3>
+                    <p class="has-text-centered mb-5 text-gray-500">Para comenzar, necesitamos verificar tu correo
+                        electrónico.</p>
+
+                    <div class="field">
+                        <label class="label">Correo Electrónico</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="email" id="email-verification"
+                                placeholder="tucorreo@ejemplo.com">
+                            <span class="icon is-small is-left">
+                                <i class="zmdi zmdi-email"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="field has-text-centered mb-5">
+                        <button type="button" class="button is-info is-rounded" id="btn-send-code"
+                            onclick="sendVerificationCode()">
+                            Enviar Código de Verificación
+                        </button>
+                    </div>
+
+                    <div id="code-section" class="is-hidden message is-info">
+                        <div class="message-body has-text-centered">
+                            <p class="mb-3">Se ha enviado un código a tu correo.</p>
+                            <input type="text" id="verification-code" class="input verification-code-input mb-4"
+                                placeholder="XXXXXX" maxlength="6">
+                            <button type="button" class="button is-success is-rounded" id="btn-verify-code"
+                                onclick="verifyCode()">
+                                Verificar Código
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="has-text-right mt-6">
+                        <button type="button" class="button btn-next" onclick="nextStep()">Siguiente &rarr;</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 1: Personal Data -->
+            <div class="step-content">
+                <div class="box">
+                    <h3 class="title is-4 has-text-centered mb-5">Datos Personales</h3>
+
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Nombre de Usuario</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="username" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Contraseña</label>
+                                <div class="control">
+                                    <input class="input" type="password" name="password" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Nombres</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="nombres" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Apellidos</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="apellidos" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">DNI</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="dni" required maxlength="8">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Correo Verificado</label>
+                                <div class="control">
+                                    <input class="input" type="email" name="correo" id="correo-final" readonly
+                                        style="background-color: #f5f5f5; color: #7a7a7a;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="is-flex is-justify-content-space-between mt-5">
+                        <button type="button" class="button btn-prev" onclick="prevStep()">Atrás</button>
+                        <button type="button" class="button btn-next" onclick="nextStep()">Siguiente &rarr;</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Payment Data -->
+            <div class="step-content">
+                <div class="box">
+                    <h3 class="title is-4 has-text-centered mb-5">Método de Pago Preferido</h3>
+                    <div class="notification is-warning is-light">
+                        <i class="zmdi zmdi-info"></i> Esto agilizará tus compras futuras. Puedes cambiarlo luego.
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Número de Tarjeta</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="tarjeta" placeholder="0000 0000 0000 0000" required>
+                            <span class="icon is-small is-left">
+                                <i class="zmdi zmdi-card"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Expiración</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="MM/YY">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">CVC</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="is-flex is-justify-content-space-between mt-5">
+                        <button type="button" class="button btn-prev" onclick="prevStep()">Atrás</button>
+                        <button type="button" class="button btn-next" onclick="nextStep()">Siguiente &rarr;</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Pet Info -->
+            <div class="step-content">
+                <div class="box has-background-info-light">
+                    <h3 class="title is-4 has-text-centered mb-5 has-text-info-dark">Tu Mascota (Opcional)</h3>
+                    <p class="has-text-centered mb-4">Cuéntanos sobre tu engreído para personalizar su experiencia.</p>
+
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Nombre</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="mascota_nombre">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Tipo</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select name="mascota_tipo">
+                                            <option value="">Seleccione...</option>
+                                            <option value="Perro">Perro 🐶</option>
+                                            <option value="Gato">Gato 🐱</option>
+                                            <option value="Otro">Otro 🐹</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Raza</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="mascota_raza">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-6">
+                            <div class="field">
+                                <label class="label">Cumpleaños</label>
+                                <div class="control">
+                                    <input class="input" type="date" name="mascota_fecha">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="is-flex is-justify-content-space-between mt-5">
+                        <button type="button" class="button btn-prev" onclick="prevStep()">Atrás</button>
+                        <button type="submit" class="button btn-submit is-success is-medium is-rounded shadow-lg">✨
+                            Finalizar Registro</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="my-footer">
+        <div class="hero my-hero" style="--banner: url(/static/img/footer-banner.jpg); --bg-atachment: none;">
+            <div class="container-hero">
+                <div class="columns is-multiline">
+                    <div class="column is-full has-text-centered">
+                        <span class="has-text-white">
+                            <img src="/static/img/logo-big.png" alt="Almas Salvajes Logo" class="footer-logo">
+                        </span>
+                    </div>
+                    <div class="column is-full">
+                        <ul class="my-footer-ul">
+                            <li class="my-footer-item">
+                                <a href="#" class="my-footer-link">
+                                    <i class="zmdi zmdi-whatsapp"></i>
+                                </a>
+                            </li>
+                            <li class="my-footer-item">
+                                <a href="#" class="my-footer-link facebook">
+                                    <i class="zmdi zmdi-facebook"></i>
+                                </a>
+                            </li>
+                            <li class="my-footer-item">
+                                <a href="#" class="my-footer-link instagram">
+                                    <i class="zmdi zmdi-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="my-footer-item">
+                                <a href="#" class="my-footer-link">
+                                    <i class="zmdi zmdi-youtube"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="column has-text-centered is-full">
+                        <p class="has-text-white is-size-6" style="margin-bottom: 1rem;">Escríbenos a
+                            jhuancal@unsa.edu.pe</p>
+                    </div>
+                    <div class="column has-text-centered is-size-7-mobile is-full">
+                        <p class="footer-p has-text-white">© 2025 Almas Salvajes. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="login-modal-overlay" id="login-modal">
+        <div class="login-modal-content">
+            <button class="modal-close"
+                style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#8E8E8E;">&times;</button>
+            <h2 class="login-title">Iniciar Sesión</h2>
+            <form id="login-form">
+                <div class="login-form-group">
+                    <label class="login-label">Nombre Usuario</label>
+                    <input type="text" id="login-username" class="login-input" placeholder="Nombre Usuario" required>
+                </div>
+                <div class="login-form-group">
+                    <label class="login-label">Contraseña</label>
+                    <input type="password" id="login-password" class="login-input" placeholder="********" required>
+                </div>
+                <button type="submit" class="btn-login">Ingresar</button>
+            </form>
+            <div class="login-footer">
+                ¿No tienes cuenta? <a href="/registro" style="color: var(--primary); font-weight: bold;">Regístrate
+                    aquí</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/public/payment.js"></script>
+    <script src="/static/js/public/cart.js"></script>
+    <script src="/static/js/public/smooth-scroll.min.js"></script>
+    <script src="/static/js/public/main.js"></script>
+    <script src="/static/js/public/views/registro.js"></script>
+</body>
+
+</html>

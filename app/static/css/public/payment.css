@@ -1,0 +1,183 @@
+/* Payment Modal Styles (Sidebar Layout) */
+
+/* Overlay */
+.payment-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    /* Slightly higher than cart (999/1000) so it stacks if needed, though we swap. */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Modal Sidebar */
+.payment-modal {
+    position: fixed;
+    top: 0;
+    right: -450px;
+    /* Hidden off-screen */
+    width: 420px;
+    /* Slightly wider than cart for forms */
+    height: 100vh;
+    background: #fff;
+    z-index: 1002;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    /* Reset */
+    border-radius: 0;
+    /* Reset from centered modal */
+    transform: none;
+    /* Reset */
+    max-width: 100%;
+    /* Mobile safety */
+}
+
+/* Open State */
+.payment-modal.open {
+    right: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+/* Overlay Visibility */
+.payment-modal.open~.payment-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* If overlay is modified by JS manually to have .open */
+.payment-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Header */
+.payment-header {
+    background: var(--primary);
+    /* Same as cart header */
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.payment-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.payment-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.2s;
+}
+
+.payment-close:hover {
+    color: var(--danger);
+    transform: rotate(90deg);
+}
+
+/* Content Area (Scrollable) */
+.payment-content {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+    /* Takes available space like cart-active-area */
+    background: #fff;
+}
+
+/* Form Groups */
+.payment-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.payment-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--dark);
+}
+
+.payment-input,
+.payment-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    background: #fff;
+}
+
+.payment-input:focus,
+.payment-select:focus {
+    outline: none;
+    border-color: var(--info);
+}
+
+/* Button & Footer Area (if we had a footer div, but button is in form) */
+.btn-confirm-payment {
+    width: 100%;
+    background: var(--danger);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.btn-confirm-payment:hover {
+    background: #c0392b;
+}
+
+.btn-confirm-payment:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.payment-error {
+    color: #dc3545;
+    background: #ffe6e6;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    display: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .payment-modal {
+        width: 100%;
+        right: -100%;
+    }
+}

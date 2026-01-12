@@ -12,48 +12,36 @@ import uuid
 public_bp = Blueprint('public', __name__)
 
 @public_bp.route("/")
-@public_bp.route("/productos")
-@public_bp.route("/")
-@public_bp.route("/productos")
-@public_bp.route("/publicaciones")
 def home():
     user = session.get('user_data')
-    return render_template("public_old/index.html", user=user)
+    return render_template("public/index.html", user=user)
 
-@public_bp.route("/new")
-def home_new():
+@public_bp.route("/adopcion")
+def adopcion_page():
     user = session.get('user_data')
-    return render_template("public_new/index.html", user=user)
+    return render_template("public/views/adopcion.html", user=user)
 
-@public_bp.route("/new/adopcion")
-def new_adopcion():
+@public_bp.route("/productos")
+def productos_page():
     user = session.get('user_data')
-    return render_template("public_new/views/adopcion.html", user=user)
-
-@public_bp.route("/new/productos")
-def new_productos():
-    user = session.get('user_data')
-    return render_template("public_new/views/productos.html", user=user)
-
-@public_bp.route("/new/servicios")
-def new_servicios():
-    user = session.get('user_data')
-    return render_template("public_new/views/servicios.html", user=user)
-
-@public_bp.route("/new/publicaciones")
-def new_publicaciones():
-    user = session.get('user_data')
-    return render_template("public_new/views/publicaciones.html", user=user)
+    return render_template("public/views/productos.html", user=user)
 
 @public_bp.route("/servicios")
 def servicios_page():
     user = session.get('user_data')
-    return render_template("public_old/index.html", user=user)
+    return render_template("public/views/servicios.html", user=user)
 
-@public_bp.route("/register")
+@public_bp.route("/publicaciones")
+def publicaciones_page():
+    user = session.get('user_data')
+    return render_template("public/views/publicaciones.html", user=user)
+
+@public_bp.route("/registro")
 def register_page():
     user = session.get('user_data')
-    return render_template("public_old/register.html", user=user)
+    return render_template("public/views/registro.html", user=user)
+
+
 
 @public_bp.route("/login")
 def login_redirect():
@@ -82,6 +70,14 @@ def initiate_register():
         return jsonify({"success": False, "message": "Email is required"}), 400
         
     result = AuthService.initiate_verification(email)
+    if result.get('success'):
+        return jsonify(result)
+    return jsonify(result), 400
+
+@public_bp.route("/api/auth/verify-code", methods=['POST'])
+def verify_code():
+    data = request.get_json()
+    result = AuthService.verify_registration(data)
     if result.get('success'):
         return jsonify(result)
     return jsonify(result), 400
@@ -118,10 +114,7 @@ def get_products():
     conn.close()
     return jsonify([p.to_dict() for p in products])
 
-@public_bp.route("/adopcion")
-def adopcion_page():
-    user = session.get('user_data')
-    return render_template("public_old/adopcion.html", user=user)
+
 
 @public_bp.route("/api/public/mascotas")
 def get_public_mascotas():

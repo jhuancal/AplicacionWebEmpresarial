@@ -328,9 +328,6 @@ CREATE TABLE IF NOT EXISTS Adopcion_Solicitud (
     USER_MODIFICACION VARCHAR(50)
 );
 
-
-
-
 INSERT INTO Seg_Rol (Id, Nombre, Descripcion, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
 ('11111111-1111-1111-1111-111111111111', 'Administrador', 'Administrador del sistema', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin'),
 ('22222222-2222-2222-2222-222222222222', 'Empleado', 'Empleado de ventas', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin');
@@ -350,41 +347,10 @@ INSERT INTO Seg_Rol_Acceso (Id, IdRol, Codigo, Valor, Tipo, IdAccesoUno, IdAcces
 (UUID(), '22222222-2222-2222-2222-222222222222', 'ADMIPROD', 'N', 'ADMIN', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'cccccccc-cccc-cccc-cccc-cccccccccccc', 1, 1, 1725375954790, 1725375954790, 'Admin', 'Admin');
 
 INSERT INTO Adm_Persona (Id, Nombres, Apellidos, DNI, Correo, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
-('P1111111-1111-1111-1111-111111111111', 'Abel', 'D', '77777777', 'abel@mail.com', 1, 1, 0, 0, 'SYS', 'SYS'),
-('P2222222-2222-2222-2222-222222222222', 'Bruno', 'C', '88888888', 'bruno@mail.com', 1, 1, 0, 0, 'SYS', 'SYS'),
-('P3333333-3333-3333-3333-333333333333', 'Carlos', 'E', '99999999', 'carlos@mail.com', 1, 1, 0, 0, 'SYS', 'SYS'),
-('P4444444-4444-4444-4444-444444444444', 'Admin', 'System', '00000000', 'admin@mail.com', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS');
+('P1111111-1111-1111-1111-111111111111', 'Abel', 'D', '77777777', 'abel@mail.com', 1, 1, 0, 0, 'Sistema', 'Sistema');
 
 INSERT INTO Seg_Cliente (Id, IdPersona, NombreUsuario, Contrasena, NumeroCuenta, NumeroTarjeta, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
-('C1111111-1111-1111-1111-111111111111', 'P1111111-1111-1111-1111-111111111111', 'abelcliente', '1234', 'ACC-ABEL-001', '4555-5555-5555-5555', 1, 1, 0, 0, 'SYS', 'SYS'),
-('C2222222-2222-2222-2222-222222222222', 'P2222222-2222-2222-2222-222222222222', 'bruno', '1234', 'ACC-BRUNO-001', '4444-4444-4444-4444', 1, 1, 0, 0, 'SYS', 'SYS');
+('C1111111-1111-1111-1111-111111111111', 'P1111111-1111-1111-1111-111111111111', 'abelcliente', '1234', 'ACC-ABEL-001', '4555-5555-5555-5555', 1, 1, 0, 0, 'Sistema', 'Sistema');
 
 INSERT INTO Seg_Colaborador (Id, IdPersona, NombreUsuario, Contrasena, IdRol, EsActivo, FechaContratacion, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
-('K1111111-1111-1111-1111-111111111111', 'P1111111-1111-1111-1111-111111111111', 'ws_abelAdmin', '1234', '22222222-2222-2222-2222-222222222222', 1, 0, 1, 1, 0, 0, 'SYS', 'SYS'),
-('K3333333-3333-3333-3333-333333333333', 'P3333333-3333-3333-3333-333333333333', 'ws_carlos', '1234', '22222222-2222-2222-2222-222222222222', 1, 0, 1, 1, 0, 0, 'SYS', 'SYS'),
-('K4444444-4444-4444-4444-444444444444', 'P4444444-4444-4444-4444-444444444444', 'admin', 'admin', '11111111-1111-1111-1111-111111111111', 1, 0, 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS');
-
-INSERT INTO Adm_Producto (Id, Nombre, Descripcion, PrecioRegular, PrecioVenta, Descuento, DiaLlegada, UrlImagen, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
-(UUID(), 'Silla', 'Silla cómoda', 389.00, 439.00, 80, 'Martes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),
-(UUID(), 'Mesa', 'Mesa de madera', 150.00, 120.00, 20, 'Lunes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS'),
-(UUID(), 'Sofá', 'Sofá de cuero', 500.00, 450.00, 10, 'Viernes', 'https://quepatas.com/cdn/shop/files/MALSEG-1_847d98d0-fd53-4edc-a847-5d5e72b0a402.jpg?v=1747856665&width=1100', 1, 1, 1725375954790, 1725375954790, 'SYS', 'SYS');
-
-INSERT INTO Adm_Servicios (Id, Nombre, TipoMascota, Categoria, DuracionMinutos, Costo, Descripcion, Requisitos, Horario, PersonalAsignado, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION)
-VALUES ('serv-001', 'Baño Premium', 'Perro', 'Aseo', 60, 50.00, 'Baño con shampoo antipulgas', 'Ninguno', 'L-V 9-18', 'Juan', 1, 1, 0, 0, 'SYS', 'SYS')
-ON DUPLICATE KEY UPDATE Nombre = Nombre;
-
-INSERT INTO Adm_Mascota (Id, IdCliente, Nombre, Raza, Tipo, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION)
-VALUES ('pet-001', 'C1111111-1111-1111-1111-111111111111', 'Firulais', 'Labrador', 'Perro', 1, 1, 0, 0, 'SYS', 'SYS')
-ON DUPLICATE KEY UPDATE Nombre = Nombre;
-
-INSERT INTO Cli_Publicaciones (Id, IdCliente, Contenido, FechaPublicacion, Likes, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
-('pub-001', 'C2222222-2222-2222-2222-222222222222', '¡Disfrutando un día de parque con mi perro! 🌳🐶', NOW(), 15, 1, 1, 0, 0, 'SYS', 'SYS'),
-('pub-002', 'C1111111-1111-1111-1111-111111111111', 'Mi gato aprendió un nuevo truco hoy. 😺', NOW() - INTERVAL 1 DAY, 24, 1, 1, 0, 0, 'SYS', 'SYS'),
-('pub-003', 'C2222222-2222-2222-2222-222222222222', 'Mirad qué bonito collar le compré a Bobby en AlmasSalvajes.', NOW() - INTERVAL 2 DAY, 10, 1, 1, 0, 0, 'SYS', 'SYS')
-ON DUPLICATE KEY UPDATE Contenido = Contenido;
-
-INSERT INTO Cli_Publicacion_Media (Id, IdPublicacion, Url, TipoMedia, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
-('med-001', 'pub-001', 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'Imagen', 1, 1, 0, 0, 'SYS', 'SYS'),
-('med-002', 'pub-002', 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'Imagen', 1, 1, 0, 0, 'SYS', 'SYS'),
-('med-003', 'pub-003', 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', 'Imagen', 1, 1, 0, 0, 'SYS', 'SYS')
-ON DUPLICATE KEY UPDATE Url = Url;
+('K1111111-1111-1111-1111-111111111111', 'P1111111-1111-1111-1111-111111111111', 'ws_abelAdmin', '1234', '22222222-2222-2222-2222-222222222222', 1, 0, 1, 1, 0, 0, 'Sistema', 'Sistema');

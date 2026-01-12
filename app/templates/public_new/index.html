@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wily Savy</title>
+  <link rel="stylesheet" href="/static/css/public_new/bulma.min.css">
+  <link rel="stylesheet" href="/static/css/public_new/material-design-iconic-font.css">
+  <link rel="stylesheet" href="/static/css/public_new/style.css">
+
+</head>
+
+<body>
+  <nav class="navbar">
+    <!-- Nabvar header -->
+    <header class="navbar-header" id="navbar-header">
+      <a href="#" class="brand-link" style="display: flex; align-items: center;">
+        <img src="/static/img_new/logo-big.png" alt="Almas Salvajes Logo" class="navbar-logo">
+        <span class="brand is-size-3">Almas Salvajes</span>
+      </a>
+      <button class="navbar-menu-mobile open is-size-3 is-hidden-desktop" id="navbar-menu-mobile">
+        <i class="zmdi zmdi-menu"></i>
+      </button>
+    </header>
+    <!-- Navbar container -->
+
+    <ul class="navbar-container" id="navbar-container">
+      <li class="navbar-item">
+        <a data-scroll href="/new" id="inicio" class="navbar-a navbar-link-active">Inicio</a>
+      </li>
+      <li class="navbar-item">
+        <a href="/new/adopcion" id="adopcion" class="navbar-a">Adopción</a>
+      </li>
+      <li class="navbar-item">
+        <a href="/new/productos" id="productos" class="navbar-a">Productos</a>
+      </li>
+      <li class="navbar-item">
+        <a href="/new/servicios" id="servicios" class="navbar-a">Servicios</a>
+      </li>
+      <li class="navbar-item">
+        <a href="/new/publicaciones" id="publicaciones" class="navbar-a">Publicaciones</a>
+      </li>
+      {% if user %}
+      <li class="navbar-item">
+        <span class="navbar-a">Hola, {{ user.Nombres }}</span>
+      </li>
+      <li class="navbar-item">
+        <a href="#" id="cart-trigger" class="navbar-a" style="display: flex; align-items: center;">
+          <i class="zmdi zmdi-shopping-cart" style="font-size: 1.5rem;"></i>
+          <span class="cart-badge" id="cart-count-badge" style="display:none;">0</span>
+        </a>
+      </li>
+      <li class="navbar-item">
+        <a href="/logout" class="navbar-a">Cerrar Sesión</a>
+      </li>
+      {% else %}
+      <li class="navbar-item">
+        <a href="#" id="login-trigger" class="navbar-a">Iniciar Sesión</a>
+      </li>
+      {% endif %}
+    </ul>
+
+  </nav>
+  <!-- Sección del carrusel -->
+
+  <div class="section-body" id="top">
+    <div class="slide-contenedor">
+      <div class="miSlider fade">
+        <div class="slider-body">
+          <span class="tag-slider is-size-5-desktop">Adopción</span>
+          <h2 class="is-size-3-mobile has-text-weight-bold slider-title">Adopta una Mascota</h2>
+          <p class="description-slider is-size-7-mobile">Encuentra tu compañero perfecto entre nuestras mascotas
+            rescatadas esperando un hogar lleno de amor.</p>
+        </div>
+        <img src="/static/img_new/slider-1.jpg" alt="">
+      </div>
+      <div class="miSlider fade">
+        <div class="slider-body">
+          <span class="tag-slider">Productos</span>
+          <h2 class="is-size-3-mobile has-text-weight-bold slider-title">Productos de calidad</h2>
+          <p class="description-slider is-size-7-mobile">Todo lo que necesitas para el bienestar de tu mascota:
+            alimentos, juguetes, accesorios y más.</p>
+        </div>
+        <img src="/static/img_new/slider-2.jpg" alt="">
+      </div>
+      <div class="miSlider fade">
+        <div class="slider-body">
+          <span class="tag-slider">Comunidad</span>
+          <h2 class="is-size-3-mobile has-text-weight-bold slider-title">Nuestra Comunidad</h2>
+          <p class="description-slider is-size-7-mobile">Comparte fotos de tus mascotas y conoce a otros amantes de los
+            animales en nuestro apartado de publicaciones.</p>
+        </div>
+        <img src="/static/img_new/slider-3.jpg" alt="">
+      </div>
+      <div class="direcciones">
+        <a href="#" class="atras" onclick="avanzaSlide(-1)">&#10094;</a>
+        <a href="#" class="adelante" onclick="avanzaSlide(1)">&#10095;</a>
+      </div>
+      <div class="dots">
+        <span class="dot active" onclick="posicionSlide(1)"></span>
+        <span class="dot" onclick="posicionSlide(2)"></span>
+        <span class="dot" onclick="posicionSlide(3)"></span>
+      </div>
+    </div>
+    <!-- Adopta -->
+    <div class="container" id="about">
+      <div class="columns is-vcentered">
+        <div class="column is-half">
+          <div class="about-me">
+            <figure class="image">
+              <img class="about-me-img" src="/static/img_new/about-me-mobile.jpg" alt="">
+            </figure>
+          </div>
+        </div>
+        <div class="column is-half section-about-me">
+          <h1 class="title is-size-3-mobile is-size-2-tablet has-text-weight">Dale un Hogar a un Amigo</h1>
+          <h5 class="subtitle is-size-6-mobile is-size-5-tablet separator">Encuentra tu compañero perfecto</h5>
+          <p class="text is-size-7-mobile">Encuentra tu compañero perfecto y todo lo que necesitas para su bienestar en
+            un solo lugar. En Almas Salvajes, nos dedicamos a conectar corazones y crear familias felices.</p>
+          <p class="text is-size-7-mobile">
+            Explora nuestra galería de mascotas listas para adopción y descubre cómo puedes cambiar una vida hoy mismo.
+            También ofrecemos una amplia gama de productos de alta calidad para asegurar que tu nuevo amigo tenga todo
+            lo que necesita.
+          </p>
+          <div style="margin-top: 20px;">
+            <a href="#gallery" class="button is-black is-medium is-radiusless is-shadowless">Ver Mascotas</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pasos para adoptar -->
+    <div id="section2" class="hero my-hero" style="--banner: url(/static/img_new/hero-img.jpg); --bg-atachment: fixed;">
+      <div class="container-hero">
+        <div class="container">
+          <div class="columns is-multiline">
+            <div class="column is-full has-text-centered">
+              <h1 class="title has-text-white is-size-3-mobile is-size-1-tablet">
+                Pasos para Adoptar
+              </h1>
+              <h5 class="subtitle is-size-5">
+                Encuentra a tu compañero ideal
+              </h5>
+            </div>
+            <div class="column">
+              <div class="banner-container">
+                <span class="container-icon">
+                  <i class="zmdi zmdi-search zmdi-hc-2x"></i>
+                </span>
+                <h4 class="is-size-5 has-text-centered has-text-weight-bold">Encuentra a tu Amigo</h4>
+                <p class="has-text-centered is-size-7-mobile">Explora entre todas nuestras mascotas rescatadas y
+                  encuentra a tu compañero perfecto esperando por ti.</p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="banner-container">
+                <span class="container-icon">
+                  <i class="zmdi zmdi-calendar-check zmdi-hc-2x"></i>
+                </span>
+                <h4 class="is-size-5 has-text-centered has-text-weight-bold">Conoce y Reserva</h4>
+                <p class="has-text-centered is-size-7-mobile">Agenda una visita para conoceros. Si hay conexión mutua,
+                  reservamos tu adopción de inmediato.</p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="banner-container">
+                <span class="container-icon">
+                  <i class="zmdi zmdi-home zmdi-hc-2x"></i>
+                </span>
+                <h4 class="is-size-5 has-text-centered has-text-weight-bold">Bienvenida a Casa</h4>
+                <p class="has-text-centered is-size-7-mobile">Recoge a tu mascota. Te ofrecemos planes de salud y
+                  beneficios exclusivos para su nuevo hogar.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Nuestros Productos -->
+    <div class="container" id="gallery">
+      <div class="columns is-multiline">
+        <div class="column has-text-centered is-full">
+          <h1 class="title is-size-3-mobile is-size-1-tablet has-text-weight">Nuestros Productos</h1>
+          <h5 class="subtitle is-size-6">Para el bienestar de tu compañero</h5>
+        </div>
+        <div class="column">
+          <div class="gallery-container" id="gallery-container">
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-1-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-2-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-3-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-4-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-5-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-6-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-7-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-8-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-9-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-10-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-11-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+            <div class="gallery-item">
+              <figure class="image">
+                <img class="gallery-img" src="/static/img_new/gallery-12-thumb.jpg" alt=""
+                  style="width: 336px; height: 223px;">
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Nuestros Servicios -->
+    <div class="container is-fluid" style="padding: 0;" id="servicios">
+      <div class="columns is-gapless is-multiline" style="margin-bottom: 0;">
+        <div class="column has-text-centered is-full" style="padding: 2rem !important; background-color: var(--white);">
+          <h1 class="title is-size-3-mobile is-size-1-tablet has-text-weight">Nuestros Servicios</h1>
+          <h5 class="subtitle is-size-6">Cuidado integral para tu mejor amigo</h5>
+        </div>
+        <div class="column is-4-desktop is-12-tablet">
+          <div class="service-card service-bg-1">
+            <div class="service-content-overlay has-text-centered">
+              <p class="title is-4">Peluquería y Aseo</p>
+              <p class="subtitle is-6" style="padding-top: 10px;">Cuidado estético profesional</p>
+              <div class="content">
+                Ofrecemos baños relajantes, cortes de raza y tratamientos de spa para que tu mascota luzca y se sienta
+                espectacular.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4-desktop is-12-tablet">
+          <div class="service-card service-bg-2">
+            <div class="service-content-overlay has-text-centered">
+              <p class="title is-4">Cuidado y Alojamiento</p>
+              <p class="subtitle is-6" style="padding-top: 10px;">Tu mascota en buenas manos</p>
+              <div class="content">
+                Cuidadores de confianza para cuando tengas que viajar. Alojamiento cómodo y seguro con actualizaciones
+                diarias.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4-desktop is-12-tablet">
+          <div class="service-card service-bg-3">
+            <div class="service-content-overlay has-text-centered">
+              <p class="title is-4">Salud Veterinaria</p>
+              <p class="subtitle is-6" style="padding-top: 10px;">Bienestar garantizado</p>
+              <div class="content">
+                Atención veterinaria preventiva y de urgencia. Registramos cada detalle de su salud para asegurar una
+                vida larga y feliz.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Publicaciones-->
+    <div id="publicaciones-header" class="hero my-hero"
+      style="--banner: url(/static/img_new/publications.jpg); --bg-atachment: fixed; margin-top: 5rem; margin-bottom: 0px;">
+      <div class="container-hero">
+        <div class="container">
+          <div class="columns is-multiline">
+            <div class="column is-two-thirds-desktop is-full-tablet has-text-left">
+              <h1 class="title has-text-white is-size-3-mobile is-size-1-tablet has-text-weight"
+                style="display: flex; align-items: center;">
+                <i class="zmdi zmdi-camera-alt" style="margin-right: 15px;"></i>El Muro de Patitas
+              </h1>
+              <h5 class="subtitle has-text-white is-size-5" style="margin-bottom: 2rem; max-width: 90%;">
+                Descubre los momentos más divertidos y tiernos de nuestros huéspedes. Desde días de spa hasta tardes de
+                juegos, cada foto cuenta una historia de felicidad y cuidado. ¡Únete a nuestra comunidad!
+              </h5>
+              <div class="buttons">
+                <button class="button is-rounded is-outlined is-white">Siguiendo</button>
+                <button class="button is-rounded is-info">Explorar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" id="publicaciones-grid" style="padding-top: 0; padding-bottom: 25px;">
+      <div class="patitas-masonry-container">
+        <div class="patitas-masonry-wrapper">
+          <div class="patitas-masonry-item">
+            <div class="card publication-card">
+              <div class="card-image" style="padding: 0.75rem;">
+                <div class="publication-image-container">
+                  <img src="/static/img_new/post-1.jpg" alt="Pet Post 1" class="publication-img">
+                  <div class="publication-badge">
+                    <i class="zmdi zmdi-check-circle" style="color: var(--info);"></i> Documentado
+                  </div>
+                </div>
+              </div>
+              <div class="card-content" style="padding: 0.5rem 1rem;">
+                <div class="media" style="margin-bottom: 0.5rem; align-items: center;">
+                  <div class="media-left" style="margin-right: 0.5rem;">
+                    <div class="avatar-container"
+                      style="background:#e0f2fe; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.7rem; color:#0369a1">
+                      PC</div>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-7" style="margin:0">PetCare+</p>
+                    <p class="subtitle is-7" style="margin:0; font-size:0.7rem; color:grey">hace 2h</p>
+                  </div>
+                  <div class="media-right"><span class="icon is-small like-button"><i
+                        class="zmdi zmdi-favorite-outline"></i></span></div>
+                </div>
+                <div class="content is-size-7">¡Día de spa completo! 🛁</div>
+              </div>
+            </div>
+          </div>
+          <div class="patitas-masonry-item">
+            <div class="card publication-card">
+              <div class="card-image" style="padding: 0.75rem;">
+                <div class="publication-image-container">
+                  <img src="/static/img_new/post-2.jpg" alt="Pet Post 2" class="publication-img">
+                  <div class="publication-badge">Público</div>
+                </div>
+              </div>
+              <div class="card-content" style="padding: 0.5rem 1rem;">
+                <div class="media" style="margin-bottom: 0.5rem; align-items: center;">
+                  <div class="media-left" style="margin-right: 0.5rem;">
+                    <div class="avatar-container"
+                      style="background:#e0e7ff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.7rem; color:#4338ca">
+                      SJ</div>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-7" style="margin:0">Sara J.</p>
+                    <p class="subtitle is-7" style="margin:0; font-size:0.7rem; color:grey">hace 5h</p>
+                  </div>
+                  <div class="media-right"><span class="icon is-small like-button"><i
+                        class="zmdi zmdi-favorite-outline"></i></span></div>
+                </div>
+                <div class="content is-size-7">Amando la vista 😻</div>
+              </div>
+            </div>
+          </div>
+          <div class="patitas-masonry-item">
+            <div class="card publication-card">
+              <div class="card-image" style="padding: 0.75rem;">
+                <div class="publication-image-container">
+                  <img src="/static/img_new/post-3.jpg" alt="Pet Post 3" class="publication-img">
+                  <div class="publication-badge"><i class="zmdi zmdi-check-circle" style="color: var(--info);"></i>
+                    Documentado</div>
+                </div>
+              </div>
+              <div class="card-content" style="padding: 0.5rem 1rem;">
+                <div class="media" style="margin-bottom: 0.5rem; align-items: center;">
+                  <div class="media-left" style="margin-right: 0.5rem;">
+                    <div class="avatar-container"
+                      style="background:#f0f9ff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.7rem; color:#0c4a6e">
+                      PC</div>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-7" style="margin:0">PetCare+</p>
+                    <p class="subtitle is-7" style="margin:0; font-size:0.7rem; color:grey">hace 6h</p>
+                  </div>
+                  <div class="media-right"><span class="icon is-small like-button"><i
+                        class="zmdi zmdi-favorite-outline"></i></span></div>
+                </div>
+                <div class="content is-size-7">Check-in listo 🦴</div>
+              </div>
+            </div>
+          </div>
+          <div class="patitas-masonry-item">
+            <div class="card publication-card">
+              <div class="card-image" style="padding: 0.75rem;">
+                <div class="publication-image-container">
+                  <img src="/static/img_new/post-4.jpg" alt="Pet Post 4" class="publication-img">
+                  <div class="publication-badge">Público</div>
+                </div>
+              </div>
+              <div class="card-content" style="padding: 0.5rem 1rem;">
+                <div class="media" style="margin-bottom: 0.5rem; align-items: center;">
+                  <div class="media-left" style="margin-right: 0.5rem;">
+                    <div class="avatar-container"
+                      style="background:#ffedd5; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.7rem; color:#c2410c">
+                      MK</div>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-7" style="margin:0">Miguel K.</p>
+                    <p class="subtitle is-7" style="margin:0; font-size:0.7rem; color:grey">hace 1d</p>
+                  </div>
+                  <div class="media-right"><span class="icon is-small like-button"><i
+                        class="zmdi zmdi-favorite-outline"></i></span></div>
+                </div>
+                <div class="content is-size-7">Jugando en el parque</div>
+              </div>
+            </div>
+          </div>
+          <div class="patitas-masonry-item">
+            <div class="card publication-card">
+              <div class="card-image" style="padding: 0.75rem;">
+                <div class="publication-image-container">
+                  <img src="/static/img_new/post-5.jpg" alt="Pet Post 5" class="publication-img">
+                  <div class="publication-badge">Público</div>
+                </div>
+              </div>
+              <div class="card-content" style="padding: 0.5rem 1rem;">
+                <div class="media" style="margin-bottom: 0.5rem; align-items: center;">
+                  <div class="media-left" style="margin-right: 0.5rem;">
+                    <div class="avatar-container"
+                      style="background:#dcfce7; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.7rem; color:#15803d">
+                      AN</div>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-7" style="margin:0">Ana N.</p>
+                    <p class="subtitle is-7" style="margin:0; font-size:0.7rem; color:grey">hace 2d</p>
+                  </div>
+                  <div class="media-right"><span class="icon is-small like-button"><i
+                        class="zmdi zmdi-favorite-outline"></i></span></div>
+                </div>
+                <div class="content is-size-7">¡Nueva aventura!</div>
+              </div>
+            </div>
+          </div>
+          <div class="patitas-masonry-item">
+            <div class="card publication-card">
+              <div class="card-image" style="padding: 0.75rem;">
+                <div class="publication-image-container">
+                  <img src="/static/img_new/post-6.jpg" alt="Pet Post 6" class="publication-img">
+                  <div class="publication-badge"><i class="zmdi zmdi-check-circle" style="color: var(--info);"></i>
+                    Documentado</div>
+                </div>
+              </div>
+              <div class="card-content" style="padding: 0.5rem 1rem;">
+                <div class="media" style="margin-bottom: 0.5rem; align-items: center;">
+                  <div class="media-left" style="margin-right: 0.5rem;">
+                    <div class="avatar-container"
+                      style="background:#eef2ff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.7rem; color:#3730a3">
+                      PC</div>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-7" style="margin:0">PetCare+</p>
+                    <p class="subtitle is-7" style="margin:0; font-size:0.7rem; color:grey">hace 3d</p>
+                  </div>
+                  <div class="media-right"><span class="icon is-small like-button"><i
+                        class="zmdi zmdi-favorite-outline"></i></span></div>
+                </div>
+                <div class="content is-size-7">Hora de la siesta 😴</div>
+              </div>
+            </div>
+          </div>
+          <div class="patitas-masonry-item">
+            <div class="card publication-card">
+              <div class="card-image" style="padding: 0.75rem;">
+                <div class="publication-image-container">
+                  <img src="/static/img_new/post-7.jpg" alt="Pet Post 7" class="publication-img">
+                  <div class="publication-badge">Público</div>
+                </div>
+              </div>
+              <div class="card-content" style="padding: 0.5rem 1rem;">
+                <div class="media" style="margin-bottom: 0.5rem; align-items: center;">
+                  <div class="media-left" style="margin-right: 0.5rem;">
+                    <div class="avatar-container"
+                      style="background:#fee2e2; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.7rem; color:#b91c1c">
+                      LP</div>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-7" style="margin:0">Luis P.</p>
+                    <p class="subtitle is-7" style="margin:0; font-size:0.7rem; color:grey">hace 4d</p>
+                  </div>
+                  <div class="media-right"><span class="icon is-small like-button"><i
+                        class="zmdi zmdi-favorite-outline"></i></span></div>
+                </div>
+                <div class="content is-size-7">Mi mejor amigo 🐶</div>
+              </div>
+            </div>
+          </div>
+          <div class="patitas-masonry-item">
+            <div class="card publication-card">
+              <div class="card-image" style="padding: 0.75rem;">
+                <div class="publication-image-container">
+                  <img src="/static/img_new/post-8.jpg" alt="Pet Post 8" class="publication-img">
+                  <div class="publication-badge"><i class="zmdi zmdi-check-circle" style="color: var(--info);"></i>
+                    Documentado</div>
+                </div>
+              </div>
+              <div class="card-content" style="padding: 0.5rem 1rem;">
+                <div class="media" style="margin-bottom: 0.5rem; align-items: center;">
+                  <div class="media-left" style="margin-right: 0.5rem;">
+                    <div class="avatar-container"
+                      style="background:#f5f3ff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.7rem; color:#5b21b6">
+                      PC</div>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-7" style="margin:0">PetCare+</p>
+                    <p class="subtitle is-7" style="margin:0; font-size:0.7rem; color:grey">hace 5d</p>
+                  </div>
+                  <div class="media-right"><span class="icon is-small like-button"><i
+                        class="zmdi zmdi-favorite-outline"></i></span></div>
+                </div>
+                <div class="content is-size-7">Listos para el paseo 🌳</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="patitas-fade-overlay"></div>
+      </div>
+      <div class="has-text-centered" style="margin-top: -30px; position: relative; z-index: 10;">
+        <button class="button is-text has-text-dark has-text-weight-bold"
+          style="background: rgba(255,255,255,0.8); padding: 0.5rem 1rem; border-radius: 20px; color: #ef5734 !important; padding-bottom: 50px;">
+          Cargar Más Publicaciones
+          <i class="zmdi zmdi-chevron-down" style="margin-left: 5px;"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="my-footer">
+      <div class="hero my-hero" style="--banner: url(/static/img_new/footer-banner.jpg); --bg-atachment: none;">
+        <div class="container-hero">
+          <div class="columns is-multiline">
+            <div class="column is-full has-text-centered">
+              <span class="has-text-white">
+                <img src="/static/img_new/logo-big.png" alt="Almas Salvajes Logo" class="footer-logo">
+              </span>
+            </div>
+            <div class="column is-full">
+              <ul class="my-footer-ul">
+                <li class="my-footer-item">
+                  <a href="#" class="my-footer-link">
+                    <i class="zmdi zmdi-whatsapp"></i>
+                  </a>
+                </li>
+                <li class="my-footer-item">
+                  <a href="#" class="my-footer-link facebook">
+                    <i class="zmdi zmdi-facebook"></i>
+                  </a>
+                </li>
+                <li class="my-footer-item">
+                  <a href="#" class="my-footer-link instagram">
+                    <i class="zmdi zmdi-instagram"></i>
+                  </a>
+                </li>
+                <li class="my-footer-item">
+                  <a href="#" class="my-footer-link">
+                    <i class="zmdi zmdi-youtube"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="column has-text-centered is-full">
+              <p class="has-text-white is-size-6" style="margin-bottom: 1rem;">Escríbenos a jhuancal@unsa.edu.pe</p>
+            </div>
+            <div class="column has-text-centered is-size-7-mobile  is-full">
+              <p class="footer-p has-text-white">© 2025 Almas Salvajes. Todos los derechos reservados</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="login-modal-overlay" id="login-modal">
+    <div class="login-modal-content">
+      <button class="modal-close"
+        style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#8E8E8E;">&times;</button>
+      <h2 class="login-title">Iniciar Sesión</h2>
+      <form id="login-form">
+        <div class="login-form-group">
+          <label class="login-label">Nombre Usuario</label>
+          <input type="text" id="login-username" class="login-input" placeholder="Nombre Usuario" required>
+        </div>
+        <div class="login-form-group">
+          <label class="login-label">Contraseña</label>
+          <input type="password" id="login-password" class="login-input" placeholder="********" required>
+        </div>
+        <button type="submit" class="btn-login">Ingresar</button>
+      </form>
+      <div class="login-footer">
+        ¿No tienes cuenta? <a href="#">Regístrate aquí</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="cart-overlay"></div>
+  <div class="cart-modal" id="cart-modal">
+    <div class="cart-header">
+      <h3><i class="zmdi zmdi-shopping-cart"></i> Mi Carrito</h3>
+      <button class="cart-close"><i class="zmdi zmdi-close"></i></button>
+    </div>
+    <div class="cart-active-area" id="cart-items-container">
+      <!-- Items will be loaded here -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span>S/ <span id="cart-total-amount">0.00</span></span>
+      </div>
+      <button class="btn-checkout" id="btn-checkout" onclick="window.location.href='/checkout'">Proceder al Pago <i
+          class="zmdi zmdi-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <script src="/static/js/public_new/cart.js"></script>
+  <script src="/static/js/public_new/smooth-scroll.min.js"></script>
+  <script src="/static/js/public_new/main.js"></script>
+
+</body>
+
+</html>

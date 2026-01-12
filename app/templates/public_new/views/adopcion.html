@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adopción - Almas Salvajes</title>
+    <link rel="stylesheet" href="/static/css/public_new/bulma.min.css">
+    <link rel="stylesheet" href="/static/css/public_new/material-design-iconic-font.css">
+    <link rel="stylesheet" href="/static/css/public_new/style.css">
+    <link rel="stylesheet" href="/static/css/public_new/views/adopcion.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <header class="navbar-header" id="navbar-header">
+            <a href="/new" class="brand-link" style="display: flex; align-items: center;">
+                <img src="/static/img_new/logo-big.png" alt="Almas Salvajes Logo" class="navbar-logo">
+                <span class="brand is-size-3">Almas Salvajes</span>
+            </a>
+            <button class="navbar-menu-mobile open is-size-3 is-hidden-desktop" id="navbar-menu-mobile">
+                <i class="zmdi zmdi-menu"></i>
+            </button>
+        </header>
+
+        <ul class="navbar-container" id="navbar-container">
+            <li class="navbar-item">
+                <a href="/new#top" class="navbar-a">Inicio</a>
+            </li>
+            <li class="navbar-item">
+                <a href="#" class="navbar-a navbar-link-active">Adopción</a>
+            </li>
+            <li class="navbar-item">
+                <a href="/new/productos" class="navbar-a">Productos</a>
+            </li>
+            <li class="navbar-item">
+                <a href="/new/servicios" class="navbar-a">Servicios</a>
+            </li>
+            <li class="navbar-item">
+                <a href="/new/publicaciones" class="navbar-a">Publicaciones</a>
+            </li>
+            {% if user %}
+            <li class="navbar-item">
+                <span class="navbar-a">Hola, {{ user.Nombres }}</span>
+            </li>
+            <li class="navbar-item">
+                <a href="/logout" class="navbar-a">Cerrar Sesión</a>
+            </li>
+            {% else %}
+            <li class="navbar-item">
+                <a href="#" id="login-trigger" class="navbar-a">Iniciar Sesión</a>
+            </li>
+            {% endif %}
+        </ul>
+
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="adoption-hero">
+        <div class="adoption-hero-content">
+            <h1 class="title has-text-white is-size-1-desktop is-size-3-mobile">Adopta un Amigo</h1>
+            <h3 class="subtitle has-text-white is-size-4-desktop is-size-6-mobile">Dale una segunda oportunidad a un
+                corazón noble</h3>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="adoption-filters">
+        <button class="adoption-filter-btn active" data-filter="all">Todos</button>
+        <button class="adoption-filter-btn" data-filter="perro"><i class="zmdi zmdi-google-earth"></i> Perros</button>
+        <button class="adoption-filter-btn" data-filter="gato"><i class="zmdi zmdi-cocktail"></i> Gatos</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="adoption-container" id="adopciones-list">
+        <!-- JS will render cards here -->
+        <p class="has-text-centered p-5">Cargando peluditos...</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="my-footer">
+        <div class="hero my-hero" style="--banner: url(/static/img_new/footer-banner.jpg); --bg-atachment: none;">
+            <div class="container-hero">
+                <div class="columns is-multiline">
+                    <div class="column is-full has-text-centered">
+                        <span class="has-text-white">
+                            <img src="/static/img_new/logo-big.png" alt="Almas Salvajes Logo" class="footer-logo">
+                        </span>
+                    </div>
+                    <div class="column is-full">
+                        <ul class="my-footer-ul">
+                            <li class="my-footer-item">
+                                <a href="#" class="my-footer-link">
+                                    <i class="zmdi zmdi-whatsapp"></i>
+                                </a>
+                            </li>
+                            <li class="my-footer-item">
+                                <a href="#" class="my-footer-link facebook">
+                                    <i class="zmdi zmdi-facebook"></i>
+                                </a>
+                            </li>
+                            <li class="my-footer-item">
+                                <a href="#" class="my-footer-link instagram">
+                                    <i class="zmdi zmdi-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="my-footer-item">
+                                <a href="#" class="my-footer-link">
+                                    <i class="zmdi zmdi-youtube"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="column has-text-centered is-full">
+                        <p class="has-text-white is-size-6" style="margin-bottom: 1rem;">Escríbenos a
+                            jhuancal@unsa.edu.pe</p>
+                    </div>
+                    <div class="column has-text-centered is-size-7-mobile  is-full">
+                        <p class="footer-p has-text-white">© 2025 Almas Salvajes. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="login-modal-overlay" id="login-modal">
+        <div class="login-modal-content">
+            <button class="modal-close"
+                style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#8E8E8E;">&times;</button>
+            <h2 class="login-title">Iniciar Sesión</h2>
+            <form id="login-form">
+                <div class="login-form-group">
+                    <label class="login-label">Nombre Usuario</label>
+                    <input type="text" id="login-username" class="login-input" placeholder="Nombre Usuario" required>
+                </div>
+                <div class="login-form-group">
+                    <label class="login-label">Contraseña</label>
+                    <input type="password" id="login-password" class="login-input" placeholder="********" required>
+                </div>
+                <button type="submit" class="btn-login">Ingresar</button>
+            </form>
+            <div class="login-footer">
+                ¿No tienes cuenta? <a href="#">Regístrate aquí</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adoption Confirmation Modal -->
+    <div class="login-modal-overlay" id="adoption-modal">
+        <div class="login-modal-content">
+            <button class="modal-close"
+                style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#8E8E8E;">&times;</button>
+            <h2 class="login-title">Confirmar Adopción</h2>
+            <p id="adoption-modal-message" style="margin-bottom: 20px; color: #666; text-align: center;">¿Estás seguro?
+            </p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button type="button" class="btn-login" id="btn-confirm-adopt"
+                    style="background-color: #ff7043;">Confirmar</button>
+                <button type="button" class="btn-login" id="btn-cancel-adopt"
+                    style="background-color: #999;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/public_new/smooth-scroll.min.js"></script>
+    <script src="/static/js/public_new/main.js"></script>
+    <script src="/static/js/public_new/views/adopcion.js"></script>
+
+</body>
+
+</html>

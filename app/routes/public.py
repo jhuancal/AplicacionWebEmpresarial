@@ -18,17 +18,42 @@ public_bp = Blueprint('public', __name__)
 @public_bp.route("/publicaciones")
 def home():
     user = session.get('user_data')
-    return render_template("public/index.html", user=user)
+    return render_template("public_old/index.html", user=user)
+
+@public_bp.route("/new")
+def home_new():
+    user = session.get('user_data')
+    return render_template("public_new/index.html", user=user)
+
+@public_bp.route("/new/adopcion")
+def new_adopcion():
+    user = session.get('user_data')
+    return render_template("public_new/views/adopcion.html", user=user)
+
+@public_bp.route("/new/productos")
+def new_productos():
+    user = session.get('user_data')
+    return render_template("public_new/views/productos.html", user=user)
+
+@public_bp.route("/new/servicios")
+def new_servicios():
+    user = session.get('user_data')
+    return render_template("public_new/views/servicios.html", user=user)
+
+@public_bp.route("/new/publicaciones")
+def new_publicaciones():
+    user = session.get('user_data')
+    return render_template("public_new/views/publicaciones.html", user=user)
 
 @public_bp.route("/servicios")
 def servicios_page():
     user = session.get('user_data')
-    return render_template("public/index.html", user=user)
+    return render_template("public_old/index.html", user=user)
 
 @public_bp.route("/register")
 def register_page():
     user = session.get('user_data')
-    return render_template("public/register.html", user=user)
+    return render_template("public_old/register.html", user=user)
 
 @public_bp.route("/login")
 def login_redirect():
@@ -96,7 +121,7 @@ def get_products():
 @public_bp.route("/adopcion")
 def adopcion_page():
     user = session.get('user_data')
-    return render_template("public/adopcion.html", user=user)
+    return render_template("public_old/adopcion.html", user=user)
 
 @public_bp.route("/api/public/mascotas")
 def get_public_mascotas():

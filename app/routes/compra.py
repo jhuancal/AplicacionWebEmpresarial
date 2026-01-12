@@ -13,14 +13,14 @@ def checkout_page():
     user = session.get('user_data')
     if not user:
         return redirect("/login")
-    return render_template("public/checkout.html", user=user)
+    return render_template("public_old/checkout.html", user=user)
 
 @compra_bp.route("/compras")
 def history_page():
     user = session.get('user_data')
     if not user:
         return redirect("/login")
-    return render_template("public/compras.html", user=user)
+    return render_template("public_old/compras.html", user=user)
 
 @compra_bp.route("/api/checkout", methods=['POST'])
 def process_checkout():

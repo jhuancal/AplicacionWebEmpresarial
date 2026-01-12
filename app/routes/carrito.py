@@ -10,7 +10,7 @@ def view_cart():
     user = session.get('user_data')
     if not user:
         return redirect("/login")
-    return render_template("public/carrito.html", user=user)
+    return render_template("public_old/carrito.html", user=user)
 
 @carrito_bp.route("/api/carrito/items")
 def get_cart_items():

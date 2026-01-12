@@ -26,6 +26,26 @@ class Repository:
         cursor.execute(sql, tuple(kwargs.values()))
         self.conn.commit()
         cursor.close()
+    def update(self, id, **kwargs):
+        cursor = self.conn.cursor()
+        
+        # Remove RowVersion if present to prevent update errors (static column)
+        kwargs.pop('RowVersion', None)
+
+        if not kwargs:
+            cursor.close()
+            return
+
+        set_clauses = [f"{key} = %s" for key in kwargs.keys()]
+        sql = f"UPDATE {self.table_name} SET {', '.join(set_clauses)} WHERE Id = %s"
+
+        values = list(kwargs.values())
+        values.append(id)
+
+        cursor.execute(sql, tuple(values))
+        self.conn.commit()
+        cursor.close()
+
     def delete(self, id):
         cursor = self.conn.cursor()
         sql = f"DELETE FROM {self.table_name} WHERE Id = %s"

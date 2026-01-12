@@ -58,3 +58,27 @@ class MascotaRepository(Repository):
                 pet_dict['Fotos'] = self.get_photos(pet_id)
         
         return results
+
+    def delete_photo_by_url(self, url):
+        cursor = self.conn.cursor()
+        query = "DELETE FROM Adm_Mascota_Foto WHERE Url = %s"
+        cursor.execute(query, (url,))
+        self.conn.commit()
+        cursor.close()
+
+    def delete_all_photos(self, id_mascota):
+        cursor = self.conn.cursor()
+        query = "DELETE FROM Adm_Mascota_Foto WHERE IdMascota = %s"
+        cursor.execute(query, (id_mascota,))
+        self.conn.commit()
+        cursor.close()
+
+    def delete(self, id):
+        # Primero eliminar todas las fotos asociadas
+        self.delete_all_photos(id)
+        # Luego eliminar la mascota (llamando al metodo padre si es necesario, pero aqui lo reescribimos para asegurarnos)
+        cursor = self.conn.cursor()
+        query = f"DELETE FROM {self.table_name} WHERE Id = %s"
+        cursor.execute(query, (id,))
+        self.conn.commit()
+        cursor.close()

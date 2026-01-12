@@ -22,10 +22,12 @@ function loadServices() {
         .then(data => {
             servicesData = data;
             servicesData = servicesData.map((s, index) => {
-                let img = '/static/img/service-bg-1.jpg'; // Default image
-                if (s.Nombre.includes('Peluquería')) img = '/static/img/service-bg-1.jpg';
-                else if (s.Nombre.includes('Alojamiento')) img = '/static/img/service-bg-2.jpg';
-                else if (s.Nombre.includes('Veterinaria')) img = '/static/img/service-bg-3.jpg';
+
+                const randomNum = Math.floor(Math.random() * 4) + 1;
+                let img = `/static/img/service-${randomNum}.jpg`;
+                if (s.Nombre.includes('Peluquería')) img = '/static/img/service-1.jpg';
+                else if (s.Nombre.includes('Alojamiento')) img = '/static/img/service-2.jpg';
+                else if (s.Nombre.includes('Veterinaria')) img = '/static/img/service-3.jpg';
                 img = s.UrlImagen || img;
 
                 const locations = ['Miraflores', 'Yanahuara', 'Cercado', 'Cayma', 'Jose Luis Bustamante'];

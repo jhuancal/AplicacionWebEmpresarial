@@ -50,7 +50,7 @@ def add_to_cart():
             'Cantidad': cantidad,
             'ESTADO': 1,
             'DISPONIBILIDAD': 1,
-            'FECHA_CREACION': 0, # Should be timestamp
+            'FECHA_CREACION': 0,
             'FECHA_MODIFICACION': 0,
             'USER_CREACION': user['NombreUsuario'],
             'USER_MODIFICACION': user['NombreUsuario']

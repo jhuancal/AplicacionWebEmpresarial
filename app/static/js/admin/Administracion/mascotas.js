@@ -72,11 +72,39 @@ var setFormValuesEdit = function () {
     $('#divFotosPreview').empty();
     if (e.Fotos && e.Fotos.length > 0) {
         e.Fotos.forEach(function (url) {
-            var img = $('<img>', { src: url, height: '60px', class: 'mr-2 mb-2' });
-            $('#divFotosPreview').append(img);
+            var wrapper = $('<div>', { style: 'display: inline-block; position: relative; margin-right: 10px; margin-bottom: 10px;' });
+            var img = $('<img>', { src: url, height: '60px', class: 'mr-2' });
+            var btnDelete = $('<button>', {
+                class: 'btn btn-xs btn-danger',
+                style: 'position: absolute; top: 0; right: 0;',
+                click: function (e) {
+                    e.preventDefault();
+                    eventClickDeletePhoto(url, wrapper);
+                }
+            }).append($('<i>', { class: 'fa fa-times' }));
+
+            wrapper.append(img).append(btnDelete);
+            $('#divFotosPreview').append(wrapper);
         });
     }
     $('#txtFotos').val('');
+}
+
+var eventClickDeletePhoto = function (url, element) {
+    bootbox.confirm("¿Está seguro de eliminar esta foto?", function (result) {
+        if (result) {
+            callAjax({ Url: url }, urlDeletePhoto, "POST").done(function () {
+                element.remove();
+                Noty("success", "Éxito", "Foto eliminada correctamente");
+
+                // Update local entity to reflect change (optional but good for consistency)
+                var entity = ClaseRegistro.getEntity();
+                if (entity.Fotos) {
+                    entity.Fotos = entity.Fotos.filter(function (f) { return f !== url; });
+                }
+            });
+        }
+    });
 }
 
 var clearForm = function () {

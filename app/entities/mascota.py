@@ -41,5 +41,6 @@ class Mascota:
             "FECHA_CREACION": self.FECHA_CREACION,
             "FECHA_MODIFICACION": self.FECHA_MODIFICACION,
             "USER_CREACION": self.USER_CREACION,
-            "USER_MODIFICACION": self.USER_MODIFICACION
+            "USER_MODIFICACION": self.USER_MODIFICACION,
+            "Fotos": getattr(self, 'Fotos', [])
         }

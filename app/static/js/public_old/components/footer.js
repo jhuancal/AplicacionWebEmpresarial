@@ -1,15 +1,15 @@
 class FooterComponent extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: "open" });
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
 
-    connectedCallback() {
-        this.render();
-    }
+  connectedCallback() {
+    this.render();
+  }
 
-    render() {
-        this.shadowRoot.innerHTML = `
+  render() {
+    this.shadowRoot.innerHTML = `
       <style>
         footer {
           background: #191919;
@@ -26,10 +26,10 @@ class FooterComponent extends HTMLElement {
         }
       </style>
       <footer>
-        <p>&copy; 2025 SuperPet - Todos los derechos reservados</p>
+        <p>&copy; 2025 AlmasSalvajes - Todos los derechos reservados</p>
       </footer>
     `;
-    }
+  }
 }
 
 customElements.define("footer-component", FooterComponent);

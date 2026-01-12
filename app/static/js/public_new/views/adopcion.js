@@ -28,9 +28,9 @@ function renderAdoptionList(pets) {
 
     pets.forEach((pet, index) => {
         // Fallback for photo
-        let mainImage = '/static/img_new/gallery-1-thumb.jpg';
+        let mainImage = '/static/img_new/not-found.jpg';
         if (pet.Fotos && pet.Fotos.length > 0) {
-            mainImage = pet.Fotos[0].Url;
+            mainImage = pet.Fotos[0];
         } else if (pet.UrlImagen) {
             // Some APIs might return UrlImagen directly on the object
             mainImage = pet.UrlImagen;
@@ -43,7 +43,7 @@ function renderAdoptionList(pets) {
         const isAlt = index % 2 !== 0 ? 'alt' : '';
 
         const card = document.createElement('div');
-        card.className = `adoption-card ${isAlt}`;
+        card.className = `adoption-card ${isAlt} ${isAdopted ? 'adopted' : ''}`;
 
         const historia = pet.Historia || "Una mascota esperando un hogar lleno de amor.";
         const cuidados = pet.Cuidados || "Cuidados estándar";
@@ -51,7 +51,7 @@ function renderAdoptionList(pets) {
 
         let buttonHtml = '';
         if (isAdopted) {
-            buttonHtml = '<button class="adopt-btn" disabled style="background-color: #ccc; cursor: not-allowed;">Adoptado</button>';
+            buttonHtml = '<button class="adopt-btn is-disabled" disabled>Adoptado</button>';
         } else {
             // We pass ID and Name to the handler
             buttonHtml = `<a href="#" class="adopt-btn" data-id="${pet.Id}" data-name="${pet.Nombre}">¡Adóptame!</a>`;
@@ -59,7 +59,7 @@ function renderAdoptionList(pets) {
 
         card.innerHTML = `
             <div class="adoption-img-container">
-                 ${isAdopted ? '<span style="position:absolute; top:10px; right:10px; background:#d32f2f; color:white; padding:5px 10px; border-radius:4px; font-weight:bold; z-index:10;">Adoptado</span>' : ''}
+                 ${isAdopted ? '<span class="adoption-status-badge">Adoptado</span>' : ''}
                  <img src="${mainImage}" alt="${pet.Nombre}" class="adoption-img">
             </div>
             <div class="adoption-info">

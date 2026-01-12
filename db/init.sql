@@ -380,7 +380,7 @@ ON DUPLICATE KEY UPDATE Nombre = Nombre;
 INSERT INTO Cli_Publicaciones (Id, IdCliente, Contenido, FechaPublicacion, Likes, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES
 ('pub-001', 'C2222222-2222-2222-2222-222222222222', '¡Disfrutando un día de parque con mi perro! 🌳🐶', NOW(), 15, 1, 1, 0, 0, 'SYS', 'SYS'),
 ('pub-002', 'C1111111-1111-1111-1111-111111111111', 'Mi gato aprendió un nuevo truco hoy. 😺', NOW() - INTERVAL 1 DAY, 24, 1, 1, 0, 0, 'SYS', 'SYS'),
-('pub-003', 'C2222222-2222-2222-2222-222222222222', 'Mirad qué bonito collar le compré a Bobby en SuperPet.', NOW() - INTERVAL 2 DAY, 10, 1, 1, 0, 0, 'SYS', 'SYS')
+('pub-003', 'C2222222-2222-2222-2222-222222222222', 'Mirad qué bonito collar le compré a Bobby en AlmasSalvajes.', NOW() - INTERVAL 2 DAY, 10, 1, 1, 0, 0, 'SYS', 'SYS')
 ON DUPLICATE KEY UPDATE Contenido = Contenido;
 
 INSERT INTO Cli_Publicacion_Media (Id, IdPublicacion, Url, TipoMedia, ESTADO, DISPONIBILIDAD, FECHA_CREACION, FECHA_MODIFICACION, USER_CREACION, USER_MODIFICACION) VALUES

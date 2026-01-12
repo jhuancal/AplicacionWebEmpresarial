@@ -54,7 +54,7 @@ function renderProducts(products) {
 
         let imageSrc = product.UrlImagen;
         if (!imageSrc || imageSrc.trim() === '') {
-            imageSrc = '/static/img_new/gallery-1-thumb.jpg';
+            imageSrc = '/static/img_new/not-found.jpg';
         }
 
         const card = document.createElement('div');
@@ -72,7 +72,7 @@ function renderProducts(products) {
         card.innerHTML = `
             <div class="product-image-container">
                 ${discountBadge}
-                <img src="${imageSrc}" alt="${product.Nombre}" class="product-img" onerror="this.src='/static/img_new/gallery-1-thumb.jpg'">
+                <img src="${imageSrc}" alt="${product.Nombre}" class="product-img" onerror="this.src='/static/img_new/not-found.jpg'">
                 ${arrivalBadge}
             </div>
             <div class="product-info">

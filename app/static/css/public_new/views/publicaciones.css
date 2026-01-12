@@ -87,7 +87,6 @@
 /* Feed Column (Public & Personal) */
 /* We want two main columns besides the sidebar: Public Feed and Personal Feed */
 /* Layout: Sidebar | Public Feed | Personal Feed */
-/* Let's adjust .feed-layout to Grid for 3 columns or Sidebar + 2 Flex Cols */
 
 .feed-content-area {
     display: flex;
@@ -97,11 +96,22 @@
 
 .public-feed-col {
     flex: 2;
-    /* Increased from 1.2 to give more space */
+    transition: flex 0.3s ease;
 }
 
 .personal-feed-col {
     flex: 1;
+    transition: all 0.3s ease;
+}
+
+/* Guest Mode Styles */
+.feed-layout.guest-mode .personal-feed-col {
+    display: none;
+}
+
+.feed-layout.guest-mode .public-feed-col {
+    flex: 1;
+    /* Take full width of content area */
 }
 
 /* Create Post Widget */

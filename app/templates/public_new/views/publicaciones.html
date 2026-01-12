@@ -112,13 +112,22 @@
             <div class="personal-feed-col">
                 <div class="create-post-widget">
                     <div class="widget-header">
-                        <img src="https://ui-avatars.com/api/?name=abelcliente&background=random"
-                            class="user-avatar-small">
-                        <h5 style="font-weight:600;">Hola, abelcliente</h5>
+                        <img src="https://ui-avatars.com/api/?name=User&background=random" class="user-avatar-small"
+                            id="current-user-avatar">
+                        <h5 style="font-weight:600;" id="current-user-name">Hola, Usuario</h5>
                     </div>
-                    <input type="text" id="new-post-content" class="post-input" placeholder="¿Qué estás pensando?">
+                    <textarea id="new-post-content" class="post-input" placeholder="¿Qué estás pensando?"
+                        rows="1"></textarea>
+
+                    <div id="media-preview"
+                        style="display:flex; gap:10px; margin-top:10px; margin-bottom:10px; overflow-x:auto;"></div>
+
                     <div class="widget-actions">
-                        <button class="action-btn"><i class="zmdi zmdi-image"></i> Foto/Video</button>
+                        <input type="file" id="post-file-input" multiple accept="image/*,video/*"
+                            style="display: none;">
+                        <button class="action-btn" onclick="document.getElementById('post-file-input').click()">
+                            <i class="zmdi zmdi-image"></i> Foto/Video
+                        </button>
                         <button class="action-btn"><i class="zmdi zmdi-mood"></i> Sentimiento</button>
                         <button id="btn-publish" class="btn-post">Publicar</button>
                     </div>

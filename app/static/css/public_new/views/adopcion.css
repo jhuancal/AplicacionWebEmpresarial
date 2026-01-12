@@ -238,3 +238,36 @@
         font-size: 2rem;
     }
 }
+
+/* Adopted State Styles */
+.adoption-card.adopted .adoption-img {
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+
+.adoption-card.adopted .adoption-info {
+    background-color: #fafafa;
+}
+
+.adoption-status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #d32f2f;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.adopt-btn.is-disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none;
+}

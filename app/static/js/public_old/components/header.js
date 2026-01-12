@@ -82,7 +82,7 @@ class HeaderComponent extends HTMLElement {
         }
       </style>
       <nav>
-        <div class="logo"><a href="/">🐶 SuperPet</a></div>
+        <div class="logo"><a href="/">🐶 AlmasSalvajes</a></div>
         <ul>
           <li><a href="/adopcion">Adopción</a></li>
           <li><a href="/productos">Productos</a></li>

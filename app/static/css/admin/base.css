@@ -1,3 +1,16 @@
+/* Base Reset & Variables from Public Site */
+:root {
+    /* Paleta de Colores Publica */
+    --primary: #021523;
+    --danger: #EF5734;
+    --info: #33CC99;
+    --grey: #8E8E8E;
+    --grey-light: #CEC8C8;
+    --dark: #000000;
+    --white: #FFFFFF;
+    --bg-light: #f4f4f4;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,18 +21,22 @@
 body {
     display: flex;
     height: 100vh;
-    background-color: #f4f4f4;
+    background-color: var(--bg-light);
+    color: var(--dark);
 }
 
+/* Sidebar Styles */
 .sidebar {
     width: 250px;
-    background-color: #191919;
-    color: #fff;
+    background-color: var(--primary);
+    color: var(--white);
     display: flex;
     flex-direction: column;
     padding: 20px;
     position: fixed;
     height: 100%;
+    /* border-right: 1px solid var(--grey); */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar .logo {
@@ -27,7 +44,9 @@ body {
     font-weight: bold;
     margin-bottom: 40px;
     text-align: center;
-    color: #b40500;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .sidebar nav ul {
@@ -40,38 +59,41 @@ body {
 }
 
 .sidebar nav ul li a {
-    color: #ccc;
+    color: var(--grey-light);
     text-decoration: none;
     font-size: 16px;
     display: block;
-    padding: 10px;
-    border-radius: 5px;
-    transition: 0.3s;
+    padding: 12px 15px;
+    border-radius: 8px;
+    /* Slightly more rounded */
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    /* Prepare for hover/active */
 }
 
 .sidebar nav ul li a:hover,
 .sidebar nav ul li a.active,
 .sidebar nav ul li a[aria-expanded="true"] {
-    background-color: #333;
-    color: #fff;
-    border-left: 4px solid #b40500;
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Subtle background */
+    color: var(--white);
+    border-left: 4px solid var(--danger);
 }
 
 .sidebar nav ul li a.menu-toggle {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: 600;
-    font-size: 13px;
+    font-weight: 500;
+    font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #aaa;
-    border-left: 4px solid transparent;
+    color: var(--grey-light);
 }
 
 .sidebar .arrow {
     transition: transform 0.3s;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .sidebar a[aria-expanded="true"] .arrow {
@@ -79,16 +101,23 @@ body {
 }
 
 .sidebar .submenu li a {
-    padding-left: 40px;
+    padding-left: 45px;
     font-size: 14px;
-    background-color: #111;
+    background-color: transparent;
+    opacity: 0.8;
+}
+
+.sidebar .submenu li a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    opacity: 1;
 }
 
 .sidebar nav ul li a.disabled {
-    color: #444;
+    color: #555;
     pointer-events: none;
 }
 
+/* Layout & Header */
 .wrapper {
     margin-left: 250px;
     width: 100%;
@@ -97,22 +126,33 @@ body {
 }
 
 header {
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: var(--white);
+    padding: 20px 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 header .user-info {
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1.1em;
 }
 
 header .logout {
-    color: #b40500;
+    color: var(--danger);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: 1px solid var(--danger);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+header .logout:hover {
+    background-color: var(--danger);
+    color: var(--white);
 }
 
 .content {
@@ -121,6 +161,7 @@ header .logout {
     overflow-y: auto;
 }
 
+/* Utility Classes */
 .text-center {
     text-align: center;
 }
@@ -155,4 +196,27 @@ header .logout {
 
 .modal {
     display: none;
+}
+
+/* Button Overrides (Matching Public Site Aesthetics) */
+/* Assuming Bootstrap is used, we can override .btn or create .button class */
+
+.btn-primary {
+    background-color: var(--info);
+    border-color: var(--info);
+    color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: var(--danger) !important;
+    border-color: var(--danger) !important;
+    color: var(--white) !important;
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    border-color: var(--danger);
 }

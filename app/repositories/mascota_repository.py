@@ -47,3 +47,18 @@ class MascotaRepository(Repository):
         cursor.execute(query, (availability, user_mod, int(time.time() * 1000), id_mascota))
         self.conn.commit()
         cursor.close()
+
+    def get_paged(self, start_index, length, filters=None, order=None):
+        # Call base implementation to avoid code duplication for filtering/sorting
+        results = super().get_paged(start_index, length, filters, order)
+        
+        # Determine if results are dicts or objects (BaseRepository.get_paged returns dicts)
+        # Based on base_repository.py: return [self.entity_class(**row).to_dict() for row in rows]
+        # So results is a list of dicts.
+        
+        for pet_dict in results:
+            pet_id = pet_dict.get('Id')
+            if pet_id:
+                pet_dict['Fotos'] = self.get_photos(pet_id)
+        
+        return results

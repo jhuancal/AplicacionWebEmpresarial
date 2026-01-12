@@ -30,7 +30,6 @@ $(function () {
     initDataTable();
     initDropdown();
 
-    // Refresh dropdown on tab switch to Permissions
     $('a[href="#acceso-tab"]').on('shown.bs.tab', function (e) {
         initDropdown();
     });
@@ -144,7 +143,6 @@ var eventClickEliminar = function (item) {
     });
 };
 
-// --- TREE LOGIC ---
 
 var eventClickSeleccionar = function () {
     var rolId = $("#dropRol").val();
@@ -220,13 +218,11 @@ var initTreeEvents = function () {
         var checked = $(this).prop("checked");
         var id = $(this).attr("name");
 
-        // Check Children
         var item = ClaseGlobalVar.ListaAcccesobyRol.find(x => x.IdVistaUno === id);
         if (item) {
             checkChildrenRecursively(item.Codigo, checked);
         }
 
-        // Check Father
         if (checked) {
             checkFatherRecursively(item.CodigoPadre);
         }
@@ -257,9 +253,6 @@ var eventClickSaveVista = function () {
 
     ClaseGlobalVar.ListaAcccesobyRol.forEach(function (item) {
         var isChecked = $('input[name="' + item.IdVistaUno + '"]').prop('checked');
-        // We only send checked changes? Or full list? 
-        // Backend expects full list or logic to wipe and insert.
-        // My backend wipes and inserts ONLY checked ones if Permiso=True.
 
         listaToSave.push({
             IdRol: ClaseGlobalVar.RolTemporal.Id,
@@ -276,7 +269,6 @@ var eventClickSaveVista = function () {
         data: JSON.stringify(listaToSave),
         success: function () {
             alert("Permisos actualizados correctamente");
-            // Clear or reset
             $("#treeTable").empty();
             $("#dropRol").val("");
             ClaseGlobalVar.RolTemporal = null;

@@ -1,6 +1,6 @@
-/* Payment Modal Styles (Sidebar Layout) */
 
-/* Overlay */
+
+
 .payment-overlay {
     position: fixed;
     top: 0;
@@ -9,20 +9,20 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1001;
-    /* Slightly higher than cart (999/1000) so it stacks if needed, though we swap. */
+    
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
 }
 
-/* Modal Sidebar */
+
 .payment-modal {
     position: fixed;
     top: 0;
     right: -450px;
-    /* Hidden off-screen */
+    
     width: 420px;
-    /* Slightly wider than cart for forms */
+    
     height: 100vh;
     background: #fff;
     z-index: 1002;
@@ -31,16 +31,16 @@
     display: flex;
     flex-direction: column;
     padding: 0;
-    /* Reset */
+    
     border-radius: 0;
-    /* Reset from centered modal */
+    
     transform: none;
-    /* Reset */
+    
     max-width: 100%;
-    /* Mobile safety */
+    
 }
 
-/* Open State */
+
 .payment-modal.open {
     right: 0;
     opacity: 1;
@@ -48,22 +48,22 @@
     transform: none;
 }
 
-/* Overlay Visibility */
+
 .payment-modal.open~.payment-overlay {
     opacity: 1;
     visibility: visible;
 }
 
-/* If overlay is modified by JS manually to have .open */
+
 .payment-overlay.open {
     opacity: 1;
     visibility: visible;
 }
 
-/* Header */
+
 .payment-header {
     background: var(--primary);
-    /* Same as cart header */
+    
     color: #fff;
     padding: 1rem 1.5rem;
     border-bottom: 1px solid #eee;
@@ -97,16 +97,16 @@
     transform: rotate(90deg);
 }
 
-/* Content Area (Scrollable) */
+
 .payment-content {
     padding: 1.5rem;
     overflow-y: auto;
     flex-grow: 1;
-    /* Takes available space like cart-active-area */
+    
     background: #fff;
 }
 
-/* Form Groups */
+
 .payment-form-group {
     margin-bottom: 1.5rem;
 }
@@ -136,7 +136,7 @@
     border-color: var(--info);
 }
 
-/* Button & Footer Area (if we had a footer div, but button is in form) */
+
 .btn-confirm-payment {
     width: 100%;
     background: var(--danger);
@@ -174,7 +174,7 @@
     display: none;
 }
 
-/* Mobile Responsive */
+
 @media (max-width: 480px) {
     .payment-modal {
         width: 100%;

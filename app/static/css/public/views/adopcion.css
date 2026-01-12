@@ -1,4 +1,4 @@
-/* Adoption Page Specific Styles */
+
 
 .adoption-hero {
     height: 40vh;
@@ -30,7 +30,7 @@
     z-index: 2;
 }
 
-/* Filter Section */
+
 .adoption-filters {
     padding: 1rem 2rem;
     background: #f9f9f9;
@@ -60,14 +60,14 @@
     border-color: var(--danger);
 }
 
-/* Adoption List Container */
+
 .adoption-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem 4rem;
 }
 
-/* Adoption Card (Row) */
+
 .adoption-card {
     display: flex;
     background: var(--white);
@@ -83,12 +83,12 @@
     transform: translateY(-5px);
 }
 
-/* Alternating Layout: Row Reverse */
+
 .adoption-card.alt {
     flex-direction: row-reverse;
 }
 
-/* Image Section */
+
 .adoption-img-container {
     flex: 1;
     position: relative;
@@ -107,7 +107,7 @@
     transform: scale(1.05);
 }
 
-/* Info Section */
+
 .adoption-info {
     flex: 1.2;
     padding: 3rem;
@@ -116,7 +116,7 @@
     justify-content: center;
     background: #fff;
     position: relative;
-    /* For decorative elements */
+    
 }
 
 .adoption-name {
@@ -203,12 +203,12 @@
     color: var(--white);
 }
 
-/* Badge for Availability */
+
 .adoption-badge {
     position: absolute;
     top: 20px;
     right: 20px;
-    /* Or left depending on layout, handled by JS/Logic usually, but here fixed for simplicity */
+    
     z-index: 10;
     background: rgba(255, 255, 255, 0.9);
     padding: 0.5rem 1rem;
@@ -218,7 +218,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive */
+
 @media (max-width: 900px) {
 
     .adoption-card,
@@ -240,7 +240,7 @@
     }
 }
 
-/* Adopted State Styles */
+
 .adoption-card.adopted .adoption-img {
     filter: grayscale(100%);
     opacity: 0.8;

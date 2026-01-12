@@ -14,14 +14,7 @@ async function initProducts() {
     try {
         grid.innerHTML = '<div style="width:100%; text-align:center; padding:2rem;"><i class="zmdi zmdi-spinner zmdi-hc-spin zmdi-hc-3x"></i></div>';
 
-        // Use the existing API endpoint that returns JSON (assuming it exists based on old code analysis)
-        // If not, we might need to check routes. But let's try the standard one.
         const response = await fetch('/api/products');
-        // Note: I am guessing the route based on standard practices or previous analysis. 
-        // If /api/products was used in public_old JS, let's stick to valid endpoints.
-        // Looking at public_old/views/products.js (Step 367), it used /api/products but that was client-side mock?
-        // Wait, step 367 showed `export async function initProducts() { ... fetch('/api/products') ... }`
-        // So `/api/products` likely exists. Let's use that.
 
         if (!response.ok) throw new Error('Failed to fetch products');
 
@@ -45,7 +38,6 @@ function renderProducts(products) {
     }
 
     products.forEach(product => {
-        // Fallback for ID and Image
         const productId = product.Id || product.id || product.ID;
         if (!productId) {
             console.error('Product missing ID:', product);
@@ -68,7 +60,6 @@ function renderProducts(products) {
             ? `<span class="arrival-badge"><i class="zmdi zmdi-time"></i> ${product.DiaLlegada}</span>`
             : '';
 
-        // onclick calls global addToCart from cart.js
         card.innerHTML = `
             <div class="product-image-container">
                 ${discountBadge}
@@ -91,7 +82,6 @@ function renderProducts(products) {
         `;
         grid.appendChild(card);
 
-        // Set data-id programmatically to ensure it sticks
         const btn = card.querySelector('.btn-add');
         if (btn) {
             btn.setAttribute('data-id', productId);
@@ -104,8 +94,6 @@ function setupEventDelegation() {
     const grid = document.getElementById('products-grid');
     if (!grid) return;
 
-    // Remove existing listener if any (not easily possible with anonymous functions but we run init once)
-    // To be safe, we could use a named function or check a flag.
     if (grid.dataset.listenerAttached) return;
 
     grid.addEventListener('click', (e) => {

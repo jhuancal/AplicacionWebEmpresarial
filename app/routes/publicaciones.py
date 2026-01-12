@@ -42,7 +42,6 @@ def upload_post():
         
     media_list = []
     
-    # Process files
     for file in files:
         if file.filename == '':
             continue
@@ -54,12 +53,10 @@ def upload_post():
             continue
             
         filename = secure_filename(file.filename)
-        # Unique filename
         unique_name = f"{int(time.time())}_{uuid.uuid4().hex[:8]}_{filename}"
         file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], unique_name)
         file.save(file_path)
         
-        # Public URL
         public_url = f"/static/uploads/{unique_name}"
         tipo_media = 'Imagen' if is_img else 'Video'
         
@@ -75,7 +72,6 @@ def upload_post():
             'USER_MODIFICACION': "admin"
         })
     
-    # Create Post Data
     post_id = str(uuid.uuid4())
     post_data = {
         'Id': post_id,
@@ -90,7 +86,6 @@ def upload_post():
         'USER_MODIFICACION': "admin"
     }
     
-    # Update Media list with Post ID
     for m in media_list:
         m['IdPublicacion'] = post_id
         

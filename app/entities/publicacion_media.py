@@ -1,21 +1,19 @@
 from .base import Entidad
 
-class Carrito(Entidad):
-    def __init__(self, Id=None, IdCliente=None, IdProducto=None, Cantidad=None, FechaAgregado=None, **kwargs):
+class PublicacionMedia(Entidad):
+    def __init__(self, Id=None, IdPublicacion=None, Url=None, TipoMedia=None, **kwargs):
         super().__init__(**kwargs)
         self.Id = Id
-        self.IdCliente = IdCliente
-        self.IdProducto = IdProducto
-        self.Cantidad = Cantidad
-        self.FechaAgregado = FechaAgregado
+        self.IdPublicacion = IdPublicacion
+        self.Url = Url
+        self.TipoMedia = TipoMedia
 
     def to_dict(self):
         return {
             'Id': self.Id,
-            'IdCliente': self.IdCliente,
-            'IdProducto': self.IdProducto,
-            'Cantidad': self.Cantidad,
-            'FechaAgregado': self.FechaAgregado,
+            'IdPublicacion': self.IdPublicacion,
+            'Url': self.Url,
+            'TipoMedia': self.TipoMedia,
             'ESTADO': self.ESTADO,
             'RowVersion': self.RowVersion,
             'DISPONIBILIDAD': self.DISPONIBILIDAD,

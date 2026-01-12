@@ -1,7 +1,5 @@
 def serialize_user(user_data):
-    """
-    Serializes user data for the session cookie/storage.
-    """
+
     if not user_data:
         return None
     model = {

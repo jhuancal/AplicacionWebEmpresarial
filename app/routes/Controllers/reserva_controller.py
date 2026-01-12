@@ -7,14 +7,10 @@ import time
 
 @login_required
 def api_reservas_all():
-    # Admin only
     conn = get_db_connection()
     try:
         repo = ReservaRepository(conn)
         reservas = repo.get_all()
-        # Should populate related data (Client Name, Service Name, Pet Name) in a real app, 
-        # but for now returning basic dict.
-        # Ideally, we should join tables or fetch related entitites.
         return jsonify([r.to_dict() for r in reservas])
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -22,22 +18,14 @@ def api_reservas_all():
         conn.close()
 
 def api_reservas_cliente():
-    # Public/Client access
-    # Should use session user id
     user = session.get('user_data') # Assuming this structure
     if not user:
          return jsonify({'error': 'Unauthorized'}), 401
     
     conn = get_db_connection()
     try:
-        # Filter by client id. BaseRepository might generic get_all but not filter.
-        # Custom query needed or get_all and filter in python (inefficient but simple for now)
         repo = ReservaRepository(conn)
         reservas = repo.get_all() 
-        # TODO: Filter by user['Id'] or similar. 
-        # Assuming we need to implement get_by_cliente in repo later or now.
-        # For prototype, filtering in code:
-        # client_reservas = [r for r in reservas if r.id_cliente == user.id]
         return jsonify([r.to_dict() for r in reservas]) # Returning all for now as placeholder
     except Exception as e:
         return jsonify({'error': str(e)}), 500

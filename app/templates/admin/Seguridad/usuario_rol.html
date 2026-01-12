@@ -18,7 +18,7 @@
             <div class="col-lg-12">
                 <div class="panel">
                     <div class="panel-body">
-                        <!-- Tabs -->
+                        
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="active">
                                 <a href="#lista-tab" role="tab" data-toggle="tab">
@@ -33,7 +33,7 @@
                         </ul>
 
                         <div class="tab-content mt-4" style="margin-top: 20px;">
-                            <!-- TAB 1: Lista -->
+                            
                             <div class="tab-pane active" id="lista-tab">
                                 <div class="panel-table">
                                     <div class="row" style="margin-bottom: 10px;">
@@ -63,7 +63,7 @@
                                         </table>
                                     </div>
                                     <div class="text-center" style="margin-top: 10px;">
-                                        <div id="paginationUser"></div> <!-- Simple wrapper -->
+                                        <div id="paginationUser"></div> 
                                         <button class="btn btn-default btn-sm"
                                             onclick="prevPageUser()">Anterior</button>
                                         <span id="pageInfoUser">Página 1</span>
@@ -73,13 +73,13 @@
                                 </div>
                             </div>
 
-                            <!-- TAB 2: Nuevo / Edición -->
+                            
                             <div class="tab-pane" id="nuevo-tab">
                                 <div class="panel">
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-8 col-md-offset-2">
-                                                <!-- Buscador Persona -->
+                                                
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 control-label">Persona</label>
                                                     <div class="col-sm-7">
@@ -87,7 +87,7 @@
                                                             <input type="text" id="txtPersonaName" class="form-control"
                                                                 readonly placeholder="Seleccione una persona">
                                                             <input type="hidden" id="hdnIdPersona">
-                                                            <input type="hidden" id="hdnIdUsuario"> <!-- For updates -->
+                                                            <input type="hidden" id="hdnIdUsuario"> 
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-info"
                                                                     onclick="eventClickOpenModalPersona()">
@@ -98,7 +98,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Username -->
+                                                
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 control-label">Usuario</label>
                                                     <div class="col-sm-9">
@@ -107,7 +107,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Password -->
+                                                
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 control-label">Contraseña</label>
                                                     <div class="col-sm-9">
@@ -118,7 +118,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Rol -->
+                                                
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 control-label">Rol</label>
                                                     <div class="col-sm-9">
@@ -145,7 +145,7 @@
     </div>
 </div>
 
-<!-- Modal Buscar Persona -->
+
 <div class="modal fade" id="dlgSearchPersona" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

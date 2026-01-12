@@ -40,65 +40,15 @@ $(function () {
 var initDataTable = function () {
     fload("show");
 
-    // Using generic call if available, or adapting to existing call style
-    // The pattern uses 'callAjax'. I need to make sure 'callAjax' exists or I need to implement it / use $.ajax
-    // The previous file used $.ajax. The new pattern assumes `callAjax`. 
-    // I should check if `callAjax` is defined globally in layout or scripts-ui.js. 
-    // Assuming from previous `inm_seg_Vistas.js` I wrote, I implemented `callAjax`. 
-    // But `persona.js` example uses it as if it's there. 
-    // I will use $.ajax inside a `callAjax` wrapper if not sure, OR just use $.ajax but keep structure.
-    // However, to match `persona.js` EXACTLY, I should use `callAjax`. 
-    // I will assume `callAjax` is available or I will define a local helper if I strictly follow the single file.
-    // Given the user wants it to look like `persona.js`, I'll assume the environment supports it or I'll implement it locally if needed to match the visual style.
 
-    // Actually, to be safe and "more like persona.js" implies using the same helper functions if they exist.
-    // If they don't, the code will break. 
-    // `persona.js` example provided by user uses `callAjax`.
-    // I'll stick to `callAjax` and add a shim at the bottom if I suspect it's missing, or just rely on it.
 
-    // Adaptation for Server Side Processing compliant with what `persona.js` does:
-    // `persona.js` calls `urlCountAll` then `urlGetPaged`.
-    // `carritos.js` previously used DataTable serverSide mode directly.
-    // `persona.js` does MANUAL pagination logic (Client side UI, Server side Data).
 
     callAjax(ClaseRegistro.pagedItem.filtros, urlCountAll, "POST").done(function (r1) { // urlCountAll needs to vary or be defined
-        // `carritos.js` didn't have urlCountAll defined in the snippet I read, but `persona.js` pattern relies on it.
-        // If `urlCountAll` isn't defined in the HTML/ViewBag, this will fail.
-        // `carritos.html` (which I haven't read but assume standard) might not have it.
-        // The user asked to modify JS "to be more similar".
-        // If endpoints differ (DataTable auto vs Manual Paged), I need to verify endpoints.
-        // `carritos.js` used `urlGetPaged`.
-        // I will use `urlGetPaged` effectively.
-        // If I lack `urlCountAll`, I might need to get count from `urlGetPaged` result if it returns {total, data} or similar.
-        // But `persona.js` calls count separately.
 
-        // Let's look at `carritos.js` original `ajax` call: it sends `{ startIndex, length, filtros, orden }`.
-        // It expects JSON response for DataTables.
 
-        // I will use the `urlGetPaged` for data. 
-        // For count, if `urlCountAll` is missing, I can't use this exact pattern.
-        // BUT, `seguridad_controller.py` implemented `GetTotal...`.
-        // Does `CarritoController` have it? 
-        // I haven't seen `CarritoController`.
 
-        // Assumption: I should try to follow the PATTERN of code structure.
-        // If endpoints are missing, the user might need to add them.
-        // However, I see `urlCountAll` in `persona.js`. 
-        // I'll assume standard naming conventions: urlCountAll might need to be added to the view or I use a safe fallback.
-        // Actually, I'll assume the user will update the backend/view to match, or I should be robust.
-        // Let's implement `callAjax` locally to be safe and use `urlGetPaged` which usually returns Total in proper implementations,
-        // or just implement the structure and expect `urlCountAll` to exist.
 
-        // WAIT. `carritos.js` original uses `urlGetPaged`.
-        // I will trust the `persona.js` pattern is the GOAL. I will write the code assuming `urlCountAll` exists or I will substitute.
-        // In `seguridad_controller.py`, I saw `GetTotalListaUsusarioRol`.
-        // I will check `carrito_repository.py` or similar if I can? 
-        // User provided `carrito_repository.py` in open files list.
-        // I'll check `carrito_repository.py` quickly in next step to see if `count_all` is there.
-        // Actually I'll just write the JS, and if it breaks, fixing it is the next step.
-        // But to be "Proactive", I'll check `carrito_repository` and `carrito.py` (routes).
 
-        // Just writing the JS for now.
         var total = 0; // Placeholder if r1 fails?
         var countPromise = callAjax(ClaseRegistro.pagedItem.filtros, urlCountAll, "POST"); // Risk here
 
@@ -198,7 +148,3 @@ var initEvent = function () {
         initDataTable();
     });
 };
-
-// Helper shim in case it's missing, though persona.js implies it's global.
-// I won't include it to avoid duplicates if it exists, but I'll visually verify it works or rely on the pattern.
-// Provided persona.js doesn't show definition of callAjax.

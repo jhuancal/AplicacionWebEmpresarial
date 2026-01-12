@@ -1,6 +1,6 @@
-/* Publications Page Styles */
 
-/* Hero Section (New) */
+
+
 .publications-hero {
     position: relative;
     padding: 8rem 1.5rem 4rem;
@@ -31,7 +31,7 @@
     z-index: 2;
 }
 
-/* Main Layout: Split 2 Columns */
+
 .feed-layout {
     display: flex;
     gap: 2rem;
@@ -41,10 +41,10 @@
     align-items: flex-start;
 }
 
-/* Sidebar / Filters (Left Column) */
+
 .feed-sidebar {
     width: 20%;
-    /* Reduced from 25% */
+    
     position: sticky;
     top: 90px;
     height: calc(100vh - 100px);
@@ -85,9 +85,9 @@
     outline: none;
 }
 
-/* Feed Column (Public & Personal) */
-/* We want two main columns besides the sidebar: Public Feed and Personal Feed */
-/* Layout: Sidebar | Public Feed | Personal Feed */
+
+
+
 
 .feed-content-area {
     display: flex;
@@ -105,17 +105,17 @@
     transition: all 0.3s ease;
 }
 
-/* Guest Mode Styles */
+
 .feed-layout.guest-mode .personal-feed-col {
     display: none;
 }
 
 .feed-layout.guest-mode .public-feed-col {
     flex: 1;
-    /* Take full width of content area */
+    
 }
 
-/* Create Post Widget */
+
 .create-post-widget {
     background: var(--white);
     border-radius: 8px;
@@ -147,7 +147,7 @@
     border-radius: 20px;
     resize: none;
     height: 40px;
-    /* expands on focus via JS or keeps simple */
+    
     transition: all 0.2s;
 }
 
@@ -196,7 +196,7 @@
     background: var(--danger);
 }
 
-/* Post Card Styles */
+
 .post-card {
     background: var(--white);
     border-radius: 8px;
@@ -298,7 +298,7 @@
     color: var(--danger) !important;
 }
 
-/* Category Filters Badge */
+
 .filter-badge-container {
     display: flex;
     gap: 0.5rem;
@@ -321,7 +321,7 @@
 }
 
 
-/* Responsive */
+
 @media (max-width: 900px) {
     .feed-layout {
         flex-direction: column;

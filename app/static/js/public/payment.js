@@ -1,25 +1,18 @@
 
-/* Payment & Checkout Logic */
+
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Setup event listeners for the payment modal
     const closeBtn = document.querySelector('.payment-close');
     const overlay = document.querySelector('.payment-overlay');
 
     if (closeBtn) closeBtn.addEventListener('click', closePaymentModal);
     if (overlay) overlay.addEventListener('click', closePaymentModal);
 
-    // Setup the "Proceed to Payment" button in the cart
-    // We delegate this because the button might be part of the cart modal which is already loaded
-    // But since the button is in the HTML (even if hidden/shown), we can try to find it.
-    // However, cart actions often regenerate HTML. But index.html has it static in the structure.
     const checkoutBtn = document.getElementById('btn-checkout');
     if (checkoutBtn) {
         checkoutBtn.onclick = (e) => {
             e.preventDefault();
-            // Close Cart
             if (window.toggleCart) window.toggleCart();
-            // Open Payment
             openPaymentModal();
         };
     }
@@ -33,7 +26,6 @@ function openPaymentModal() {
         modal.classList.add('open');
         if (overlay) overlay.classList.add('open'); // Explicitly open overlay
         body.classList.add('no-scroll');
-        // Reset form
         const form = document.getElementById('checkout-form');
         if (form) form.reset();
         toggleAddress(); // Reset address visibility
@@ -47,7 +39,6 @@ function closePaymentModal() {
     if (modal) {
         modal.classList.remove('open');
         if (overlay) overlay.classList.remove('open'); // Explicitly close overlay
-        // Only remove no-scroll if cart is also closed. 
         const cartModal = document.getElementById('cart-modal');
         if (!cartModal || !cartModal.classList.contains('open')) {
             body.classList.remove('no-scroll');

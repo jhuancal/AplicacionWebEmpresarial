@@ -6,48 +6,48 @@ from repositories.producto_repository import ProductoRepository
 from repositories.carrito_repository import CarritoRepository
 from repositories.entrega_repository import EntregaRepository
 from repositories.compra_repository import CompraRepository
-from services.email_service import EmailService
+from services.email_service import ServicioCorreo
 import uuid
 
-public_bp = Blueprint('public', __name__)
+publico_bp = Blueprint('public', __name__)
 
-@public_bp.route("/")
+@publico_bp.route("/")
 def home():
     user = session.get('user_data')
     return render_template("public/index.html", user=user)
 
-@public_bp.route("/adopcion")
+@publico_bp.route("/adopcion")
 def adopcion_page():
     user = session.get('user_data')
     return render_template("public/views/adopcion.html", user=user)
 
-@public_bp.route("/productos")
+@publico_bp.route("/productos")
 def productos_page():
     user = session.get('user_data')
     return render_template("public/views/productos.html", user=user)
 
-@public_bp.route("/servicios")
+@publico_bp.route("/servicios")
 def servicios_page():
     user = session.get('user_data')
     return render_template("public/views/servicios.html", user=user)
 
-@public_bp.route("/publicaciones")
+@publico_bp.route("/publicaciones")
 def publicaciones_page():
     user = session.get('user_data')
     return render_template("public/views/publicaciones.html", user=user)
 
-@public_bp.route("/registro")
+@publico_bp.route("/registro")
 def register_page():
     user = session.get('user_data')
     return render_template("public/views/registro.html", user=user)
 
 
 
-@public_bp.route("/login")
+@publico_bp.route("/login")
 def login_redirect():
     return redirect("/")
 
-@public_bp.route("/api/login", methods=['POST'])
+@publico_bp.route("/api/login", methods=['POST'])
 def login():
     data = request.get_json()
     username = data.get('username')
@@ -62,7 +62,7 @@ def login():
 
     return jsonify({"success": False, "message": "Invalid credentials"}), 401
 
-@public_bp.route("/api/auth/initiate-register", methods=['POST'])
+@publico_bp.route("/api/auth/initiate-register", methods=['POST'])
 def initiate_register():
     data = request.get_json()
     email = data.get('email')
@@ -74,7 +74,7 @@ def initiate_register():
         return jsonify(result)
     return jsonify(result), 400
 
-@public_bp.route("/api/auth/verify-code", methods=['POST'])
+@publico_bp.route("/api/auth/verify-code", methods=['POST'])
 def verify_code():
     data = request.get_json()
     result = AuthService.verify_registration(data)
@@ -82,30 +82,26 @@ def verify_code():
         return jsonify(result)
     return jsonify(result), 400
 
-@public_bp.route("/api/register", methods=['POST'])
+@publico_bp.route("/api/register", methods=['POST'])
 def register():
     data = request.get_json()
     result = AuthService.register_client(data)
     if result.get('success'):
-         # Email already sent during verification, no need to send welcome implementation unless desired.
-         # The requirement says "send welcome messages every time someone registers".
-         # So we keep the welcome email.
          
-         # Send Welcome Email
          email = data.get('correo')
          username = data.get('username') or data.get('nombres')
          if email:
-             EmailService.send_welcome_email(email, username)
+             ServicioCorreo.enviar_correo_bienvenida(email, username)
              
          return jsonify(result)
     return jsonify(result), 400
 
-@public_bp.route("/logout")
+@publico_bp.route("/logout")
 def logout():
     session.pop('user_data', None)
     return redirect(url_for('public.home'))
 
-@public_bp.route("/api/products")
+@publico_bp.route("/api/products")
 def get_products():
     conn = get_db_connection()
     repo = ProductoRepository(conn)
@@ -116,7 +112,7 @@ def get_products():
 
 
 
-@public_bp.route("/api/public/mascotas")
+@publico_bp.route("/api/public/mascotas")
 def get_public_mascotas():
     from repositories.mascota_repository import MascotaRepository
     conn = get_db_connection()
@@ -125,23 +121,16 @@ def get_public_mascotas():
     conn.close()
     return jsonify([p.to_dict() for p in pets])
 
-@public_bp.route("/api/mis-mascotas")
+@publico_bp.route("/api/mis-mascotas")
 def get_mis_mascotas():
-    # Helper to get logged in user's pets for booking
     user = session.get('user_data')
     if not user:
         return jsonify([])
     
     from repositories.mascota_repository import MascotaRepository
-    # We need a method get_by_client in MascotaRepository or raw query here
-    # For MVP, using raw query or get_all and filter (inefficient) or assuming repository has it.
     conn = get_db_connection()
     try:
-        # Assuming MascotaRepository doesn't have get_by_cliente, we'll implement a quick check or filter
         repo = MascotaRepository(conn)
-        # Hack: using get_all (or similar) and filtering in python if repo doesn't support filter
-        # Better: Add functionality to MascotaRepository, but modifying repo file is extra step.
-        # Let's see if we can use get_all and filter. Adm_Mascota has IdCliente.
 
         my_pets = repo.get_by_cliente(user['Id'])
         return jsonify([p.to_dict() for p in my_pets])
@@ -151,7 +140,7 @@ def get_mis_mascotas():
         conn.close()
 
 
-@public_bp.route("/api/carrito/add", methods=['POST'])
+@publico_bp.route("/api/carrito/add", methods=['POST'])
 def add_to_cart():
     user = session.get('user_data')
     if not user:
@@ -164,7 +153,6 @@ def add_to_cart():
     conn = get_db_connection()
     repo = CarritoRepository(conn)
     
-    # Check if exists
     existing_item = repo.get_item(user['Id'], id_producto)
     
     if existing_item:

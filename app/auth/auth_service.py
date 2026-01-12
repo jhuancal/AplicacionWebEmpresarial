@@ -10,13 +10,11 @@ class AuthService:
     def validate_user(username, password):
         conn = get_db_connection()
         try:
-            # Check Colaborador
             colab_repo = ColaboradorRepository(conn)
             colab = colab_repo.get_by_username(username)
             if colab and colab['Contrasena'] == password:
                 return True
             
-            # Check Cliente
             client_repo = ClienteRepository(conn)
             client = client_repo.get_by_username(username)
             if client and client['Contrasena'] == password:
@@ -30,12 +28,10 @@ class AuthService:
     def get_user_details(username):
         conn = get_db_connection()
         try:
-            # Check Colaborador
             colab_repo = ColaboradorRepository(conn)
             colab = colab_repo.get_by_username(username)
             
             if colab:
-                # Fetch Role Name and Persona Details
                 cursor = conn.cursor(dictionary=True)
                 query = """
                     SELECT R.Nombre as RolNombre, P.Nombres, P.Apellidos, P.DNI, P.Correo
@@ -53,12 +49,10 @@ class AuthService:
                 user_data['Tipo'] = 'Colaborador'
                 return user_data
 
-            # Check Cliente
             client_repo = ClienteRepository(conn)
             client = client_repo.get_by_username(username)
             
             if client:
-                # Fetch Persona Details
                 cursor = conn.cursor(dictionary=True)
                 query = """
                     SELECT P.Nombres, P.Apellidos, P.DNI, P.Correo
@@ -140,7 +134,6 @@ class AuthService:
                     USER_MODIFICACION='SYS'
                 )
 
-            # Verify Token
             token_input = data.get('verification_code')
             if not token_input:
                 return {"success": False, "message": "Verification code required"}
@@ -153,7 +146,6 @@ class AuthService:
                 conn.rollback()
                 return {"success": False, "message": "Invalid or expired verification code"}
 
-            # Mark token as used
             token_repo.mark_used(valid_token.Id)
 
             conn.commit()
@@ -170,21 +162,18 @@ class AuthService:
     def initiate_verification(email):
         conn = get_db_connection()
         try:
-            # Check if email already exists? (Optional, maybe specific requirement)
-            # For now just send code.
             
             import random
             import string
-            from services.email_service import EmailService
+            from services.email_service import ServicioCorreo
             from repositories.token_repository import TokenRepository
             
-            # Generate 6 char token (Upper + Digits)
             token = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
             
             repo = TokenRepository(conn)
             repo.save_token(email, token)
             
-            if EmailService.send_verification_email(email, token):
+            if ServicioCorreo.enviar_correo_verificacion(email, token):
                 return {"success": True, "message": "Verification code sent"}
             else:
                  return {"success": False, "message": "Failed to send email"}
@@ -209,9 +198,6 @@ class AuthService:
             if not valid_token:
                 return {"success": False, "message": "Invalid or expired verification code"}
             
-            # Token valid, proceed to register
-            # This method can be used just for checking, but register_client does the actual work.
-            # We will use this simply to validate if needed, but register_client now handles it.
             if valid_token:
                  return {"success": True, "message": "Token valid"}
             return {"success": False, "message": "Invalid token"}

@@ -64,7 +64,6 @@ def api_servicio_delete(id):
     conn = get_db_connection()
     try:
         repo = ServicioRepository(conn)
-        # Soft delete usually, but using update ESTADO=0
         repo.update(id, ESTADO=0)
         return jsonify({'message': 'Servicio eliminado exitosamente'})
     except Exception as e:

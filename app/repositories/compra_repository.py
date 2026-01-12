@@ -1,5 +1,6 @@
 from .base_repository import Repository
-from entities.compra import Compra, DetalleCompra
+from entities.compra import Compra
+from entities.detalle_compra import DetalleCompra
 
 class CompraRepository(Repository):
     def __init__(self, conn):
@@ -8,13 +9,11 @@ class CompraRepository(Repository):
     def create_with_details(self, compra_dict, detalles_list):
         cursor = self.conn.cursor()
         try:
-            # Create Compra
             keys = ", ".join(compra_dict.keys())
             placeholders = ", ".join(["%s"] * len(compra_dict))
             sql = f"INSERT INTO {self.table_name} ({keys}) VALUES ({placeholders})"
             cursor.execute(sql, tuple(compra_dict.values()))
 
-            # Create Detalles
             for detalle in detalles_list:
                 d_keys = ", ".join(detalle.keys())
                 d_placeholders = ", ".join(["%s"] * len(detalle))

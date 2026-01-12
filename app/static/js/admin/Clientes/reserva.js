@@ -66,13 +66,6 @@ $(function () {
 var initDataTable = function () {
     fload("show");
 
-    // Note: reserva.js original used `urlGetAll` and client-side filtering. 
-    // Standard pattern uses server side `get_paged` and `count_all`.
-    // I will try to use the standard pattern `urlCountAll` and `urlGetPaged`.
-    // If backend only supports `urlGetAll`, this might be empty on first load if variables aren't defined.
-    // Assuming variables `urlCountAll` and `urlGetPaged` are available in template for Reservations too.
-    // If not, revert to `urlGetAll` inside callAjax? No, user wants SAME PATTERN.
-    // So I assume `reserva.html` will define `urlCountAll`.
 
     callAjax(ClaseRegistro.pagedItem.filtros, urlCountAll, "POST").done(function (r1) {
         var total = r1[0].total || r1[0];
@@ -124,10 +117,6 @@ var eventClickSaveRegistro = function () {
     var data = getFormValues();
     var entity = ClaseRegistro.getEntity();
 
-    // Specific update endpoint was `urlUpdateStatus`
-    // Standard pattern uses `urlUpdate`.
-    // I will use `urlUpdate` if available, or fallback/construct specific one.
-    // Let's assume standard `urlUpdate` is defined in template to point to the correct endpoint.
 
     Object.assign(entity, data); // Update entity with form data
 

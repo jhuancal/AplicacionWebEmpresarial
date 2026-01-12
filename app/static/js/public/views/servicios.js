@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initServices() {
     loadServices();
-    // We try to load pets early if logged in, or we can load on demand
     loadUserPets();
     setupModal();
     initFilters();
@@ -22,18 +21,13 @@ function loadServices() {
         .then(response => response.json())
         .then(data => {
             servicesData = data;
-            // The API returns the raw list. We might want to enrich it or just use it.
-            // The old code had logic to assign images based on category. let's replicate that.
             servicesData = servicesData.map((s, index) => {
                 let img = '/static/img/service-bg-1.jpg'; // Default image
                 if (s.Nombre.includes('Peluquería')) img = '/static/img/service-bg-1.jpg';
                 else if (s.Nombre.includes('Alojamiento')) img = '/static/img/service-bg-2.jpg';
                 else if (s.Nombre.includes('Veterinaria')) img = '/static/img/service-bg-3.jpg';
-                // If the service object already has a URL, use it, otherwise use the determined img
                 img = s.UrlImagen || img;
 
-                // Add mock ranking/location if missing from API, just for UI consistency if needed
-                // Old API didn't have ranking/location, so we keep the mock logic for display purposes if we want to keep the UI rich
                 const locations = ['Miraflores', 'Yanahuara', 'Cercado', 'Cayma', 'Jose Luis Bustamante'];
                 const ranking = (3.5 + (index * 0.3) % 1.5).toFixed(1);
 
@@ -54,8 +48,6 @@ function loadServices() {
 }
 
 function loadUserPets() {
-    // Check if user is logged in first?
-    // We can just try to fetch. If 401/403 or empty, we handle it.
     fetch('/api/mis-mascotas')
         .then(response => {
             if (response.ok) return response.json();
@@ -151,7 +143,6 @@ function populateLocationFilter() {
     const locationSelect = document.getElementById('filter-location');
     const locations = [...new Set(servicesData.filter(s => s.ESTADO === 1).map(s => s.Ubicacion))];
 
-    // Clear existing options except first
     locationSelect.innerHTML = '<option value="">Todas las ubicaciones</option>';
 
     locations.forEach(loc => {
@@ -162,15 +153,9 @@ function populateLocationFilter() {
     });
 }
 
-// Global modal logic
 function openReservation(serviceId) {
-    // Check login status somehow. 
-    // We can rely on userPets fetch. If it failed or returns empty (and we want to distinguish between empty and not logged in), 
-    // we might need a better check. But usually, if one is logged in, the template renders the user info.
-    // Let's assume strict check: if the "Iniciar Sesión" link exists in DOM, we are not logged in.
     if (document.getElementById('login-trigger')) {
         alert("Debes iniciar sesión para reservar.");
-        // Trigger login modal if available
         document.getElementById('login-modal').classList.add('visible');
         return;
     }
@@ -178,14 +163,12 @@ function openReservation(serviceId) {
     const service = servicesData.find(s => s.Id === serviceId);
     if (!service) return;
 
-    // Fill Modal
     document.getElementById('service-id').value = service.Id;
     document.getElementById('service-name').value = service.Nombre;
     document.getElementById('service-cost').value = 'S/ ' + parseFloat(service.Costo).toFixed(2);
     document.getElementById('res-date').value = '';
     document.getElementById('res-obs').value = '';
 
-    // Populate pets
     const petSelect = document.getElementById('pet-select');
     petSelect.innerHTML = '';
     if (userPets.length === 0) {
@@ -248,18 +231,7 @@ function setupModal() {
             FechaHora: date.replace('T', ' '), // Align format if needed 'YYYY-MM-DD HH:MM'
             Observaciones: obs
         };
-        // Ideally we pass IdCliente too if backend requires it in body, 
-        // but backend usually takes it from session. 
-        // The old code passed IdCliente: window.USER_SESSION.Id. 
-        // We might need to fetch user ID if backend doesn't infer it from session.
-        // Assuming backend infers from session for internal API, OR we need to inject it.
-        // Let's try sending it without IdCliente first (relying on session), 
-        // OR prompt user if my backend design requires explicit ID.
-        // Looking at old code: `IdCliente: window.USER_SESSION.Id`. 
-        // Use a safe fallback or fetch profile if needed. 
-        // For now, I'll assume the session cookie is enough or I will inject it if I can find it.
 
-        // Actually, let's fetch profile to get ID if we don't have it, or just send request.
 
         fetch('/api/reservas/create', {
             method: 'POST',

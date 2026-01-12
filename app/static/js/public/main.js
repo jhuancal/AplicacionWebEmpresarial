@@ -122,10 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const emailInput = document.getElementById('login-username'); // Changing ID logic to match HTML if needed, but HTML has login-username
-            // Wait, HTML says id="login-username" in the templates I viewed earlier.
-            // Let's check the HTML content I have.
-            // index.html: id="login-username"
-            // JS was referencing login-email. Need to fix that too.
 
             const username = document.getElementById('login-username').value;
             const password = document.getElementById('login-password').value;
@@ -147,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (data.success) {
-                    // Reload to update UI from server-side session
                     window.location.reload();
                 } else {
                     alert(data.message || 'Error al iniciar sesión');

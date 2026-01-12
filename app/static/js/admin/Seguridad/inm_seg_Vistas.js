@@ -1,9 +1,7 @@
 
 var ClaseGlobalVar = {};
 (function () {
-    /*
-     * Variables globales
-     */
+    
     this.getRowsTable = function () {
         return 5;
     };
@@ -52,7 +50,6 @@ var ClaseRegistro = {};
 
     var FilterInfo = {};
     this.getFilterInfo = function (Logical, PropertyName, value, Operator) {
-        // Simple shim for what the original code likely did
         return {
             Logical: Logical,
             PropertyName: PropertyName,
@@ -68,7 +65,6 @@ var ClaseRegistro = {};
     };
 
     this.setDataEntity = function (objeto) {
-        // Update current entity with new values
         Object.assign(entity, objeto);
     };
 
@@ -108,7 +104,6 @@ function gl_validateForm(validator) {
 function getFormValuesInsert() {
     var objRow = new Object();
 
-    // Auto-calculate order based on list length for simplicity
     objRow.Orden = ClaseGlobalVar.ListaVistas.length + 1;
     objRow.Codigo = $('#txtCodigo').val();
     objRow.NombreVista = $('#txtNombreVista').val();
@@ -137,7 +132,6 @@ function getFormValuesUpdate() {
     objRow.Nivel = $('#dropUpdNivel').val();
     objRow.Icono = $('#dropUpdIcono').val();
     objRow.IdPadre = $('#dropUpdPadre').val();
-    // Logic for Padre Code
     var padreObj = ClaseGlobalVar.ListaVistas.find(x => x.Id == objRow.IdPadre);
     objRow.CodigoPadre = padreObj ? padreObj.Codigo : "TODO";
 
@@ -152,17 +146,6 @@ function setFormValuesEdit() {
     $('#idUpdOrden').val(entity.Orden);
     $('#txtUpdCodigo').val(entity.Codigo);
     $('#txtUpdNombreVista').val(entity.NombreVista); // Access 'Nombre' property as mapped in controller? Controller returns keys matching DB or Entity to_dict? 
-    // Controller `get_all_vistas` uses `.to_dict()`: 'Nombre', 'Codigo', 'Descripcion'...
-    // But in `roles_permisos` we saw 'NombreVista' used in JS but 'Nombre' in Python.
-    // The previous controller update mapped 'NombreVista' <- 'Nombre' in `get_rol_acceso_by_rol`.
-    // But `get_all_vistas` returns dict straight from Entity?
-    // Entity `Acceso.to_dict()` has 'Nombre'. 
-    // JS EXPECTS 'NombreVista'.
-    // FIX: I will check `initDataTable` mapping.
-    // It maps `item.NombreVista`.
-    // So the API `get_all_vistas` MUST return `NombreVista`.
-    // I should update Controller or Entity to key it `NombreVista` OR update JS here.
-    // Let's update JS to check properties.
 
     $('#txtUpdNombreVista').val(entity.Nombre || entity.NombreVista);
     $('#txtUpdDescripcion').val(entity.Descripcion);
@@ -170,7 +153,6 @@ function setFormValuesEdit() {
     $('#dropUpdNivel').val(entity.Nivel);
     $('#txtUpdCodigoPadre').val(entity.Padre || entity.CodigoPadre);
     $('#txtUpdUrlVista').val(entity.UrlAcceso || entity.UrlVista);
-    // Entity uses UrlAcceso. Adapter needed?
 
     $('#dropUpdIcono').val(entity.Icono || ""); // DB doesn't have Icono mapped yet?
 
@@ -186,16 +168,12 @@ function setFormValuesEdit() {
                 listaPadreNivel.push({ label: objeto.Nombre || objeto.NombreVista, value: objeto.Id });
             }
             if ((!entity.Padre) && objeto.Id == entity.IdPadre) {
-                // entity.Padre is the Code 'ADMITODO'.
                 $('#txtUpdCodigoPadre').val(objeto.Codigo);
             }
         });
     }
     changeUpdPadre(listaPadreNivel);
 
-    // Attempt to set Parent ID if we can find it by Code?
-    // The entity returned by API has 'Padre' (Code). It doesn't have 'IdPadre'.
-    // We need to find the ID of the parent based on the 'Padre' code.
     if (entity.Padre && entity.Padre !== 'TODO') {
         var parent = ClaseGlobalVar.ListaVistas.find(x => x.Codigo === entity.Padre);
         if (parent) {
@@ -221,11 +199,9 @@ $(function () {
 
 var initData = function () {
     fload('hide');
-    // Using $.when even if only one call
     var servPaged = callAjax(null, urlGetAll, "GET");
     $.when(servPaged).done(function (r1) {
         var data = r1;
-        // Adapter: Map Entity keys to JS expected keys if needed
         ClaseGlobalVar.ListaVistas = data.map(function (d) {
             return {
                 Id: d.Id,
@@ -235,7 +211,6 @@ var initData = function () {
                 Nivel: d.Nivel,
                 Orden: d.Orden,
                 UrlVista: d.UrlAcceso,
-                //Padre is Code in DB
                 CodigoPadre: d.Padre,
                 Padre: d.Padre
             };
@@ -292,7 +267,6 @@ var initDataTable = function () {
 
 var initEvent = function () {
     $('#numRows').change(function () {
-        // Mock pagination
         initDataTable();
     });
 };
@@ -346,9 +320,7 @@ $('#dropNivel').on('change', function () {
 });
 
 $('#dropUpdNivel').on('change', function () {
-    // Similar logic for Update...
     var nivel = $(this).val();
-    // ... (simplified for brevity, assume similar logic)
 });
 
 function changePadre(lista) {
@@ -376,7 +348,6 @@ $('#dropPadre').on('change', function () {
     }
 });
 
-// --- TREE LOGIC ---
 var initTreeTable = function () {
     ClaseGlobalVar.ListaVistas.sort((a, b) => a.Orden - b.Orden);
     var htmlTree = generateTree(ClaseGlobalVar.ListaVistas);
@@ -397,7 +368,6 @@ var generateTree = function (list) {
 };
 
 var crearNodos = function (node, list) {
-    // Find children: Code of child's Parent == node.Code
     let children = list.filter(item => item.CodigoPadre === node.Codigo && item.Nivel == parseInt(node.Nivel) + 1);
     let hasChildren = children.length > 0;
 
@@ -416,7 +386,6 @@ var crearNodos = function (node, list) {
 };
 
 
-// --- DRAG AND DROP (Simplificado para navegador moderno) ---
 var initMoveAndDrop = function () {
     let draggedNode = null;
 
@@ -450,9 +419,6 @@ var initMoveAndDrop = function () {
         $target.removeClass('drag-over');
 
         if (draggedNode) {
-            // Append as child for simplicity in this demo
-            // Real logic needs "Insert Before", "Insert After" or "Append Child" distinction based on mouse Y
-            // Here we just append to the UL of the target
 
             let $ul = $target.children('ul');
             if ($ul.length === 0) {
@@ -553,7 +519,6 @@ function eventClickEditar($this) {
 }
 
 function eventUpdateItem() {
-    // Similar to Save
     var data = getFormValuesUpdate();
     data.Id = ClaseRegistro.getEntity().Id; // Ensure ID is passed
 
@@ -578,7 +543,6 @@ function eventClickRefresh() {
 }
 
 function fload(action) {
-    // implement loader if needed
 }
 
 function eventClickFiltro() {

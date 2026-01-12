@@ -36,17 +36,13 @@ $(function () {
 var initDataTable = function () {
     fload("show");
 
-    // Using $.ajax directly as 'callAjax' wrapper availability is uncertain in new file context
-    // unless defined in layout. Using $.ajax for reliability here but maintaining pattern.
 
     $.ajax({
         url: urlGetAll,
         type: 'GET',
         success: function (data) {
-            // Client-side pagination for this module as per Controller implementation (Get All)
             var filterVal = $('#txtBuscar').val().toLowerCase();
 
-            // Filter
             var filteredData = data.filter(function (item) {
                 if (!filterVal) return true;
                 var clientName = (item.ClienteNombre + " " + item.ClienteApellido).toLowerCase();
@@ -54,7 +50,6 @@ var initDataTable = function () {
                 return clientName.includes(filterVal) || petName.includes(filterVal);
             });
 
-            // Sort (Newest first)
             filteredData.sort((a, b) => b.FechaSolicitud - a.FechaSolicitud);
 
             var total = filteredData.length;
@@ -189,5 +184,4 @@ var initEvent = function () {
 };
 
 function fload(action) {
-    // Shim if missing
 }

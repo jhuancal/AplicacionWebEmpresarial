@@ -7,7 +7,6 @@ class CarritoRepository(Repository):
 
     def get_by_client_with_products(self, id_cliente):
         cursor = self.conn.cursor(dictionary=True)
-        # Join with Product to get product details
         sql = """
             SELECT c.*, p.Nombre as ProductoNombre, p.PrecioVenta, p.UrlImagen 
             FROM Cli_Carrito c

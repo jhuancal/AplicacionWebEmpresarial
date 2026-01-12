@@ -14,12 +14,9 @@ var ClaseGlobalVar = {
 };
 
 $(function () {
-    // Load roles for dropdown
     loadRoles();
-    // Initial Load
     initDataTableUser();
 
-    // Bind Enter key
     $("#txtBuscarUser").keypress(function (e) {
         if (e.which == 13) initDataTableUser();
     });
@@ -38,7 +35,7 @@ var loadRoles = function () {
     });
 };
 
-/* --- TAB 1: LISTA USUARIOS --- */
+
 
 var initDataTableUser = function () {
     ClaseGlobalVar.filter.consulta = $("#txtBuscarUser").val();
@@ -94,16 +91,13 @@ var prevPageUser = function () {
 };
 
 var nextPageUser = function () {
-    // Ideally we should check if there are more records, but for now simple next
     ClaseGlobalVar.filter.p_inicio += ClaseGlobalVar.filter.p_intervalo;
     initDataTableUser();
 };
 
 var eventClickEditarUser = function (item) {
-    // Switch to tab 2
     $('a[href="#nuevo-tab"]').tab('show');
 
-    // Populate fields
     $("#hdnIdUsuario").val(item.Id);
     $("#hdnIdPersona").val(item.IdPersona);
     $("#txtPersonaName").val(item.NombrePersona);
@@ -128,10 +122,9 @@ var eventClickEliminarUser = function (item) {
     });
 };
 
-/* --- TAB 2: NUEVO / EDICION --- */
+
 
 var eventClickCancelUser = function () {
-    // Reset form
     $("#hdnIdUsuario").val("00000000-0000-0000-0000-000000000000");
     $("#hdnIdPersona").val("");
     $("#txtPersonaName").val("");
@@ -139,7 +132,6 @@ var eventClickCancelUser = function () {
     $("#txtPassword").val("");
     $("#dropRolUser").val($("#dropRolUser option:first").val());
 
-    // Go to list tab
     $('a[href="#lista-tab"]').tab('show');
 };
 
@@ -190,7 +182,7 @@ var eventClickSaveUser = function () {
     });
 };
 
-/* --- MODAL PERSONA --- */
+
 
 var eventClickOpenModalPersona = function () {
     $("#searchDni").val("");
@@ -238,12 +230,10 @@ var selectPersona = function (item) {
     $("#hdnIdPersona").val(item.Usuario.IdPersona);
     $("#txtPersonaName").val(item.Usuario.NombrePersona);
 
-    // Check if they already have a user
     if (item.Usuario.IdUsuario && item.Usuario.IdUsuario !== "00000000-0000-0000-0000-000000000000") {
         if (confirm("Esta persona ya tiene usuario (" + item.Usuario.Username + "). ¿Desea editarlo?")) {
             $("#hdnIdUsuario").val(item.Usuario.IdUsuario);
             $("#txtUsername").val(item.Usuario.Username);
-            // Select their role if returned
             if (item.RolesEmpresa && item.RolesEmpresa.length > 0) {
                 $("#dropRolUser").val(item.RolesEmpresa[0].IdRol);
             }

@@ -7,7 +7,6 @@ def api_personas_available():
     conn = get_db_connection()
     try:
         cursor = conn.cursor(dictionary=True)
-        # Select Personas that show up in Adm_Persona but NOT in Seg_Colaborador
         query = """
             SELECT P.Id, P.Nombres, P.Apellidos, P.DNI
             FROM Adm_Persona P

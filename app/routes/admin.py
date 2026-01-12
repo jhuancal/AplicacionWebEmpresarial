@@ -3,7 +3,6 @@ from db import get_db_connection
 from auth.decorators import login_required
 from repositories.producto_repository import ProductoRepository
 
-# Import controllers
 from routes.Controllers.base_controller import register_routes as register_base_routes
 from routes.Controllers.producto_controller import register_routes as register_producto_routes
 from routes.Controllers.mascota_controller import register_routes as register_mascota_routes
@@ -16,7 +15,6 @@ from routes.Controllers.adopcion_controller import register_routes as register_a
 
 admin_bp = Blueprint('admin', __name__)
 
-# Register Routes from Controllers
 register_base_routes(admin_bp)
 register_producto_routes(admin_bp)
 register_mascota_routes(admin_bp)
@@ -116,4 +114,3 @@ def admin_carritos():
 def admin_publicaciones():
     user = session.get('user_data')
     return render_template("admin/Clientes/publicaciones.html", user=user)
-

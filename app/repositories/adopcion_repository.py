@@ -30,11 +30,7 @@ class AdopcionRepository(Repository):
         cursor.close()
 
     def get_all_detailed(self):
-        # Join with Cliente and Mascota to get names
         cursor = self.conn.cursor(dictionary=True)
-        # Assuming Seg_Cliente has Nombres/Apellidos and Adm_Mascota has Nombre
-        # Adjust table names if necessary (Seg_Cliente vs users table)
-        # Using basic join.
         query = """
             SELECT s.*, 
                    c.Nombres as ClienteNombre, c.Apellidos as ClienteApellido, 
@@ -47,8 +43,6 @@ class AdopcionRepository(Repository):
         cursor.execute(query)
         rows = cursor.fetchall()
         cursor.close()
-        # Return dicts or enhanced objects. 
-        # For simplicity, returning list of dicts extended with names
         results = []
         for row in rows:
             obj = self.entity_class(**{k:v for k,v in row.items() if k in self.entity_class.__init__.__code__.co_varnames})

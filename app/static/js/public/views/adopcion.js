@@ -27,19 +27,15 @@ function renderAdoptionList(pets) {
     }
 
     pets.forEach((pet, index) => {
-        // Fallback for photo
         let mainImage = '/static/img/not-found.jpg';
         if (pet.Fotos && pet.Fotos.length > 0) {
             mainImage = pet.Fotos[0];
         } else if (pet.UrlImagen) {
-            // Some APIs might return UrlImagen directly on the object
             mainImage = pet.UrlImagen;
         }
 
-        // Check availability
         const isAdopted = pet.DISPONIBILIDAD === 0;
 
-        // Alternating logic: Even indexes normal (Row), Odd indexes reversed (Row-Reverse)
         const isAlt = index % 2 !== 0 ? 'alt' : '';
 
         const card = document.createElement('div');
@@ -53,7 +49,6 @@ function renderAdoptionList(pets) {
         if (isAdopted) {
             buttonHtml = '<button class="adopt-btn is-disabled" disabled>Adoptado</button>';
         } else {
-            // We pass ID and Name to the handler
             buttonHtml = `<a href="#" class="adopt-btn" data-id="${pet.Id}" data-name="${pet.Nombre}">¡Adóptame!</a>`;
         }
 
@@ -93,7 +88,6 @@ function renderAdoptionList(pets) {
         listContainer.appendChild(card);
     });
 
-    // Attach click events to buttons
     document.querySelectorAll('.adopt-btn').forEach(btn => {
         if (!btn.disabled) {
             btn.addEventListener('click', (e) => {
@@ -107,23 +101,18 @@ function renderAdoptionList(pets) {
 }
 
 function handleAdoptClick(id, name) {
-    // Check if user is logged in
-    // We can check by looking for the "Cerrar Sesión" link in the navbar
     const logoutLink = document.querySelector('a[href="/logout"]');
 
     if (!logoutLink) {
-        // Not logged in -> Open Login Modal
         const loginModal = document.getElementById('login-modal');
         if (loginModal) {
             loginModal.classList.add('open');
-            // Optional: Add a message in the login modal saying "Log in to adopt"
         } else {
             alert("Por favor inicia sesión para adoptar.");
         }
         return;
     }
 
-    // Logged in -> Open Confirm Modal
     currentPetId = id;
     const confirmModal = document.getElementById('adoption-modal');
     const msg = document.getElementById('adoption-modal-message');
@@ -175,7 +164,6 @@ async function submitAdoptionRequest(petId) {
         if (data.success) {
             alert("¡Solicitud enviada con éxito! Nos pondremos en contacto contigo pronto.");
             modal.classList.remove('open');
-            // Refresh list to potentially show updated state (though backend might not auto-update disponibilidade instantly, manual refresh is safer)
             fetchPets();
         } else {
             alert(data.message || "Error al procesar la solicitud.");
@@ -194,9 +182,7 @@ function setupFilters(allPets) {
 
     filters.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove active class from all
             filters.forEach(f => f.classList.remove('active'));
-            // Add to clicked
             btn.classList.add('active');
 
             const type = btn.dataset.filter;
@@ -204,7 +190,6 @@ function setupFilters(allPets) {
             if (type === 'all') {
                 renderAdoptionList(allPets);
             } else {
-                // Filter by type (assuming Tipo matches or close enough)
                 const filtered = allPets.filter(item => item.Tipo && item.Tipo.toLowerCase() === type.toLowerCase());
                 renderAdoptionList(filtered);
             }

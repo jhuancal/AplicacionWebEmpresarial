@@ -8,13 +8,11 @@ class PublicacionRepository(Repository):
     def create_post(self, post_data, media_list):
         cursor = self.conn.cursor()
         try:
-            # Create Post
             keys = ", ".join(post_data.keys())
             placeholders = ", ".join(["%s"] * len(post_data))
             sql = f"INSERT INTO {self.table_name} ({keys}) VALUES ({placeholders})"
             cursor.execute(sql, tuple(post_data.values()))
 
-            # Create Media
             for media in media_list:
                 m_keys = ", ".join(media.keys())
                 m_placeholders = ", ".join(["%s"] * len(media))
@@ -32,7 +30,6 @@ class PublicacionRepository(Repository):
 
     def get_feed(self, limit=20, offset=0):
         cursor = self.conn.cursor(dictionary=True)
-        # Get posts with user info
         sql = """
             SELECT p.*, c.NombreUsuario as Autor, c.IdPersona
             FROM Cli_Publicaciones p
@@ -44,7 +41,6 @@ class PublicacionRepository(Repository):
         cursor.execute(sql, (limit, offset))
         posts = cursor.fetchall()
         
-        # Determine unique post IDs to fetch media efficiently
         if not posts:
             cursor.close()
             return []
@@ -52,14 +48,12 @@ class PublicacionRepository(Repository):
         post_ids = [p['Id'] for p in posts]
         format_strings = ','.join(['%s'] * len(post_ids))
         
-        # Fetch media for these posts
         media_sql = f"SELECT * FROM Cli_Publicacion_Media WHERE IdPublicacion IN ({format_strings}) AND ESTADO = 1"
         cursor.execute(media_sql, tuple(post_ids))
         all_media = cursor.fetchall()
         
         cursor.close()
         
-        # Attach media to posts
         posts_map = {p['Id']: {**p, 'Media': []} for p in posts}
         for m in all_media:
             if m['IdPublicacion'] in posts_map:

@@ -85,13 +85,11 @@ $(function () {
 });
 
 var initDataTable = function () {
-    // fload("show"); // Assuming this global exists
     $.ajax({
         url: urlGetAll,
         type: 'GET',
         success: function (data) {
             $("#tableRegistros tbody").empty();
-            // Simple filtering by name if input exists
             var filterVal = $('#txtBuscar').val().toLowerCase();
 
             var filteredData = data.filter(function (item) {
@@ -100,7 +98,6 @@ var initDataTable = function () {
                 return (item.Nombre && item.Nombre.toLowerCase().includes(filterVal));
             });
 
-            // Pagination Logic (Client Side)
             var total = filteredData.length;
             var numRows = parseInt($('#numRows').val());
             var currentPage = ClaseRegistro.currentPage;
@@ -139,11 +136,9 @@ var initDataTable = function () {
 
             getPaginator(total, currentPage);
             getLabelRegistro(total, start, end);
-            // fload("hide");
         },
         error: function (e) {
             console.error(e);
-            // fload("hide");
         }
     });
 };
@@ -196,7 +191,6 @@ var eventClickSaveRegistro = function () {
 };
 
 var eventClickEliminar = function (data) {
-    // Using bootbox if available, else standard confirm
     if (window.bootbox) {
         bootbox.confirm("¿Está seguro de eliminar el registro?", function (result) {
             if (result) {

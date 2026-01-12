@@ -23,7 +23,7 @@ def wait_for_db():
             retries -= 1
     return None
 
-def init_db():
+def iniciar_db():
     print("Starting Database Verification and Initialization...")
     conn = wait_for_db()
     if not conn:
@@ -65,7 +65,6 @@ def init_db():
         else:
             print("Entities already exist in database. Verifying integrity... OK.")
             
-        # Ensure Seg_TokenVerificacion exists (Migration)
         cursor.execute("SHOW TABLES LIKE 'Seg_TokenVerificacion'")
         if not cursor.fetchone():
              print("Creating Seg_TokenVerificacion table...")
@@ -81,4 +80,4 @@ def init_db():
     print("Database initialization logic completed.")
 
 if __name__ == "__main__":
-    init_db()
+    iniciar_db()

@@ -15,10 +15,8 @@ class TokenRepository(Repository):
         self.conn.commit()
 
     def save_token(self, correo, token):
-        # Invalidate previous tokens
         self.invalidate_previous_tokens(correo)
         
-        # 10 minutes expiration
         now_ms = int(datetime.now().timestamp() * 1000)
         expiration = now_ms + (10 * 60 * 1000) 
         

@@ -1,6 +1,6 @@
-/* Base Reset & Variables from Public Site */
+
 :root {
-    /* Paleta de Colores Publica */
+    
     --primary: #021523;
     --danger: #EF5734;
     --info: #33CC99;
@@ -25,7 +25,7 @@ body {
     color: var(--dark);
 }
 
-/* Sidebar Styles */
+
 .sidebar {
     width: 250px;
     background-color: var(--primary);
@@ -35,7 +35,7 @@ body {
     padding: 20px;
     position: fixed;
     height: 100%;
-    /* border-right: 1px solid var(--grey); */
+    
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -65,17 +65,17 @@ body {
     display: block;
     padding: 12px 15px;
     border-radius: 8px;
-    /* Slightly more rounded */
+    
     transition: all 0.3s ease;
     border-left: 4px solid transparent;
-    /* Prepare for hover/active */
+    
 }
 
 .sidebar nav ul li a:hover,
 .sidebar nav ul li a.active,
 .sidebar nav ul li a[aria-expanded="true"] {
     background-color: rgba(255, 255, 255, 0.05);
-    /* Subtle background */
+    
     color: var(--white);
     border-left: 4px solid var(--danger);
 }
@@ -117,7 +117,7 @@ body {
     pointer-events: none;
 }
 
-/* Layout & Header */
+
 .wrapper {
     margin-left: 250px;
     width: 100%;
@@ -161,7 +161,7 @@ header .logout:hover {
     overflow-y: auto;
 }
 
-/* Utility Classes */
+
 .text-center {
     text-align: center;
 }
@@ -198,8 +198,8 @@ header .logout:hover {
     display: none;
 }
 
-/* Button Overrides (Matching Public Site Aesthetics) */
-/* Assuming Bootstrap is used, we can override .btn or create .button class */
+
+
 
 .btn-primary {
     background-color: var(--info);

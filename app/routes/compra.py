@@ -38,16 +38,13 @@ def process_checkout():
     compra_repo = CompraRepository(conn)
     entrega_repo = EntregaRepository(conn)
     
-    # Get Cart Items
     cart_items = cart_repo.get_by_client_with_products(user['Id'])
     if not cart_items:
         conn.close()
         return jsonify({"success": False, "message": "Cart is empty"}), 400
         
-    # Calculate Total
     total = sum(item['PrecioVenta'] * item['Cantidad'] for item in cart_items)
     
-    # Create Purchase
     compra_id = str(uuid.uuid4())
     compra_data = {
         'Id': compra_id,
@@ -84,7 +81,6 @@ def process_checkout():
         })
         
     if compra_repo.create_with_details(compra_data, detalles):
-        # Create Delivery Record if needed
         if tipo_entrega == 'Delivery':
             entrega_data = {
                 'Id': str(uuid.uuid4()),
@@ -99,7 +95,6 @@ def process_checkout():
             }
             entrega_repo.add(**entrega_data)
             
-        # Clear Cart
         cart_repo.clear_cart(user['Id'])
         conn.close()
         return jsonify({"success": True, "boleta": compra_data['NumeroBoleta']})
@@ -121,7 +116,6 @@ def get_history():
     result = []
     for c in compras:
         c_dict = c.to_dict()
-        # Add delivery status if exists
         entrega = entrega_repo.get_by_compra(c.Id)
         if entrega:
             c_dict['EstadoEntrega'] = entrega.EstadoEntrega
@@ -139,7 +133,6 @@ def get_details(id_compra):
     conn = get_db_connection()
     compra_repo = CompraRepository(conn)
     
-    # Verify ownership? Ideally yes. Skipping for speed/MVP unless requested.
     detalles = compra_repo.get_details(id_compra)
     conn.close()
     return jsonify([d.to_dict() for d in detalles])

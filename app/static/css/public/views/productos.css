@@ -1,13 +1,13 @@
-/* Productos Page Specific Styles */
 
-/* Layout */
+
+
 .products-container {
     padding: 2rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
 
-/* Hero Section */
+
 .products-hero {
     height: 40vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/img/products-hero.jpg');
@@ -43,7 +43,7 @@
     gap: 2rem;
 }
 
-/* Sidebar */
+
 .products-sidebar {
     width: 250px;
     flex-shrink: 0;
@@ -104,7 +104,7 @@
     background-color: var(--danger);
 }
 
-/* Product Grid */
+
 .products-grid {
     flex-grow: 1;
     display: grid;
@@ -112,7 +112,7 @@
     gap: 2rem;
 }
 
-/* Product Card */
+
 .product-card {
     background-color: var(--white);
     border-radius: 8px;
@@ -230,7 +230,7 @@
     transform: rotate(90deg);
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .products-layout {
         flex-direction: column;

@@ -92,17 +92,9 @@ def api_update_mascota():
         conn.close()
 
 def register_routes(bp):
-    # Register purely specific routes for Mascota
-    # These paths are chosen to be specific for the entity 'adm_mascota'
-    # Depending on how the frontend calls them, we might need to match the generic pattern
-    # The Generic pattern is /api/<entity_name>/Action
-    # If we register /api/adm_mascota/GetAll here, it should take precedence over /api/<entity_name>/GetAll
     
     bp.add_url_rule("/api/adm_mascota/GetAll", view_func=api_get_all_mascotas, methods=['GET'])
     bp.add_url_rule("/api/adm_mascota/Insert", view_func=api_insert_mascota, methods=['POST'])
     bp.add_url_rule("/api/adm_mascota/Update", view_func=api_update_mascota, methods=['PUT'])
     
-    # Also keep the old one if needed, but the user asked to move logic here
-    # Reuse admin_add_mascota logic? accepted naming conventions: api_insert_mascota
-    # The old route was /api/admin/mascotas
     bp.add_url_rule("/api/admin/mascotas", view_func=api_insert_mascota, methods=['POST']) 

@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const stepIndicators = document.querySelectorAll('.step-item');
     const progressFill = document.querySelector('.steps-progress-fill');
 
-    // --- Navigation Logic ---
 
     window.nextStep = function () {
         if (currentStep < steps.length - 1) {
@@ -47,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function validateStep(step) {
-        // Step 0: Email Verification
         if (step === 0) {
             const correoFinal = document.getElementById('correo-final');
             if (!correoFinal.value) {
@@ -56,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Step 1: Personal Data
         if (step === 1) {
             const inputs = steps[1].querySelectorAll('input[required]');
             for (let input of inputs) {
@@ -67,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Step 2: Payment (Mock validation)
         if (step === 2) {
             const inputs = steps[2].querySelectorAll('input[required]');
             for (let input of inputs) {
@@ -81,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
-    // --- Email Verification Logic ---
 
     window.sendVerificationCode = async function () {
         const email = document.getElementById('email-verification').value;
@@ -158,8 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnVerify.classList.remove('is-info');
                 btnVerify.classList.add('is-success');
 
-                // Optional: Auto-next
-                // nextStep();
             } else {
                 btnVerify.disabled = false;
                 btnVerify.textContent = 'Verificar Código';
@@ -173,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- Form Submission ---
 
     const form = document.getElementById('registerForm');
     if (form) {
@@ -183,20 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            // Backend expects 'verification_code' but input name is not set in HTML?
-            // Let's check HTML. Ah, verification-code input has ID but maybe not name?
-            // Or maybe it is separate.
-            // We need to send verification_code because register_client implementation CHECKS IT AGAIN.
 
             const codeInput = document.getElementById('verification-code');
             if (codeInput) {
                 data.verification_code = codeInput.value;
             }
-            // Also need "correo" which is in 'correo-final' input (name="correo"), so that should be fine.
 
             data.tipo_usuario = 'Cliente';
 
-            // Prepare nested 'mascota' object if needed
             if (data.mascota_nombre) {
                 data.mascota = {
                     nombre: data.mascota_nombre,

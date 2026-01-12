@@ -1,4 +1,4 @@
-/* Services Page Styles */
+
 
 .services-hero {
     height: 40vh;
@@ -30,12 +30,12 @@
     z-index: 2;
 }
 
-/* Filters */
+
 .services-filters {
     background: var(--white);
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    /* Subtle shadow */
+    
     margin-bottom: 3rem;
     border-radius: 8px;
     display: flex;
@@ -71,7 +71,7 @@
     font-family: inherit;
 }
 
-/* Services Grid */
+
 .services-container {
     padding: 0 1.5rem 4rem;
     max-width: 1200px;
@@ -84,7 +84,7 @@
     gap: 2rem;
 }
 
-/* Service Card */
+
 .service-card-item {
     background: var(--white);
     border-radius: 12px;
@@ -156,7 +156,7 @@
 
 .service-rating {
     color: #FFD700;
-    /* Gold */
+    
     font-size: 0.9rem;
     display: flex;
     align-items: center;
@@ -181,7 +181,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     min-height: 4.2em;
-    /* Ensure alignment */
+    
 }
 
 .service-meta {
@@ -237,7 +237,7 @@
     background: var(--danger);
 }
 
-/* Modal Styles */
+
 .modal-overlay {
     position: fixed;
     top: 0;

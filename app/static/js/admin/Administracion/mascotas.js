@@ -144,8 +144,6 @@ var eventClickNuevo = function () {
 
 var eventClickEditar = function (data) {
     if (!data.Fotos) {
-        // Fetch specific details (photos) if not in list (though get_all_with_photos should have them)
-        // Since we are using get_all_with_photos, they should be there.
     }
 
     ClaseRegistro.setEdit();
@@ -192,7 +190,6 @@ var eventClickSaveRegistro = function () {
         formData.append("Id", entity.Id);
 
         callAjaxFormData(formData, urlUpdate, "PUT").done(function () {
-            // Re-draw or just init?
             initDataTable();
             $("#modalRegistro").modal("hide");
             Noty("success", "Éxito", "Actualizado correctamente");

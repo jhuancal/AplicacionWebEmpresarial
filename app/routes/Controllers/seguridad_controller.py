@@ -9,7 +9,6 @@ from repositories.persona_repository import PersonaRepository
 import uuid
 import time
 
-# --- ROL ---
 
 @login_required
 def get_all_roles():
@@ -48,7 +47,6 @@ def update_rol():
     conn = get_db_connection()
     repo = RolRepository(conn)
     try:
-        # Custom update for Rol
         cursor = conn.cursor()
         sql = "UPDATE Seg_Rol SET Nombre=%s, Descripcion=%s, FECHA_MODIFICACION=%s, USER_MODIFICACION=%s WHERE Id=%s"
         cursor.execute(sql, (data['Nombre'], data['Descripcion'], int(time.time() * 1000), 'ADMIN', rol_id))
@@ -86,7 +84,6 @@ def get_rol_acceso_by_rol():
     accesos = repo_acceso.get_all()
     permisos = repo_rol_acceso.get_by_rol_id(rol_id)
     
-    # Map permissions
     result = []
     for acc in accesos:
         assigned = next((p for p in permisos if p.IdAccesoUno == acc.Id), None)
@@ -105,7 +102,6 @@ def get_rol_acceso_by_rol():
     conn.close()
     return jsonify(result)
 
-# --- VISTA (ACCESO) ---
 
 @login_required
 def get_all_vistas(): 
@@ -117,22 +113,14 @@ def get_all_vistas():
 
 @login_required
 def get_vista_by_id():
-    # Used for Count Check in JS: callAjax(filtroPrueba, urlGetVistaById, "POST")
-    # Actually JS seems to misuse this endpoint or it filters.
-    # The JS sends a filter object to this endpoint to check if "INMOBILIARIA" exists?
-    # Let's support basic filtering or generic get_by_id.
-    # If the request has filters, treat as simple search.
     
     data = request.json
     conn = get_db_connection()
     repo = AccesoRepository(conn)
     
     if isinstance(data, dict) and 'PropertyName' in data:
-        # It's a filter
-        # Simple implementation for the recursive check
         cursor = conn.cursor(dictionary=True)
         sql = f"SELECT * FROM Seg_Acceso WHERE {data['PropertyName']} = %s"
-        # Since 'Operator' is Equals
         cursor.execute(sql, (data['value'],))
         rows = cursor.fetchall()
         cursor.close()
@@ -155,10 +143,6 @@ def insert_vista():
             Nombre=data.get('NombreVista'),
             Descripcion=data.get('Descripcion'),
             Padre=data.get('CodigoPadre') if data.get('Padre') != 'TODO' else 'TODO', # JS Sends CodigoPadre
-            # JS sends IdPadre as well.
-            # Schema 'Seg_Acceso' usually has 'Padre' as Code or Id? 
-            # Entities/acceso.py says 'Padre'.
-            # RolController logic implied 'Padre' is Code. 
             Tipo='VISTA', # Default
             Nivel=data.get('Nivel'),
             Orden=data.get('Orden'),
@@ -168,9 +152,6 @@ def insert_vista():
             FECHA_CREACION=int(time.time() * 1000),
             USER_CREACION='ADMIN'
         )
-        # Also need 'Icono' and 'Negocio' if they exist in DB?
-        # Checked `acceso.py`: No Icono/Negocio fields mapped in Entity?
-        # If DB has them, entity needs update. Assuming basic fields for now.
         return jsonify({'Id': new_id, 'Message': 'Success'}), 200
     except Exception as e:
         print(e)
@@ -185,7 +166,6 @@ def update_vista():
     conn = get_db_connection()
     try:
         cursor = conn.cursor()
-        # Updating basic fields. Note: Update query should be more robust.
         sql = """UPDATE Seg_Acceso SET 
                  Codigo=%s, Nombre=%s, Descripcion=%s, Padre=%s, Nivel=%s, Orden=%s, UrlAcceso=%s,
                  FECHA_MODIFICACION=%s, USER_MODIFICACION='ADMIN'
@@ -247,7 +227,6 @@ def update_lista_acceso(): # For Drag and Drop Position Update
     finally:
         conn.close()
 
-# --- ROL ACCESO UPDATE ---
 
 @login_required
 def update_lista_rol_acceso():
@@ -281,7 +260,6 @@ def update_lista_rol_acceso():
     finally:
         conn.close()
 
-# --- USUARIO (COLABORADOR) ---
 
 @login_required
 def get_paged_usuarios():
@@ -316,7 +294,6 @@ def get_paged_usuarios():
 
 @login_required
 def count_usuarios(): 
-    # Not fully used by simplified JS but good to have
     return jsonify([{'total': 0}]) 
 
 @login_required
@@ -333,7 +310,6 @@ def delete_usuario():
     finally:
          conn.close()
 
-# --- PERSONA SEARCH ---
 
 @login_required
 def search_persona_paged():
@@ -438,17 +414,14 @@ def insert_compuesto():
 
 
 def register_routes(bp):
-    # ROL
     bp.add_url_rule('/api/inm_seg_Rol/GetAll', view_func=get_all_roles, methods=['GET'])
     bp.add_url_rule('/api/inm_seg_Rol/Insert', view_func=insert_rol, methods=['POST'])
     bp.add_url_rule('/api/inm_seg_Rol/Update', view_func=update_rol, methods=['PUT', 'POST'])
     bp.add_url_rule('/api/inm_seg_Rol/Delete', view_func=delete_rol, methods=['DELETE'])
     bp.add_url_rule('/api/inm_seg_Rol/GetRolAccesoByRol', view_func=get_rol_acceso_by_rol, methods=['POST'])
     
-    # ROL ACCESO
     bp.add_url_rule('/api/inm_seg_RolVistas/UpdateListaRol_Acceso', view_func=update_lista_rol_acceso, methods=['POST'])
     
-    # VISTA
     bp.add_url_rule('/api/inm_seg_Vista/GetAll', view_func=get_all_vistas, methods=['GET'])
     bp.add_url_rule('/api/inm_seg_Vista/Getinm_seg_VistaById', view_func=get_vista_by_id, methods=['POST'])
     bp.add_url_rule('/api/inm_seg_Vista/Insert', view_func=insert_vista, methods=['POST'])
@@ -456,11 +429,9 @@ def register_routes(bp):
     bp.add_url_rule('/api/inm_seg_Vista/Delete', view_func=delete_vista, methods=['DELETE'])
     bp.add_url_rule('/api/inm_seg_Vista/UpdateListaAcceso', view_func=update_lista_acceso, methods=['POST'])
     
-    # COLABORADOR
     bp.add_url_rule('/api/inm_adm_Usuario/GetPagedListaUsuarioRol', view_func=get_paged_usuarios, methods=['POST'])
     bp.add_url_rule('/api/inm_adm_Usuario/GetTotalListaUsusarioRol', view_func=count_usuarios, methods=['POST'])
     bp.add_url_rule('/api/inm_adm_Usuario/Delete', view_func=delete_usuario, methods=['DELETE'])
     bp.add_url_rule('/api/inm_adm_Usuario/GetPagedListaPersonaEmpresa', view_func=search_persona_paged, methods=['POST'])
     bp.add_url_rule('/api/inm_adm_Usuario/InsertCompuesto', view_func=insert_compuesto, methods=['POST'])
-
 

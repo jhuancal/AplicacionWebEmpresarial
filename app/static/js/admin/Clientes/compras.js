@@ -78,8 +78,6 @@ var initDataTable = function () {
 };
 
 var eventClickVerDetalle = function (data) {
-    // Implement detail view logic using 'verDetalle' original intent
-    // Perhaps open a modal or alert as placeholder for now
     alert("Ver Detalle ID: " + data.Id);
 };
 

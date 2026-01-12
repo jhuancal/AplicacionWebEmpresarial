@@ -14,19 +14,14 @@ function initPublications() {
 }
 
 function checkLogin() {
-    // Check if "Iniciar Sesión" link exists in navbar to determine guest status
     const loginLink = document.getElementById('login-trigger');
     const layout = document.querySelector('.feed-layout');
 
     if (loginLink) {
-        // Guest Mode
         layout.classList.add('guest-mode');
         currentUser = null;
     } else {
-        // User Mode
         layout.classList.remove('guest-mode');
-        // Retrieve username from navbar if possible, or fetch profile.
-        // For visual display, we can try to grab it from the "Hola, User" element
         const userNav = document.querySelector('.navbar-item span.navbar-a');
         if (userNav && userNav.textContent.includes('Hola,')) {
             const name = userNav.textContent.replace('Hola,', '').trim();
@@ -71,9 +66,6 @@ function renderPublicFeed() {
     const container = document.getElementById('public-feed-container');
     const filterText = document.getElementById('filter-text').value.toLowerCase();
 
-    // Filter public posts
-    // If backend returns everything mixed, we can filter.
-    // Assuming backend returns a list of post objects.
     const filtered = allPublications.filter(pub => {
         const content = pub.Contenido || '';
         const author = pub.Autor || '';
@@ -114,16 +106,13 @@ function createPostCard(pub) {
     const div = document.createElement('div');
     div.className = 'post-card';
 
-    // Media
     let mediaHtml = '';
     if (pub.Media && pub.Media.length > 0) {
-        // Display carousel or simple stack. Let's do a horizontal scroll for multiple.
         if (pub.Media.length > 1) {
             mediaHtml = `<div class="post-media-container" style="overflow-x: auto; justify-content: flex-start;">`;
             pub.Media.forEach(m => {
                 let src = m.Url;
                 if (src.startsWith('/static/uploads/')) {
-                    // We hope these exist or use error handler
                 }
                 if (m.TipoMedia === 'Video' || src.endsWith('.mp4')) {
                     mediaHtml += `<video src="${src}" controls style="min-width:100%; height:100%; object-fit:contain;"></video>`;
@@ -190,7 +179,6 @@ function setupCreatePost() {
 
     if (!btn) return; // Not logged in
 
-    // Preview Logic
     fileInput.addEventListener('change', (e) => {
         previewContainer.innerHTML = '';
         Array.from(e.target.files).forEach(file => {
@@ -237,12 +225,10 @@ function setupCreatePost() {
             const data = await response.json();
 
             if (data.success) {
-                // Clear form
                 contentInput.value = '';
                 fileInput.value = '';
                 previewContainer.innerHTML = '';
                 alert("Publicado correctamente!");
-                // Reload feed
                 loadFeed();
             } else {
                 alert("Error: " + (data.message || 'No se pudo publicar'));

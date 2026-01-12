@@ -37,7 +37,6 @@ def add_to_cart():
     conn = get_db_connection()
     repo = CarritoRepository(conn)
     
-    # Check if exists
     existing_item = repo.get_item(user['Id'], id_producto)
     
     if existing_item:

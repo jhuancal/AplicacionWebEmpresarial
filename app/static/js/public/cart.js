@@ -1,5 +1,5 @@
 
-/* Cart Logic for Public New */
+
 
 const CART_API = {
     items: '/api/carrito/items',
@@ -9,7 +9,6 @@ const CART_API = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Cart Trigger if exists
     const cartTrigger = document.getElementById('cart-trigger');
     if (cartTrigger) {
         cartTrigger.addEventListener('click', (e) => {
@@ -18,14 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Close buttons
     const closeBtn = document.querySelector('.cart-close');
     const overlay = document.querySelector('.cart-overlay');
 
     if (closeBtn) closeBtn.addEventListener('click', toggleCart);
     if (overlay) overlay.addEventListener('click', toggleCart);
 
-    // Initial Load - Only if user is logged in (cart trigger exists)
     if (cartTrigger) {
         loadCart();
     }
@@ -50,7 +47,6 @@ async function loadCart() {
     if (!container) return;
 
     try {
-        // Show Spinner
         container.innerHTML = '<div class="cart-spinner"><i class="zmdi zmdi-spinner zmdi-hc-spin"></i> Cargando...</div>';
 
         const res = await fetch(CART_API.items);
@@ -125,11 +121,9 @@ function renderCart(items) {
     }
 }
 
-// Global functions for inline onclicks
 window.updateQty = async function (id, qty) {
     if (qty < 1) return; // Minimum 1, use remove for 0? Or just block.
 
-    // Optimistic UI update could go here, but let's stick to safe API first
     try {
         await fetch(CART_API.update, {
             method: 'POST',
@@ -158,19 +152,14 @@ window.removeItem = async function (id) {
 };
 
 window.addToCart = async function (id) {
-    // Check if user is logged in (simple check via navbar presence or global var)
-    // We can check if cart-trigger exists, if not, show login modal
     const cartTrigger = document.getElementById('cart-trigger');
     if (!cartTrigger) {
-        // Trigger login modal
         const loginTrigger = document.getElementById('login-trigger');
         if (loginTrigger) loginTrigger.click();
         else alert('Por favor inicia sesión para comprar');
         return;
     }
 
-    // Show loading state on button if possible (needs passed element)
-    // For now, simpler:
 
     try {
         const res = await fetch(CART_API.add, {
